@@ -1,5 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,vuejs,vue
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,vuejs,vue
 
 ### VisualStudioCode ###
 .vscode/*
@@ -31,10 +29,8 @@
 #
 # Recommended template: Node.gitignore
 
-# TODO: where does this rule come from?
 docs/_book
 
-# TODO: where does this rule come from?
 test/
 
 ### Vuejs ###
@@ -45,4 +41,3 @@ dist/
 npm-debug.log
 yarn-error.log
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,vuejs,vue
