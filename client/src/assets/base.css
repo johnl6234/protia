@@ -1,74 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* color palette from <https://github.com/vuejs/theme> */
+
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+    --vt-c-white: #ffffff;
+    --vt-c-white-soft: #f8f8f8;
+    --vt-c-white-mute: #f2f2f2;
+    --vt-c-black: #181818;
+    --vt-c-black-soft: #222222;
+    --vt-c-black-mute: #282828;
+    --vt-c-indigo: #2c3e50;
+    --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+    --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+    --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+    --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+    --vt-c-text-light-1: var(--vt-c-indigo);
+    --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+    --vt-c-text-dark-1: var(--vt-c-white);
+    --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
+
 /* semantic color variables for this project */
+
 :root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
+    --color-background: var(--vt-c-white);
+    --color-background-soft: var(--vt-c-white-soft);
+    --color-background-mute: var(--vt-c-white-mute);
+    --color-border: var(--vt-c-divider-light-2);
+    --color-border-hover: var(--vt-c-divider-light-1);
+    --color-heading: var(--vt-c-text-light-1);
+    --color-text: var(--vt-c-text-light-1);
+    --section-gap: 160px;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
+    :root {
+        --color-background: var(--vt-c-black);
+        --color-background-soft: var(--vt-c-black-soft);
+        --color-background-mute: var(--vt-c-black-mute);
+        --color-border: var(--vt-c-divider-dark-2);
+        --color-border-hover: var(--vt-c-divider-dark-1);
+        --color-heading: var(--vt-c-text-dark-1);
+        --color-text: var(--vt-c-text-dark-2);
+    }
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-  font-weight: normal;
+    box-sizing: border-box;
+    margin: 0;
+    position: relative;
+    font-weight: normal;
 }
 
 body {
-  min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition: color 0.5s, background-color 0.5s;
-  line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    color: var(--color-text);
+    background: var(--color-background);
+    transition: color 0.5s, background-color 0.5s;
+    line-height: 1.6;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: sans-serif;
+    font-weight: 100;
+    --grid-gap: 1px;
+    --day-label-size: 20px;
+    --light-grey: rgb(239, 239, 239);
+    --blue: #005695;
+    --light-blue: #d1ebff;
+    --color-blue-1: #005695;
+    --color-blue-1-light: #006bb9;
+    --color-blue-2: #3c7fc4;
+    --color-blue-2-dark: #336da9;
+    --color-blue-2-darker: #244c76;
+    --color-white: #fff;
+    --color-grey-white: #f7f7f7;
+    --color-grey-1: #eaebec;
+    --color-grey-2: #ccc;
+    --color-grey-3: #636569;
+    --color-grey-4: #303030;
+    --color-grey-6: #dedcdc;
+    --color-grey-9: #b5b5b5;
+    --color-grey-9-dark: #a3a3a3;
+    --color-grey-9-darker: #828282;
+    --color-grey-10: #76787d;
+    --color-grey-11: #8d8d8d;
+    --color-grey-12: #4a4a4a;
+    --color-grey100: #e4e9f0;
+    --color-grey200: #cfd7e3;
+    --color-grey300: #b5c0cd;
+    --color-grey800: #3e4e63;
+    --color-event: #007c7c;
+    --color-save: #058d05;
+    --color-reset: #929292;
+    --color-cancel: #d42d2d;
+    --color-sport-bike: #561484;
+    --color-sport-brick: #7b1f40;
+    --color-sport-mtb: #6e512a;
+    --color-sport-other: #8e1094;
+    --color-sport-rest: #84979c;
+    --color-sport-rowing: #14afd9;
+    --color-sport-run: #1e5162;
+    --color-sport-ski: #d26033;
+    --color-sport-strength: #551a51;
+    --color-sport-swim: #0382b1;
+    --color-sport-walk: #aba001;
+    --color-zones-hr: #b82410;
+    --color-zones-power: #5a0792;
+    --color-zones-pace: #125689;
+    --color-zebra-stripe-even: hsla(0, 0%, 80%, 0.5);
+    --color-zebra-stripe-odd: var(--color-grey-1);
+    --color-zebra-stripe-hover: hsla(0, 0%, 80%, 0.25);
+    --color-zebra-stripe-selected: var(--color-white);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+html {
+    -ms-overflow-style: none !important;
+    /* IE and Edge */
+    scrollbar-width: none !important;
+    /* Firefox */
+    background-color: var(--color-grey-2) !important;
 }

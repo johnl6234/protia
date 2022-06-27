@@ -1,12 +1,11 @@
 <template>
-	<main>Home view</main>
+    <h1>This is the Home page</h1>
 </template>
 
 <script>
-	export default {
-		data() {},
-		created() {
-			console.log('.env', import.meta.env);
-		},
-	};
+export default {
+    data() { },
+    created() {
+    },
+};
 </script>
