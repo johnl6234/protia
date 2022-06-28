@@ -14,7 +14,7 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex-shrink-0 flex items-center">
-                        <router-link :to="{ name: 'home' }"><img class="block  h-8 w-auto" src="src\assets\images\nav_logo.png" /></router-link>
+                        <router-link :to="{ name: 'home' }"><img class="block  h-8 w-auto rounded-md" src="src\assets\images\nav_logo.png" /></router-link>
                     </div>
                     <div class="hidden sm:block sm:ml-6 self-center">
                         <div class="flex space-x-4 mx-auto">

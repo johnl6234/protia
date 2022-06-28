@@ -14,7 +14,7 @@ import axios from 'axios'
 import ModalQuickView from "./modal/ModalQuickView.vue"
 
 export default {
-    name: 'app',
+    name: 'calendar-page',
     data: function () {
         return {
             workoutId: null,
@@ -46,7 +46,6 @@ export default {
             this.showDate = d;
         },
         eventClicked(item) {
-            console.log('event', item)
             this.workoutId = item.id
             this.toggleModal()
         },
@@ -56,9 +55,9 @@ export default {
         async getActivities() {
             await axios.get('http://127.0.0.1:5000/activities/' + "john lockham")
                 .then(res => {
-                    console.log('RES calScreen', res.data);
+                    console.log('RES calScreen', res.data.activities[0]);
                     res.data.activities.forEach(activity => {
-                        activity.title = activity.date
+                        activity.title = activity.session.sport
                         activity.startDate = activity.date
                         activity.id = activity._id
                         activity.classes = [activity.session.sport]
