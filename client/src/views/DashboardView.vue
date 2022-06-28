@@ -1,10 +1,13 @@
 <template>
-    <div class="flex flex-row min-h-screen ">
-        <div class="flex flex-col w-1/6 bg-slate-50">
-            left Div
+    <div class="flex flex-row mb-10 dashboard">
+        <div class="flex flex-col w-2/6 bg-slate-50">
+            // TODO Select charts to display
         </div>
-        <div class="flex flex-col bg-gray-500 w-full">
-            <div class="flex flex-row flex-wrap">
+        <div class="flex flex-col bg-gray-300">
+            <div class="w-full p-2 bg-slate-50 border-l border-b-8 shadow-lg">
+                // TODO add date range
+            </div>
+            <div class="flex flex-row flex-wrap overflow-scroll overflow-x-hidden mb-3">
                 <div class="w-64 h-48 bg-white m-2 p-2 rounded-md">
                     <LineChart />
                 </div>
@@ -42,10 +45,19 @@ export default {
                 { name: 4 },
                 { name: 5 },
                 { name: 6 },
+                { name: 1 },
+                { name: 2 },
+                { name: 3 },
+                { name: 4 },
+                { name: 5 },
+                { name: 6 },
             ]
         }
     }
 }
 </script>
-<style>
+<style scoped>
+.dashboard {
+    max-height: 90vh;
+}
 </style>

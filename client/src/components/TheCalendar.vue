@@ -73,7 +73,7 @@ export default {
 </script>
 <style>
 .cv-wrapper {
-    min-height: 90vh;
+    height: 90vh;
 }
 
 .walking {
