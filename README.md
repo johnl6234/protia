@@ -14,7 +14,7 @@ Using MongoDB, Express and React
   <h3 align="center">Training Web App</h3>
 
   <p align="center">
-    Clone of trainingPeaks.com used to Vue.js
+    Sports tracking software, upload files and track fitness progress
   </p>
 </p>
 
