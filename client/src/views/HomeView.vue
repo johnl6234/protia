@@ -1,6 +1,8 @@
 <template>
-	<div class="home">
-		<h1>This is the Home page</h1>
+	<div class="home grid grid-rows-3">
+		<div class="">left Column</div>
+		<div class="">middle Column</div>
+		<div class="">right Column</div>
 	</div>
 </template>
 
