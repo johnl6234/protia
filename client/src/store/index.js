@@ -5,7 +5,7 @@ const store = createStore({
 	state() {
 		return {
 			loggedIn: true, // TODO set true for texting
-			username: '',
+			username: 'johnl6234',
 		};
 	},
 	mutations: {

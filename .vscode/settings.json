@@ -3,6 +3,7 @@
 		"bindto",
 		"headlessui",
 		"heroicons",
+		"mapboxgl",
 		"tailwindcss",
 		"timeseries",
 		"VITE"

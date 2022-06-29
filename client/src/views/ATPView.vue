@@ -1,5 +1,8 @@
 <template>
-    <ATPChart v-if="datesArray !== null" :datesArray="datesArray" />
+    <div class="atp-view">
+        <ATPChart v-if="datesArray !== null" :datesArray="datesArray" />
+        <div class="table-view"></div>
+    </div>
 </template>
 
 <script>
@@ -20,10 +23,19 @@ export default {
             return a
         },
 
-    }, created() {
+    },
+    mounted() {
+        let table = this.$el.querySelector(".bb-tableview")
+        this.$el.querySelector('.table-view').append(table)
+    },
+    created() {
         this.datesArray = this.getDaysArray(new Date(new Date().setFullYear(new Date().getFullYear() - 1)), new Date())
     }
 }
 </script>
-<style>
+<style scoped>
+.table-view {
+    overflow-y: scroll;
+    max-height: 54vh;
+}
 </style>

@@ -1,47 +1,48 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import TheNavbar from './components/TheNavbar.vue';
-import AuthView from './views/AuthView.vue';
+	import { RouterLink, RouterView } from 'vue-router';
+	import TheNavbar from './components/TheNavbar.vue';
+	import AuthView from './views/AuthView.vue';
 </script>
 
 <template>
-    <AuthView v-if="!this.$store.getters.isLoggedIn" />
-    <div v-else class="container  overflow-hidden">
-        <TheNavbar />
-        <RouterView />
-    </div>
+	<AuthView v-if="!this.$store.getters.isLoggedIn" />
+	<div v-else class="container overflow-hidden">
+		<TheNavbar />
+		<RouterView />
+	</div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-export default {
-    computed: mapState(['loggedIn']),
-    watch: {
-        loggedIn(newValue, oldValue) {
-            console.log(`Updating from ${oldValue} to ${newValue}`);
-        }
-    }
-}
+	import { mapState } from 'vuex';
+	export default {
+		computed: mapState(['loggedIn']),
+		watch: {
+			loggedIn(newValue, oldValue) {
+				console.log(`Updating from ${oldValue} to ${newValue}`);
+			},
+		},
+	};
 </script>
 <style>
-@import '@/assets/base.css';
+	@import '@/assets/base.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
 
+	#app {
+		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		color: #2c3e50;
+		width: 90vw;
+		margin-left: auto;
+		margin-right: auto;
+		max-height: 100vh;
+		overflow: hidden;
+	}
 
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    color: #2c3e50;
-    width: 90vw;
-    margin-left: auto;
-    margin-right: auto;
-    max-height: 100vh;
-    overflow: hidden;
-}
-
-.container {}
+	.container {
+		background-color: var(--color-grey-1);
+	}
 </style>

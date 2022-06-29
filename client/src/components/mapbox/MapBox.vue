@@ -1,92 +1,79 @@
 <template>
-    <main class="map-container">
-        <VMap class="w-full h-full" :options="state.map" @load="onMapLoaded" />
-    </main>
+	<main class="map-container">
+		<div id="map" />
+	</main>
 </template>
 
 <script>
-import { VMap, } from "v-mapbox";
-import mapbox from "mapbox-gl";
-import { reactive } from "vue";
+	import 'mapbox-gl/dist/mapbox-gl.css';
+	import mapboxgl from 'mapbox-gl';
 
-export default {
-    components: {
-        VMap,
-    },
-    props: {
-        workout: Object,
-        startPos: Array
-    },
-    setup(props) {
-        const state = reactive({
-            map: {
-                accessToken:
-                    "pk.eyJ1Ijoic29jaWFsZXhwbG9yZXIiLCJhIjoiREFQbXBISSJ9.dwFTwfSaWsHvktHrRtpydQ",
-                style: "mapbox://styles/mapbox/streets-v11?optimize=true",
-                // style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-                center: props.startPos,
-                zoom: 15,
-                maxZoom: 22,
-                crossSourceCollisions: false,
-                failIfMajorPerformanceCaveat: false,
-                attributionControl: false,
-                preserveDrawingBuffer: true,
-                hash: false,
-                minPitch: 0,
-                maxPitch: 60,
-            }
-        });
-
-        return {
-            state,
-        };
-    },
-    methods: {
-        onMapLoaded(event) {
-            console.log('before event')//, event)
-            event.map.addSource('route', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': this.workout.route
-                    }
-                }
-            });
-            event.map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#E73838',
-                    'line-width': 4
-                }
-            });
-            console.log('after event', event)
-
-        }
-    },
-    created() {
-        // We need to set mapbox-gl library here in order to use it in template
-        this.mapbox = mapbox;
-    }
-}
-
-
+	export default {
+		components: {},
+		props: {
+			workout: Object,
+			startPos: Array,
+		},
+		methods: {},
+		mounted() {
+			console.log('workout', this.workout);
+			mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+			const long = [];
+			const lat = [];
+			this.workout.route.forEach(coord => {
+				long.push(coord[0]);
+				lat.push(coord[1]);
+			});
+			const map = new mapboxgl.Map({
+				container: 'map',
+				style: 'mapbox://styles/mapbox/streets-v11',
+				center: this.startPos,
+				zoom: 15,
+				maxZoom: 22,
+			});
+			map.on('load', () => {
+				map.addSource('route', {
+					type: 'geojson',
+					data: {
+						type: 'Feature',
+						properties: {},
+						geometry: {
+							type: 'LineString',
+							coordinates: this.workout.route,
+						},
+					},
+				});
+				map.addLayer({
+					id: 'route',
+					type: 'line',
+					source: 'route',
+					layout: {
+						'line-join': 'round',
+						'line-cap': 'round',
+					},
+					paint: {
+						'line-color': '#E73838',
+						'line-width': 4,
+					},
+				});
+				map.fitBounds([
+					[Math.min(...long) - 0.01, Math.min(...lat) - 0.01], // southwestern corner of the bounds
+					[Math.max(...long) + 0.01, Math.max(...lat) + 0.01], // northeastern corner of the bounds
+				]);
+			});
+		},
+		beforeUnmount() {},
+	};
 </script>
 
 <style>
-@import "mapbox-gl/dist/mapbox-gl.css";
-@import "v-mapbox/dist/v-mapbox.css";
+	.map-container {
+		height: 400px;
+		width: 100%;
+	}
 
-.map-container {
-    height: 400px;
-    width: 100%
-}
+	#map {
+		height: 100%;
+		width: 100%;
+	}
 </style>
