@@ -21,7 +21,8 @@ router.post('/', async (req, res, next) => {
 						if (err) return fn(err);
 						if (hash === user.hash) {
 							console.log('SUCCESS');
-							res.send({ success: 'Logged in successfully' });
+							user.success = 'Logged in successfully';
+							res.send(user);
 						} else {
 							console.log('FAILED');
 							res.send({ error: 'Invalid Username or Password' });

@@ -1,6 +1,6 @@
 <template>
 	<div class="h-screen">
-		<SubSectionProfile ref="Profile" class="h-screen w-full" />
+		<SubSectionProfile ref="Profile" class="w-full" />
 		<SubSectionSettings ref="Settings" class="h-screen w-full" />
 	</div>
 </template>
@@ -14,13 +14,9 @@
 			currentSubLink: String,
 		},
 		watch: {
-			currentSubLink(subLink) {
-				console.log('string', this.currentSubLink);
-				console.log('subLink', this.$refs[this.currentSubLink]);
+			currentSubLink() {
 				var element = this.$refs[this.currentSubLink];
-				var top = element.offsetTop;
-
-				window.scrollTo(0, top);
+				if (element) element.$el.scrollIntoView({ behavior: 'smooth' });
 			},
 		},
 	};

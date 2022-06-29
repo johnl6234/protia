@@ -131,6 +131,7 @@ html {
     scrollbar-width: none !important;
     /* Firefox */
     background-color: var(--color-grey-2) !important;
+    scroll-behavior: smooth;
 }
 
 body {

@@ -1,12 +1,14 @@
 <template>
-	<div class="flex flex-row mb-10 bg-zinc-200 settings">
-		<div class="flex flex-col mt-5 w-fit border-r border-zinc-400">
+	<div class="flex flex-row bg-zinc-200 settings pl-3 mt-3">
+		<div class="flex flex-col w-fit border-r border-zinc-400">
 			<ul class="p-0">
 				<li
 					v-for="link in links"
 					:key="link.name"
 					:class="[
-						displayLink === link.name ? 'bg-zinc-300' : '',
+						displayLink === link.name
+							? 'bg-zinc-300 rounded-tl-lg rounded-bl-lg'
+							: '',
 						'cursor-pointer p-3 pr-0 pb-1 text-xs',
 					]"
 				>
@@ -37,8 +39,9 @@
 			</ul>
 		</div>
 		<div class="component-container">
+			<!-- Display different sections -->
 			<component
-				class="p-3 mt-5 component"
+				class="p-3 component bg-zinc-300"
 				v-if="currentSubLink"
 				:is="currentSection"
 				:currentSubLink="currentSubLink"
@@ -48,8 +51,12 @@
 </template>
 
 <script>
-	import SectionAccount from '../components/settings/accountSection/SectionAccount.vue';
-	import SectionZones from '../components/settings/zonesSection/SectionZones.vue';
+	import { shallowRef } from 'vue';
+	import SectionAccountVue from '../components/settings/accountSection/SectionAccount.vue';
+	import SectionZonesVue from '../components/settings/zonesSection/SectionZones.vue';
+	const SectionAccount = shallowRef(SectionAccountVue);
+	const SectionZones = shallowRef(SectionZonesVue);
+
 	export default {
 		name: 'user-settings',
 		components: {

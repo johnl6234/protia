@@ -12,14 +12,14 @@
 						<div class="px-4 py-3 col-span-1">
 							<div class="grid grid-cols-3">
 								<label
-									for="first-name"
+									for="firstAndLast"
 									class="block text-gray-700"
 									>First and Last Name</label
 								>
 								<input
 									type="text"
-									name="first-name"
-									id="first-name"
+									v-model="firstAndLast"
+									id="firstAndLast"
 									autocomplete="given-name"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								/>
@@ -33,7 +33,7 @@
 								>
 								<input
 									type="text"
-									name="email-address"
+									v-model="email"
 									id="email-address"
 									autocomplete="email"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -48,17 +48,18 @@
 								>
 								<select
 									id="sport"
-									name="sport"
+									v-model="sport"
 									autocomplete="sport"
 									class="col-span-1 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								>
-									<option>United States</option>
-									<option>Canada</option>
-									<option>Mexico</option>
+									<option>Cyclist</option>
+									<option>Runner</option>
+									<option>Swimmer</option>
+									<option>Triathlete</option>
 								</select>
 								<select
 									id="gender"
-									name="gender"
+									v-model="gender"
 									autocomplete="gender"
 									class="col-span-1 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								>
@@ -88,7 +89,7 @@
 								>
 								<input
 									type="password"
-									name="password"
+									v-model="password"
 									id="password"
 									autocomplete="password"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -102,7 +103,7 @@
 								>
 								<input
 									type="password"
-									name="retypePassword"
+									v-model="reTypePassword"
 									id="retypePassword"
 									autocomplete="password"
 									class="col-span-2 mb-10 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -118,7 +119,7 @@
 								>
 								<input
 									type="text"
-									name="street-address-1"
+									v-model="addressLine1"
 									id="street-address-1"
 									autocomplete="street-address"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -131,7 +132,7 @@
 								></label>
 								<input
 									type="text"
-									name="street-address-2"
+									v-model="addressLine2"
 									id="street-address-2"
 									autocomplete="street-address"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -143,14 +144,14 @@
 								>
 								<input
 									type="text"
-									name="city"
+									v-model="city"
 									id="city"
 									autocomplete="address-level2"
 									class="col-span-1 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								/>
 								<select
 									id="state"
-									name="state"
+									v-model="state"
 									autocomplete="state"
 									class="col-span-1 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								>
@@ -165,11 +166,11 @@
 								<label
 									for="postal-code"
 									class="block text-gray-700"
-									>Zip Code</label
+									>Postal Code</label
 								>
 								<input
 									type="text"
-									name="postal-code"
+									v-model="postalCode"
 									id="postal-code"
 									autocomplete="postal-code"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -181,7 +182,7 @@
 								>
 								<select
 									id="country"
-									name="country"
+									v-model="country"
 									autocomplete="country-name"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								>
@@ -197,7 +198,7 @@
 								>
 								<select
 									id="time-zone"
-									name="time-zone"
+									v-model="timeZone"
 									autocomplete="time-zone"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 								>
@@ -212,7 +213,7 @@
 								>
 								<input
 									type="text"
-									name="phone"
+									v-model="phone"
 									id="phone"
 									autocomplete="phone"
 									class="col-span-2 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -277,11 +278,36 @@
 	export default {
 		data() {
 			return {
-				username: this.$store.getters.getUsername,
+				username: '',
+				firstAndLast: '',
+				email: '',
+				sport: '',
+				gender: '',
+				password: '',
+				reTypePassword: '',
+				addressLine1: '',
+				addressLine2: '',
+				city: '',
+				state: '',
+				postalCode: '',
+				country: '',
+				timeZone: '',
+				phone: '',
 			};
 		},
 		created() {
 			this.username = this.$store.getters.getUsername;
+			const userData = this.$store.getters.getUserData;
+			this.email = userData.email;
+			this.firstAndLast = userData.firstAndLast;
+			if (this.sport) this.sport = userData.sport;
+			if (this.gender) this.gender = userData.gender;
+			if (this.addressLine1) this.addressLine1 = userData.addressLine1;
+			if (this.addressLine2) this.addressLine2 = userData.addressLine2;
+			if (this.city) this.city = userData.city;
+			if (this.postalCode) this.postalCode = userData.postalCode;
+			if (this.timeZone) this.timeZone = userData.timeZone;
+			if (this.phone) this.phone = userData.phone;
 		},
 	};
 </script>
