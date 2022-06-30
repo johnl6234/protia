@@ -159,8 +159,12 @@
 					.then(res => {
 						if (res.data.success) {
 							this.$store.commit('login');
+							delete res.data.hash;
+							delete res.data.salt;
+							delete res.data.success;
 							this.$store.commit('setUserData', res.data);
-							// TODO localStorage.setItem(
+							// TODO set JWT accessToken
+							// localStorage.setItem(
 							//     'accessToken',
 							//     res.data.accessToken
 							// );

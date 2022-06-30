@@ -8,6 +8,7 @@ const store = createStore({
 			username: 'johnl6234',
 			userData: {},
 			userStats: {},
+			tempData: {},
 		};
 	},
 	mutations: {
@@ -26,6 +27,11 @@ const store = createStore({
 		setUserStats(state, userStats) {
 			state.userStats = userStats;
 		},
+		setTempData(state, data) {
+			for (const [key, value] of Object.entries(data)) {
+				state.tempData[key] = value;
+			}
+		},
 	},
 	getters: {
 		isLoggedIn(state) {
@@ -39,6 +45,9 @@ const store = createStore({
 		},
 		getUserStats(state) {
 			return state.userStats;
+		},
+		getTempData(state) {
+			return state.tempData;
 		},
 	},
 });

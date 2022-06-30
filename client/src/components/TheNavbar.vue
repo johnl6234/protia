@@ -51,6 +51,13 @@
 				<div
 					class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 				>
+					<router-link
+						:to="{ name: 'upload' }"
+						class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+					>
+						<span class="sr-only">Upload activities</span>
+						<UploadIcon class="h-6 w-6" aria-hidden="true" />
+					</router-link>
 					<button
 						type="button"
 						class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -154,6 +161,7 @@
 		BellIcon,
 		LoginIcon,
 		MenuIcon,
+		UploadIcon,
 		XIcon,
 	} from '@heroicons/vue/outline';
 </script>

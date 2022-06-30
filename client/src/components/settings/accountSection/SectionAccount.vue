@@ -1,21 +1,29 @@
 <template>
-	<div class="h-screen">
-		<SubSectionProfile ref="Profile" class="w-full" />
-		<SubSectionSettings ref="Settings" class="h-screen w-full" />
-	</div>
+	<SubSectionProfile ref="Profile" class="w-full p-3" />
+	<SubSectionSettings ref="Settings" class="w-full p-3" />
+	<SubSectionEmail ref="Email Options" class="w-full p-3 h-96" />
+	<SubSectionCalendar ref="Calendar" class="w-full p-3 h-96" />
 </template>
 <script>
 	import SubSectionProfile from './SubSectionProfile.vue';
 	import SubSectionSettings from './SubSectionSettings.vue';
+	import SubSectionEmail from './SubSectionEmail.vue';
+	import SubSectionCalendar from './SubSectionCalendar.vue';
+
 	export default {
 		name: 'section-account',
-		components: { SubSectionProfile, SubSectionSettings },
+		components: {
+			SubSectionProfile,
+			SubSectionSettings,
+			SubSectionEmail,
+			SubSectionCalendar,
+		},
 		props: {
-			currentSubLink: String,
+			toSubSection: String,
 		},
 		watch: {
-			currentSubLink() {
-				var element = this.$refs[this.currentSubLink];
+			toSubSection() {
+				var element = this.$refs[this.toSubSection];
 				if (element) element.$el.scrollIntoView({ behavior: 'smooth' });
 			},
 		},

@@ -1,10 +1,12 @@
 <template>
 	<div class="flex flex-row bg-zinc-200 settings pl-3 mt-3">
-		<div class="flex flex-col w-fit border-r border-zinc-400">
+		<!-- Side navigation -->
+		<div class="flex flex-col w-fit border-r border-zinc-400 nav-section">
 			<ul class="p-0">
+				<!-- Display section nav -->
 				<li
-					v-for="link in links"
-					:key="link.name"
+					v-for="(link, index) in sectionsArray"
+					:key="index"
 					:class="[
 						displayLink === link.name
 							? 'bg-zinc-300 rounded-tl-lg rounded-bl-lg'
@@ -17,16 +19,17 @@
 							displayLink === link.name ? 'font-bold' : '',
 							'pb-1 text-xs',
 						]"
-						@click="displayOptions(link.name)"
+						@click.prevent="displaySection(index)"
 					>
 						{{ link.name }}
 					</div>
+					<!-- If section active display subLinks -->
 					<ul v-if="displayLink === link.name">
 						<li
-							@click="gotoSubLink(section)"
 							v-for="section in link.subLinks"
+							@click.prevent="gotoSubLink(section)"
 							:class="[
-								currentSubLink === section
+								currentSubSection === section
 									? ' text-blue-500 font-light'
 									: '',
 								'pb-1 pl-4 text-xs',
@@ -38,24 +41,38 @@
 				</li>
 			</ul>
 		</div>
-		<div class="component-container">
-			<!-- Display different sections -->
-			<component
-				class="p-3 component bg-zinc-300"
-				v-if="currentSubLink"
-				:is="currentSection"
-				:currentSubLink="currentSubLink"
-			/>
+		<!-- Main container -->
+		<div class="flex flex-col w-full mr-3">
+			<div class="component-container p-3 bg-zinc-300 mb-12">
+				<!-- Display selected section -->
+				<component
+					v-if="currentSubSection"
+					:is="currentSection"
+					:toSubSection="currentSubSection"
+				/>
+			</div>
+			<!-- Save Settings Button -->
+			<div
+				class="px-4 py-3 bg-gray-50 text-right sm:px-6 absolute bottom-0 left-0 w-full"
+			>
+				<button
+					@click="saveData"
+					class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+				>
+					Save
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { shallowRef } from 'vue';
+	import axios from 'axios';
+	import { markRaw } from 'vue';
 	import SectionAccountVue from '../components/settings/accountSection/SectionAccount.vue';
 	import SectionZonesVue from '../components/settings/zonesSection/SectionZones.vue';
-	const SectionAccount = shallowRef(SectionAccountVue);
-	const SectionZones = shallowRef(SectionZonesVue);
+	const SectionAccount = markRaw(SectionAccountVue);
+	const SectionZones = markRaw(SectionZonesVue);
 
 	export default {
 		name: 'user-settings',
@@ -65,7 +82,7 @@
 		},
 		data() {
 			return {
-				links: [
+				sectionsArray: [
 					{
 						name: 'Account',
 						subLinks: [
@@ -74,37 +91,52 @@
 							'Email Options',
 							'Calendar',
 						],
+						component: SectionAccount,
 					},
 					{
 						name: 'Zones',
 						subLinks: ['Heart Rate', 'Power', 'Speed/Pace'],
+						component: SectionZones,
 					},
 				],
-				displayLink: 'Account', // default page
-				sections: {
-					Account: SectionAccount,
-					Zones: SectionZones,
-				},
-				currentSection: SectionAccount,
-				currentSubLink: null,
+				displayLink: null,
+				currentSection: null,
+				currentSubSection: null,
+				UserData: {},
 			};
 		},
 		methods: {
-			displayOptions(link) {
-				this.displayLink = link;
-				this.currentSection = this.sections[link];
+			displaySection(sectionIndex) {
+				let section = this.sectionsArray[sectionIndex];
+				this.displayLink = section.name;
+				this.currentSection = section.component;
+				this.currentSubSection = section.subLinks[0];
 			},
 			gotoSubLink(subLink) {
-				console.log('settings', subLink);
-				this.currentSubLink = subLink;
+				this.currentSubSection = subLink;
+			},
+			saveData() {
+				console.log('save');
+				let data = this.$store.getters.getTempData;
+				let userId = this.$store.getters.getUserData._id;
+				console.log('save', userId);
+				axios
+					.post(
+						import.meta.env.VITE_SERVER_URI + 'user/' + userId,
+						data
+					)
+					.then(response => {
+						console.log('res', response);
+						if (response.data.modifiedCount > 0)
+							this.$store.commit('setUserData', data);
+					});
 			},
 		},
 		mounted() {
-			this.currentSubLink =
-				this.links[
-					this.links.findIndex(el => el.name == this.displayLink)
-				].subLinks[0]; // default first subLink in section
-			console.log('settings sub', this.currentSubLink);
+			// initialize to first sub section of first section
+			this.displayLink = this.sectionsArray[0].name;
+			this.currentSection = this.sectionsArray[0].component;
+			this.currentSubSection = this.sectionsArray[0].subLinks[0];
 		},
 	};
 </script>
@@ -112,10 +144,11 @@
 	.settings {
 		height: 90vh;
 	}
-	.component {
-		min-width: 900px;
-	}
 	.component-container {
 		overflow-x: scroll;
+		min-width: 900px;
+	}
+	.nav-section {
+		min-width: 110px;
 	}
 </style>

@@ -1,8 +1,27 @@
 <template>
-	<h1>//TODO zones section</h1>
+	<SubSectionHeartRate ref="Heart Rate" class="w-full h-screen" />
+	<SubSectionPower ref="Power" class="w-full h-screen" />
+	<SubSectionPaceSpeed ref="Speed/Pace" class="w-full h-screen" />
 </template>
 <script>
+	import SubSectionHeartRate from './SubSectionHeartRate.vue';
+	import SubSectionPower from './SubSectionPower.vue';
+	import SubSectionPaceSpeed from './SubSectionPaceSpeed.vue';
 	export default {
 		name: 'section-zones',
+		components: {
+			SubSectionHeartRate,
+			SubSectionPower,
+			SubSectionPaceSpeed,
+		},
+		props: {
+			toSubSection: String,
+		},
+		watch: {
+			toSubSection() {
+				var element = this.$refs[this.toSubSection];
+				if (element) element.$el.scrollIntoView({ behavior: 'smooth' });
+			},
+		},
 	};
 </script>
