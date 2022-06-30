@@ -69,9 +69,9 @@ router.get('/activity/:id', async (req, res, next) => {
 });
 
 // get all activities
-router.get('/:username', async (req, res, next) => {
-	const { username } = req.params;
-	console.log('user', username);
+router.get('/:userId', async (req, res, next) => {
+	const { userId } = req.params;
+	console.log('user', userId);
 	let activities = null;
 	await MongoClient.connect(process.env.MONGODB, {
 		useUnifiedTopology: true,
@@ -79,7 +79,7 @@ router.get('/:username', async (req, res, next) => {
 		const db = client.db('training');
 		activities = await db
 			.collection('activities')
-			.find({ owner: username })
+			.find({ owner: ObjectId(userId) })
 			.toArray();
 	});
 	let stats = await getStats(activities);

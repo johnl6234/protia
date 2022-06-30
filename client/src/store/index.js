@@ -4,10 +4,12 @@ import { createStore } from 'vuex';
 const store = createStore({
 	state() {
 		return {
-			loggedIn: true, // TODO set true for testing
-			username: 'johnl6234',
+			loggedIn: false, // TODO set true for testing
+			username: '',
 			userData: {},
 			userStats: {},
+			userCharts: [],
+			userWorkouts: [],
 			tempData: {},
 		};
 	},
@@ -32,6 +34,12 @@ const store = createStore({
 				state.tempData[key] = value;
 			}
 		},
+		setUserCharts(state, data) {
+			state.userCharts = data;
+		},
+		setUserWorkouts(state, data) {
+			state.userWorkouts = data;
+		},
 	},
 	getters: {
 		isLoggedIn(state) {
@@ -48,6 +56,12 @@ const store = createStore({
 		},
 		getTempData(state) {
 			return state.tempData;
+		},
+		detUserCharts(state) {
+			return state.userCharts;
+		},
+		detUserWorkouts(state) {
+			return state.userWorkouts;
 		},
 	},
 });

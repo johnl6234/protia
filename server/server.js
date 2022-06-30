@@ -19,6 +19,7 @@ const activitiesRouter = require('./routes/activitiesRoute');
 const registerRouter = require('./routes/registerRoute');
 const loginRoutes = require('./routes/loginRoute');
 const statsRoutes = require('./routes/statsRoute');
+const chartsRouter = require('./routes/chartsRoute');
 const userRoutes = require('./routes/userRoute');
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/route', routeRouter);
 app.use('/user', userRoutes);
 app.use('/activities', activitiesRouter);
 app.use('/statsRoutes', statsRoutes);
+app.use('/charts', chartsRouter);
 app.use('/upload', upload.array('file', 10), uploadRouter);
 
 // catch 404 and forward to error handler

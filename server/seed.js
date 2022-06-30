@@ -1,24 +1,28 @@
-require("dotenv").config({ path: "./config.env" });
-const MongoClient = require('mongodb').MongoClient
-const parseFit = require('./utils/parseFit')
+require('dotenv').config({ path: './config.env' });
+const { MongoClient, ObjectId } = require('mongodb');
+const parseFit = require('./utils/parseFit');
 const path = require('path');
 const dayjs = require('dayjs');
 
+MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true }).then(
+	async client => {
+		console.log('Connected to Database');
+		const db = client.db('training');
+		const activities = db.collection('activities');
 
-MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true })
-    .then(async client => {
-        console.log('Connected to Database');
-        const db = client.db('training');
-        const activities = db.collection('activities');
-
-        activities.updateMany({}, { "$set": { owner: 'john lockham' } }, { "upsert": false })
-        //const data = await parseFit(path.join(__dirname, './test_data/500602897_ACTIVITY.fit'))
-        //activities.insertOne(data)
-        //    .then(result => {
-        //        console.log(result)
-        //    })
-        //    .catch(error => console.error(error))
-    })
+		activities.updateMany(
+			{},
+			{ $set: { owner: ObjectId('61def3217515d569b40377c5') } },
+			{ upsert: false }
+		);
+		//const data = await parseFit(path.join(__dirname, './test_data/500602897_ACTIVITY.fit'))
+		//activities.insertOne(data)
+		//    .then(result => {
+		//        console.log(result)
+		//    })
+		//    .catch(error => console.error(error))
+	}
+);
 
 //MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true })
 //    .then(async client => {
@@ -56,4 +60,3 @@ MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true })
 //            })
 //            .catch(error => console.error('Error', error))
 //    })
-
