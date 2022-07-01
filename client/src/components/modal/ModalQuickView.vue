@@ -30,22 +30,30 @@
 						leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 					>
 						<DialogPanel
-							class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
+							class="workout-container relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8"
 						>
 							<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-								<div class="sm:flex sm:items-start">
+								<div>
 									<MapBox
-										v-if:="
+										v-if="
 											startPos !== null &&
 											workout !== null &&
 											workout.route.length > 0
 										"
 										:workout="workout"
 										:startPos="startPos"
+										:mapPoint="mapPoint"
 									/>
 									<h1 v-else>No Map</h1>
 								</div>
+								<div>
+									<WorkoutStatsCycling
+										v-if="workout !== null"
+										:workout="workout"
+									/>
+								</div>
 							</div>
+							<!-- Buttons container -->
 							<div
 								class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 							>
@@ -65,28 +73,34 @@
 	</TransitionRoot>
 </template>
 
-<script setup>
+<script>
 	import {
 		Dialog,
 		DialogPanel,
-		DialogTitle,
 		TransitionChild,
 		TransitionRoot,
 	} from '@headlessui/vue';
 	import MapBox from '../mapbox/MapBox.vue';
-</script>
-
-<script>
+	import WorkoutStatsCycling from './WorkoutStatsCycling.vue';
 	import axios from 'axios';
 	export default {
 		props: {
 			open: Boolean,
 			workoutId: String,
 		},
+		components: {
+			Dialog,
+			DialogPanel,
+			TransitionChild,
+			TransitionRoot,
+			MapBox,
+			WorkoutStatsCycling,
+		},
 		data() {
 			return {
 				startPos: null,
 				workout: null,
+				mapPoint: 0,
 			};
 		},
 		methods: {
@@ -108,12 +122,23 @@
 							res.data.session.start_position_long / 11930465,
 							res.data.session.start_position_lat / 11930465,
 						];
+						this.smoothPower();
 					});
+			},
+			smoothPower() {
+				let data = this.workout.power.filter(point => {
+					if (point != 'undefined' && Number(point) < 2000)
+						return point;
+				});
+				this.workout.power = data;
 			},
 		},
 		watch: {
 			workoutId() {
 				if (this.workoutId !== null) this.fetchWorkout();
+			},
+			'$store.state.mapPoint': function () {
+				this.mapPoint = this.$store.getters.getMapPoint;
 			},
 		},
 		created() {
@@ -121,3 +146,9 @@
 		},
 	};
 </script>
+
+<style scoped>
+	.workout-container {
+		width: 80%;
+	}
+</style>

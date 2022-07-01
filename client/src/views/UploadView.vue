@@ -99,7 +99,8 @@
 <style scoped>
 	.upload-div {
 		align-items: center;
-		height: 400px;
+		height: 200px;
+		background-color: white;
 	}
 	button:disabled {
 		background-color: rgba(0, 0, 0, 0.5);

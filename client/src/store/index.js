@@ -11,6 +11,7 @@ const store = createStore({
 			userCharts: [],
 			userWorkouts: [],
 			tempData: {},
+			mapPoint: 0,
 		};
 	},
 	mutations: {
@@ -40,6 +41,9 @@ const store = createStore({
 		setUserWorkouts(state, data) {
 			state.userWorkouts = data;
 		},
+		setMapPoint(state, point) {
+			state.mapPoint = point;
+		},
 	},
 	getters: {
 		isLoggedIn(state) {
@@ -57,11 +61,14 @@ const store = createStore({
 		getTempData(state) {
 			return state.tempData;
 		},
-		detUserCharts(state) {
+		getUserCharts(state) {
 			return state.userCharts;
 		},
-		detUserWorkouts(state) {
+		getUserWorkouts(state) {
 			return state.userWorkouts;
+		},
+		getMapPoint(state) {
+			return state.mapPoint;
 		},
 	},
 });
