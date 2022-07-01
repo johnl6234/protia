@@ -10,8 +10,16 @@ const store = createStore({
 			userStats: {},
 			userCharts: [],
 			userWorkouts: [],
+			userActivities: [],
 			tempData: {},
 			mapPoint: 0,
+			dateRange: {
+				name: 'Last 7 days',
+				range: {
+					beforeToday: 7,
+					afterToday: 0,
+				},
+			},
 		};
 	},
 	mutations: {
@@ -41,8 +49,14 @@ const store = createStore({
 		setUserWorkouts(state, data) {
 			state.userWorkouts = data;
 		},
+		setUserActivities(state, activities) {
+			state.userActivities = activities;
+		},
 		setMapPoint(state, point) {
 			state.mapPoint = point;
+		},
+		setDateRange(state, range) {
+			state.dateRange = range;
 		},
 	},
 	getters: {
@@ -64,11 +78,26 @@ const store = createStore({
 		getUserCharts(state) {
 			return state.userCharts;
 		},
+		getUserChartsLength(state) {
+			return state.userCharts.length;
+		},
 		getUserWorkouts(state) {
 			return state.userWorkouts;
 		},
+		getUserWorkoutsLength(state) {
+			return state.userWorkouts.length;
+		},
+		getUserActivities(state) {
+			return state.userActivities;
+		},
+		getUserActivitiesLength(state) {
+			return state.userActivities.length;
+		},
 		getMapPoint(state) {
 			return state.mapPoint;
+		},
+		setDateRange(state) {
+			return state.dateRange;
 		},
 	},
 });

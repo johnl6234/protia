@@ -2,7 +2,7 @@
 	<calendar-view
 		:show-date="showDate"
 		:startingDayOfWeek="1"
-		:items="items"
+		:items="activities"
 		@click-item="eventClicked"
 		@click-date="dateClicked"
 		class="theme-default"
@@ -34,20 +34,7 @@
 				workoutId: null,
 				showModal: false,
 				showDate: new Date(),
-				items: [
-					{
-						id: 1,
-						startDate: '2022-06-24',
-						endDate: '2022-06-24',
-						title: 'test event',
-					},
-					{
-						id: 2,
-						startDate: '2022-06-26',
-						endDate: '2022-06-28',
-						title: 'test event',
-					},
-				],
+				activities: [],
 			};
 		},
 		components: {
@@ -78,19 +65,28 @@
 							this.$store.getters.getUserData._id
 					)
 					.then(res => {
-						console.log('RES calScreen', res.data.activities[0]);
+						console.log(
+							'last in array',
+							res.data.activities[res.data.activities.length - 1]
+						);
 						res.data.activities.forEach(activity => {
 							activity.title = activity.session.sport;
 							activity.startDate = activity.date;
 							activity.id = activity._id;
 							activity.classes = [activity.session.sport];
 						});
-						this.items = res.data.activities;
+						this.activities = res.data.activities;
+						this.$store.commit(
+							'setUserActivities',
+							res.data.activities
+						);
 					});
 			},
 		},
 		created() {
-			this.getActivities();
+			if (this.$store.getters.getUserActivitiesLength < 1)
+				this.getActivities();
+			else this.activities = this.$store.getters.getUserActivities;
 		},
 	};
 </script>

@@ -25,8 +25,6 @@
 		components: {
 			HomeWorkout,
 		},
-		data() {},
-		created() {},
 	};
 </script>
 

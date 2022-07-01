@@ -8,9 +8,12 @@ const getStats = require('../utils/getStats');
 
 // get activities in dateRange
 router.get('/dateRange', async (req, res, next) => {
-	const { from, to } = req.query;
-	let fromDate = new Date(from);
-	let toDate = new Date(to);
+	const { beforeToday, afterToday } = req.query;
+	let MsInDay = 1000 * 3600 * 24;
+	// afterToday date to search
+	let toDate = new Date(new Date().valueOf() + MsInDay * afterToday);
+	// beforeToday date to search
+	let fromDate = new Date(new Date().valueOf() - MsInDay * beforeToday);
 	let activities = null;
 	await MongoClient.connect(process.env.MONGODB, {
 		useUnifiedTopology: true,

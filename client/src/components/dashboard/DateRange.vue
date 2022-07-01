@@ -1,0 +1,56 @@
+<template>
+	// TODO add date range
+	<select name="date-ranges" @change="changeDateRange">
+		<option
+			v-for="(range, index) in dateRangeList"
+			:key="index"
+			:value="range.range"
+		>
+			{{ range.name }}
+		</option>
+	</select>
+</template>
+
+<script>
+	export default {
+		name: 'date-range',
+		emits: ['getData'],
+		data() {
+			return {
+				dateRange: null,
+				dateRangeList: [
+					{
+						name: 'Last 7 days',
+						range: {
+							beforeToday: 7,
+							afterToday: 0,
+						},
+					},
+					{
+						name: 'Last 14 days',
+						range: {
+							beforeToday: 14,
+							afterToday: 0,
+						},
+					},
+					{
+						name: 'Last 28 days',
+						range: {
+							beforeToday: 28,
+							afterToday: 0,
+						},
+					},
+				],
+			};
+		},
+		methods: {
+			changeDateRange(e) {
+				this.$store.commit(
+					'setDateRange',
+					this.dateRangeList[e.target.selectedIndex]
+				);
+				this.$emit('getData');
+			},
+		},
+	};
+</script>

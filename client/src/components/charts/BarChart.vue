@@ -1,42 +1,49 @@
 <template>
-    <div id="barChart" class="w-full h-full"></div>
+	<div :id="'barChart-' + chartId" class="w-full h-full"></div>
 </template>
 
 <script>
-import { bb, bar } from "billboard.js";
-import "billboard.js/dist/billboard.css";
-export default {
-    name: 'bar-chart',
-    data() {
-        return {
-
-        }
-    }, methods: {
-        initChart() {
-            const chart = bb.generate({
-                bindto: '#barChart',
-                data: {
-                    // for ESM import usage, import 'line' module and execute it as
-                    type: bar(),
-                    //type: "line",
-                    columns: [
-                        ["data1", 30, 200, 100, 400, 150, 250]
-                    ]
-                },
-                bar: {
-                    width: {
-                        ratio: 0.5
-                    }
-                },
-                zoom: {
-                    // for ESM import usage, import 'zoom' module and execute it as
-                    // enabled: zoom()
-                    enabled: true
-                }
-            });
-        }
-    }, mounted() {
-        this.initChart()
-    }
-}
+	import { bb, bar } from 'billboard.js';
+	import 'billboard.js/dist/billboard.css';
+	export default {
+		name: 'bar-chart',
+		props: {
+			chartId: Number,
+			data: Object,
+		},
+		data() {
+			return {};
+		},
+		methods: {
+			initChart() {
+				let chartId = this.chartId;
+				let data = this.data;
+				console.log('data', this.data);
+				const chart = bb.generate({
+					bindto: `#barChart-${chartId}`,
+					data: {
+						// for ESM import usage, import 'line' module and execute it as
+						type: bar(),
+						//type: "line",
+						columns: data.columns,
+						colors: {
+							heart_rate: '#ff0000',
+							power: '#9900ff',
+							speed: '#0000ff',
+							elevation: '#00ff00',
+							cadence: '#ffb700',
+						},
+					},
+					bar: {
+						width: {
+							ratio: 0.75,
+						},
+					},
+				});
+			},
+		},
+		mounted() {
+			this.initChart();
+		},
+	};
 </script>
