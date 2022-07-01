@@ -163,11 +163,11 @@
 							delete res.data.salt;
 							delete res.data.success;
 							this.$store.commit('setUserData', res.data);
-							// TODO set JWT accessToken
-							// localStorage.setItem(
-							//     'accessToken',
-							//     res.data.accessToken
-							// );
+							//TODO set JWT accessToken
+							localStorage.setItem(
+								'accessToken',
+								res.data.accessToken
+							);
 							console.log(
 								'loggedIn',
 								this.$store.getters.isLoggedIn

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var jwt = require('jsonwebtoken');
 const { MongoClient, ObjectId } = require('mongodb');
 const hash = require('pbkdf2-password')();
 
@@ -13,7 +14,6 @@ router.post('/', async (req, res, next) => {
 			let user = await db
 				.collection('users')
 				.findOne({ username: username });
-			console.log('USER', user);
 			if (user) {
 				hash(
 					{ password: password, salt: user.salt },
@@ -21,8 +21,18 @@ router.post('/', async (req, res, next) => {
 						if (err) return fn(err);
 						if (hash === user.hash) {
 							console.log('SUCCESS');
-							user.success = 'Logged in successfully';
-							res.send(user);
+							var token = jwt.sign(
+								{ id: user._id },
+								process.env.JWT_SECRET,
+								{
+									expiresIn: 86400, // 24 hours
+								}
+							);
+							res.send({
+								success: 'Logged in successfully',
+								user: user,
+								accessToken: token,
+							});
 						} else {
 							console.log('FAILED');
 							res.send({ error: 'Invalid Username or Password' });

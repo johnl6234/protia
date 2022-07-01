@@ -13,6 +13,7 @@
 </template>
 
 <script>
+	import axios from 'axios';
 	import { mapState } from 'vuex';
 	export default {
 		computed: mapState(['loggedIn']),
@@ -20,6 +21,28 @@
 			loggedIn(newValue, oldValue) {
 				console.log(`Updating from ${oldValue} to ${newValue}`);
 			},
+		},
+		created() {
+			let token = localStorage.getItem('accessToken');
+			if (token) {
+				axios
+					.post(
+						import.meta.env.VITE_SERVER_URI + 'auth',
+						{},
+						{
+							headers: {
+								'x-access-token': token,
+							},
+						}
+					)
+					.then(res => {
+						console.log('app start res', res);
+						if (res.data.success) {
+							this.$store.commit('setUserData', res.data.user);
+							this.$store.commit('login');
+						}
+					});
+			}
 		},
 	};
 </script>

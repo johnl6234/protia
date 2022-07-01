@@ -13,6 +13,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+const verifyToken = require('./middleware/authJwt');
+const TokenLogin = require('./auth/user');
+
 const uploadRouter = require('./routes/uploadRoute');
 const routeRouter = require('./routes/getRoute');
 const activitiesRouter = require('./routes/activitiesRoute');
@@ -28,6 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+app.use('/auth', verifyToken, TokenLogin);
 app.use('/register', registerRouter);
 app.use('/login', loginRoutes);
 app.use('/route', routeRouter);
