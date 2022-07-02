@@ -14,14 +14,14 @@
 		<div class="absolute inset-y-0 right-3 flex items-center pr-2">
 			<router-link
 				:to="{ name: 'upload' }"
-				class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+				class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white"
 			>
 				<span class="sr-only">Upload activities</span>
 				<TrayArrowUp class="h-6 w-6" aria-hidden="true" />
 			</router-link>
 			<button
 				type="button"
-				class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+				class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white"
 			>
 				<span class="sr-only">View notifications</span>
 				<BellOutline class="h-6 w-6" aria-hidden="true" />
@@ -34,9 +34,7 @@
 				class="ml-3 relative"
 			>
 				<div>
-					<MenuButton
-						class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-					>
+					<MenuButton class="bg-gray-800 flex text-sm rounded-full">
 						<span class="sr-only">Open user menu</span>
 						<img
 							class="h-8 w-8 rounded-full"
@@ -54,7 +52,7 @@
 					leave-to-class="transform opacity-0 scale-95"
 				>
 					<MenuItems
-						class="z-40 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+						class="z-40 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white"
 					>
 						<MenuItem v-slot="{ active }">
 							<router-link
