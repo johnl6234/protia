@@ -90,10 +90,6 @@
 							<span
 								class="absolute left-0 inset-y-0 flex items-center pl-3"
 							>
-								<LockClosedIcon
-									class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-									aria-hidden="true"
-								/>
 							</span>
 							Sign in
 						</button>
@@ -104,9 +100,6 @@
 	</div>
 </template>
 
-<script setup>
-	import { LockClosedIcon } from '@heroicons/vue/outline';
-</script>
 <script>
 	export default {
 		data() {

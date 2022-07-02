@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import CalendarView from '../views/CalendarView.vue';
 import DashboardView from '../views/DashboardView.vue';
-import ATPView from '../views/ATPView.vue';
+import ProgressView from '../views/ProgressView.vue';
 import AuthView from '../views/AuthView.vue';
 import SettingsView from '../views/SettingsView.vue';
 import UploadView from '../views/UploadView.vue';
@@ -26,9 +26,9 @@ const router = createRouter({
 			component: DashboardView,
 		},
 		{
-			path: '/atp',
-			name: 'atp',
-			component: ATPView,
+			path: '/progress',
+			name: 'progress',
+			component: ProgressView,
 		},
 		{
 			path: '/auth',

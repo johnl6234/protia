@@ -5,7 +5,7 @@
 				@click="showChartList"
 				class="flex justify-center bg-neutral-200 m-3 rounded-lg p-3"
 			>
-				<ChartBarIcon class="chart-button" />
+				<ChartBar class="chart-button" />
 			</button>
 			<div v-if="chartListIsShown" class="p-3">
 				<div
@@ -70,7 +70,7 @@
 	import BarChart from '../components/charts/BarChart.vue';
 	import PieChart from '../components/charts/PieChart.vue';
 	import axios from 'axios';
-	import { ChartBarIcon } from '@heroicons/vue/outline';
+	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
 	import { getTimeInZones } from '../utils/utils';
 	export default {
@@ -79,7 +79,7 @@
 			LineChart,
 			BarChart,
 			PieChart,
-			ChartBarIcon,
+			ChartBar,
 			DateRange,
 		},
 		data() {
@@ -160,7 +160,6 @@
 				this.userCharts.push(newChart);
 			},
 			fetchDataInDateRange() {
-				console.log('called');
 				let dateRange = this.$store.getters.setDateRange;
 				axios
 					.get(
@@ -197,7 +196,6 @@
 				this.chartList.find(
 					chart => chart.dataName == 'power'
 				).data.columns = sortedPowerData;
-				console.log('should change');
 				this.rangedChartData = {
 					heart_rate: sortedHeartData,
 					power: sortedPowerData,
@@ -214,10 +212,6 @@
 		watch: {
 			rangedChartData(old, newVal) {
 				this.updateChartsData();
-				console.log('rangedChartData changed ');
-			},
-			userCharts(old, newVal) {
-				console.log('userCharts changed');
 			},
 		},
 		mounted() {

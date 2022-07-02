@@ -20,7 +20,6 @@
 			initChart() {
 				let chartId = this.chartId;
 				let chartData = this.chartData;
-				console.log('data', this.chartData);
 				this.chart = bb.generate({
 					bindto: `#barChart-${chartId}`,
 					data: {

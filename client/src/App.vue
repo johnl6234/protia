@@ -1,14 +1,18 @@
 <script setup>
 	import { RouterLink, RouterView } from 'vue-router';
-	import TheNavbar from './components/TheNavbar.vue';
+	import TheTopNav from './components/TheTopNav.vue';
 	import AuthView from './views/AuthView.vue';
+	import TheSideNav from './components/TheSideNav.vue';
 </script>
 
 <template>
 	<AuthView v-if="!this.$store.getters.isLoggedIn" />
 	<div v-else class="container overflow-hidden">
-		<TheNavbar />
-		<RouterView />
+		<TheTopNav />
+		<div class="flex flex-row">
+			<TheSideNav />
+			<RouterView class="w-full" />
+		</div>
 	</div>
 </template>
 
@@ -50,7 +54,7 @@
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		color: #2c3e50;
-		width: 90vw;
+		width: 95vw;
 		margin-left: auto;
 		margin-right: auto;
 		max-height: 100vh;
@@ -59,5 +63,6 @@
 
 	.container {
 		background-color: var(--color-grey-1);
+		margin: auto;
 	}
 </style>
