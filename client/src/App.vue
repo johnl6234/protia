@@ -7,7 +7,7 @@
 
 <template>
 	<AuthView v-if="!this.$store.getters.isLoggedIn" />
-	<div v-else class="container overflow-hidden">
+	<div v-else class="app-container overflow-hidden md:w-full lg:w-5/6">
 		<TheTopNav />
 		<div class="flex flex-row">
 			<TheSideNav />
@@ -54,14 +54,14 @@
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		color: #2c3e50;
-		width: 95vw;
+		/* width: 95vw; */
 		margin-left: auto;
 		margin-right: auto;
-		max-height: 100vh;
+		max-height: 98vh;
 		overflow: hidden;
 	}
 
-	.container {
+	.app-container {
 		background-color: var(--color-grey-1);
 		margin: auto;
 	}

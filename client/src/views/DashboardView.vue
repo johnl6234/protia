@@ -1,5 +1,10 @@
 <template>
 	<div class="flex flex-row mb-10 dashboard">
+		<!-- Loading overlay -->
+		<div
+			v-if="loading"
+			class="absolute top-0 left-0 w-full h-screen bg-black opacity-50 z-50"
+		></div>
 		<div class="flex flex-col w-40 bg-slate-50">
 			<button
 				@click="showChartList"
@@ -20,11 +25,13 @@
 			</div>
 		</div>
 		<div class="flex flex-col w-full bg-gray-300">
+			<!-- Date range dropdown -->
 			<div class="w-full p-2 bg-slate-50 border-l border-b-8 shadow-lg">
 				<DateRange @getData="fetchDataInDateRange" />
 			</div>
+			<!-- Display charts -->
 			<div
-				class="flex flex-row flex-wrap overflow-scroll overflow-x-hidden mb-3"
+				class="flex flex-row flex-wrap overflow-auto overflow-x-hidden mb-3 min-h-full"
 				@drop="onDrop($event, 1)"
 				@dragover.prevent
 				@dragenter.prevent
@@ -84,6 +91,7 @@
 		},
 		data() {
 			return {
+				loading: true,
 				chartListIsShown: false,
 				chartList: [
 					{
@@ -158,8 +166,11 @@
 				newChart.id = this.userCharts.length;
 				newChart.order = this.userCharts.length;
 				this.userCharts.push(newChart);
+				this.showChartList();
 			},
 			fetchDataInDateRange() {
+				this.loading = true;
+
 				let dateRange = this.$store.getters.setDateRange;
 				axios
 					.get(
@@ -207,11 +218,15 @@
 					chart.data.columns = this.rangedChartData[chart.dataName];
 				});
 				this.userCharts = newCharts;
+				this.loading = false;
 			},
 		},
 		watch: {
 			rangedChartData(old, newVal) {
 				this.updateChartsData();
+			},
+			userCharts(old, val) {
+				console.log('charts', old, val);
 			},
 		},
 		mounted() {
@@ -223,7 +238,7 @@
 </script>
 <style scoped>
 	.dashboard {
-		height: 90vh;
+		height: 93vh;
 	}
 	.chart-button {
 		width: 50%;

@@ -144,7 +144,7 @@
 					},
 					plugins: [
 						new TableView({
-							title: 'ATP',
+							title: 'Year Progress',
 							categoryTitle: 'Week',
 							style: true,
 						}),
