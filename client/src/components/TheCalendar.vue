@@ -57,7 +57,6 @@
 				console.log('date', item);
 			},
 			async getActivities() {
-				console.log('userId', this.$store.getters.getUserData._id);
 				await axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
@@ -65,10 +64,6 @@
 							this.$store.getters.getUserData._id
 					)
 					.then(res => {
-						console.log(
-							'last in array',
-							res.data.activities[res.data.activities.length - 1]
-						);
 						res.data.activities.forEach(activity => {
 							activity.title = activity.session.sport;
 							activity.startDate = activity.date;

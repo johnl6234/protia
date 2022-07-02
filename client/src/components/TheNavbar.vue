@@ -182,7 +182,6 @@
 		methods: {
 			LogOut() {
 				this.$store.commit('logout');
-				console.log('loggedIn', this.$store.getters.isLoggedIn);
 			},
 		},
 	};

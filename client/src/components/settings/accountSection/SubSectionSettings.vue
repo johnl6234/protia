@@ -59,7 +59,6 @@
 		},
 		methods: {
 			stoppedEditing() {
-				console.log('userSettings', this.userSettings);
 				this.$store.commit('setTempData', this.userSettings);
 			},
 		},

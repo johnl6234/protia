@@ -14,14 +14,7 @@
 
 <script>
 	import axios from 'axios';
-	import { mapState } from 'vuex';
 	export default {
-		computed: mapState(['loggedIn']),
-		watch: {
-			loggedIn(newValue, oldValue) {
-				console.log(`Updating from ${oldValue} to ${newValue}`);
-			},
-		},
 		created() {
 			let token = localStorage.getItem('accessToken');
 			if (token) {
@@ -36,7 +29,6 @@
 						}
 					)
 					.then(res => {
-						console.log('app start res', res);
 						if (res.data.success) {
 							this.$store.commit('setUserData', res.data.user);
 							this.$store.commit('login');

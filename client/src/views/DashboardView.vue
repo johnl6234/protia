@@ -43,11 +43,20 @@
 						class="w-64 bg-white m-2 p-2 rounded-md"
 					>
 						Chart {{ chart.title }}
-						<Component
-							v-if="chart.component"
-							:is="chart.component"
+						<BarChart
+							v-if="chart.component == 'BarChart'"
 							:chartId="chart.id"
-							:data="chart.data"
+							:chartData="chart.data"
+						/>
+						<LineChart
+							v-if="chart.component == 'LineChart'"
+							:chartId="chart.id"
+							:chartData="chart.data"
+						/>
+						<PieChart
+							v-if="chart.component == 'PieChart'"
+							:chartId="chart.id"
+							:chartData="chart.data"
 						/>
 					</div>
 				</div>
@@ -57,16 +66,13 @@
 </template>
 
 <script>
-	import { shallowRef, markRaw } from 'vue';
-	import LineChartVue from '../components/charts/LineChart.vue';
-	import BarChartVue from '../components/charts/BarChart.vue';
-	import PieChartVue from '../components/charts/PieChart.vue';
+	import LineChart from '../components/charts/LineChart.vue';
+	import BarChart from '../components/charts/BarChart.vue';
+	import PieChart from '../components/charts/PieChart.vue';
 	import axios from 'axios';
-	const LineChart = markRaw(LineChartVue);
-	const BarChart = markRaw(BarChartVue);
-	const PieChart = markRaw(PieChartVue);
 	import { ChartBarIcon } from '@heroicons/vue/outline';
 	import DateRange from '../components/dashboard/DateRange.vue';
+	import { getTimeInZones } from '../utils/utils';
 	export default {
 		name: 'dashboard-page',
 		components: {
@@ -84,7 +90,8 @@
 						id: 0,
 						title: 'Time in Hr/Zones',
 						order: 0,
-						component: BarChart,
+						component: 'BarChart',
+						dataName: 'heart_rate',
 						data: {
 							columns: [
 								['heart_rate', 30, 200, 100, 400, 150, 250],
@@ -95,14 +102,15 @@
 						id: 0,
 						title: 'Time in Pw/Zones',
 						order: 0,
-						component: BarChart,
+						component: 'BarChart',
+						dataName: 'power',
 						data: {
 							columns: [['power', 120, 320, 230, 120, 160, 430]],
 						},
 					},
 				],
 				userCharts: [],
-				chartDataInRange: {},
+				rangedChartData: {},
 			};
 		},
 		methods: {
@@ -140,7 +148,6 @@
 					.then(res => {
 						this.$store.commit('setUserCharts', res.data);
 						this.userCharts = res.data;
-						console.log('results', res.data);
 					});
 			},
 			showChartList() {
@@ -153,22 +160,70 @@
 				this.userCharts.push(newChart);
 			},
 			fetchDataInDateRange() {
+				console.log('called');
 				let dateRange = this.$store.getters.setDateRange;
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
 							'activities/dateRange',
-						{ params: dateRange.value }
+						{ params: dateRange.range }
 					)
 					.then(res => {
-						console.log('results', res.data);
-						this.chartDataInRange = res.data;
+						this.groupChartData(res.data.activities);
 					});
+			},
+			groupChartData(chartDataInRange) {
+				const zones = {
+					name: 'heart_rate',
+					// maximum value
+					z1: 135,
+					z2: 150,
+					z3: 156,
+					z4: 167,
+					z5: 255,
+				};
+				let heartData = [];
+				let powerData = [];
+				chartDataInRange.forEach(activity => {
+					heartData.push(...activity.heart_rate);
+					powerData.push(...activity.power);
+				});
+				let sortedHeartData = getTimeInZones(zones, heartData);
+				let sortedPowerData = getTimeInZones(zones, powerData);
+
+				this.chartList.find(
+					chart => chart.dataName == 'heart_rate'
+				).data.columns = sortedHeartData;
+				this.chartList.find(
+					chart => chart.dataName == 'power'
+				).data.columns = sortedPowerData;
+				console.log('should change');
+				this.rangedChartData = {
+					heart_rate: sortedHeartData,
+					power: sortedPowerData,
+				};
+			},
+			updateChartsData() {
+				let newCharts = [...this.userCharts];
+				newCharts.forEach(chart => {
+					chart.data.columns = this.rangedChartData[chart.dataName];
+				});
+				this.userCharts = newCharts;
+			},
+		},
+		watch: {
+			rangedChartData(old, newVal) {
+				this.updateChartsData();
+				console.log('rangedChartData changed ');
+			},
+			userCharts(old, newVal) {
+				console.log('userCharts changed');
 			},
 		},
 		mounted() {
 			if (this.$store.getters.getUserChartsLength < 0) this.fetchCharts();
 			else this.userCharts = this.$store.getters.getUserCharts;
+			this.fetchDataInDateRange();
 		},
 	};
 </script>

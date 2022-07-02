@@ -116,17 +116,14 @@
 				this.currentSubSection = subLink;
 			},
 			saveData() {
-				console.log('save');
 				let data = this.$store.getters.getTempData;
 				let userId = this.$store.getters.getUserData._id;
-				console.log('save', userId);
 				axios
 					.post(
 						import.meta.env.VITE_SERVER_URI + 'user/' + userId,
 						data
 					)
 					.then(response => {
-						console.log('res', response);
 						if (response.data.modifiedCount > 0)
 							this.$store.commit('setUserData', data);
 					});

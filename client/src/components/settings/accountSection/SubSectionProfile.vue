@@ -572,16 +572,13 @@
 		},
 		methods: {
 			stoppedEditing() {
-				console.log('data', this.userData);
 				this.$store.commit('setTempData', this.userData);
 			},
 			onFileChange(event) {
-				console.log('event', event.target.files);
 				this.files = event.target.files;
 				event.target.value = null;
 			},
 			addFiles(files) {
-				console.log('files', files);
 				this.files = files;
 			},
 		},

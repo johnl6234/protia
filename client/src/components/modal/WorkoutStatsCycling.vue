@@ -33,7 +33,6 @@
 		methods: {
 			async smoothData() {
 				let newData = {};
-				console.log('slider', this.smoothAmount);
 				if (this.workout.heart_rate)
 					newData.heart_rate = await this.smoothArray(
 						this.workout.heart_rate

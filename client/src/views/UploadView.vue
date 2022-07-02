@@ -62,7 +62,6 @@
 		},
 		methods: {
 			onFileChange(event) {
-				console.log('event', event);
 				this.files = event.target.files;
 				event.target.value = null;
 			},
@@ -77,12 +76,6 @@
 					formData.append('file', file);
 				}
 				// Send formData object
-				console.log(
-					'url',
-					import.meta.env.VITE_SERVER_URI +
-						'upload/' +
-						this.$store.getters.getUserData._id
-				);
 				axios
 					.post(
 						import.meta.env.VITE_SERVER_URI +

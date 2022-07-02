@@ -1,5 +1,4 @@
 <template>
-	// TODO add date range
 	<select name="date-ranges" @change="changeDateRange">
 		<option
 			v-for="(range, index) in dateRangeList"
@@ -34,9 +33,9 @@
 						},
 					},
 					{
-						name: 'Last 28 days',
+						name: 'Last 128 days',
 						range: {
-							beforeToday: 28,
+							beforeToday: 128,
 							afterToday: 0,
 						},
 					},

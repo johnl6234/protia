@@ -19,6 +19,8 @@ export const getTimeInZones = (zones, data) => {
 				zonesArrays.zone4++;
 			if (dataPoint > zones.z4) zonesArrays.zone5++;
 		});
+		delete zonesArrays.zone6;
+		delete zonesArrays.zone7;
 	} else if (zones.name === 'power') {
 		data.forEach(dataPoint => {
 			if (dataPoint < zones.z1) zonesArrays.zone1++;
@@ -35,8 +37,16 @@ export const getTimeInZones = (zones, data) => {
 			if (dataPoint > zones.z6) zonesArrays.zone4++;
 		});
 	}
+	return objectToColumns(zonesArrays);
 };
 
+const objectToColumns = object => {
+	let columns = [];
+	for (const [key, value] of Object.entries(object)) {
+		columns.push([key, Math.round(value / 60)]);
+	}
+	return columns;
+};
 const zones = {
 	name: 'heart_rate',
 	// maximum value

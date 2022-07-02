@@ -14,7 +14,6 @@
         "dayjs": "^1.11.3",
         "mapbox-gl": "^2.9.1",
         "moment": "^2.29.3",
-        "v-mapbox": "^3.2.3",
         "vue": "^3.2.37",
         "vue-router": "^4.0.16",
         "vue-simple-calendar": "^6.0.4",

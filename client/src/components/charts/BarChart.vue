@@ -9,37 +9,50 @@
 		name: 'bar-chart',
 		props: {
 			chartId: Number,
-			data: Object,
+			chartData: Object,
 		},
 		data() {
-			return {};
+			return {
+				chart: null,
+			};
 		},
 		methods: {
 			initChart() {
 				let chartId = this.chartId;
-				let data = this.data;
-				console.log('data', this.data);
-				const chart = bb.generate({
+				let chartData = this.chartData;
+				console.log('data', this.chartData);
+				this.chart = bb.generate({
 					bindto: `#barChart-${chartId}`,
 					data: {
 						// for ESM import usage, import 'line' module and execute it as
 						type: bar(),
 						//type: "line",
-						columns: data.columns,
+						columns: chartData.columns,
 						colors: {
-							heart_rate: '#ff0000',
-							power: '#9900ff',
-							speed: '#0000ff',
-							elevation: '#00ff00',
-							cadence: '#ffb700',
+							zone1: '#ff0000',
+							zone2: '#9900ff',
+							zone3: '#0000ff',
+							zone4: '#00ff00',
+							zone5: '#ffb700',
 						},
 					},
 					bar: {
 						width: {
-							ratio: 0.75,
+							ratio: 0.5,
 						},
+						padding: 5,
 					},
 				});
+			},
+		},
+		watch: {
+			chartData: {
+				handler(newValue, oldValue) {
+					this.chart.load({
+						columns: this.chartData.columns,
+					});
+				},
+				deep: true,
 			},
 		},
 		mounted() {

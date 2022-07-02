@@ -132,14 +132,6 @@
 		},
 		methods: {
 			submitLogin() {
-				console.log(
-					'username',
-					this.username,
-					'password',
-					this.password,
-					'check',
-					this.remember
-				);
 				if (this.username === '' || this.password === '') {
 					console.log('empty inputs');
 				} else {
@@ -147,13 +139,10 @@
 				}
 			},
 			LoginUser() {
-				console.log('here');
 				let data = {
 					username: this.username,
 					password: this.password,
 				};
-				console.log('data', data);
-				console.log('env', import.meta.env.VITE_SERVER_URI + 'login');
 				axios
 					.post(import.meta.env.VITE_SERVER_URI + 'login', data)
 					.then(res => {
@@ -163,18 +152,9 @@
 							delete res.data.salt;
 							delete res.data.success;
 							this.$store.commit('setUserData', res.data);
-							//TODO set JWT accessToken
 							localStorage.setItem(
 								'accessToken',
 								res.data.accessToken
-							);
-							console.log(
-								'loggedIn',
-								this.$store.getters.isLoggedIn
-							);
-							console.log(
-								'user',
-								this.$store.getters.getUserData
 							);
 							this.$router.push({ path: '/' });
 						} else {
