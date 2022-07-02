@@ -91,7 +91,7 @@
 		},
 		data() {
 			return {
-				loading: true,
+				loading: false,
 				chartListIsShown: false,
 				chartList: [
 					{
