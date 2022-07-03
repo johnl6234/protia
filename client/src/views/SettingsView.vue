@@ -143,7 +143,7 @@
 	}
 	.component-container {
 		overflow-x: scroll;
-		min-width: 900px;
+		/* min-width: 900px; */
 	}
 	.nav-section {
 		min-width: 110px;
