@@ -37,7 +37,7 @@
 				@dragenter.prevent
 			>
 				<div
-					v-for="chart in userCharts"
+					v-for="(chart, index) in userCharts"
 					:key="chart.id"
 					@drop="onDrop($event)"
 					@dragover.prevent
@@ -49,7 +49,14 @@
 						:id="chart.id"
 						class="w-64 bg-white m-2 p-2 rounded-md"
 					>
-						Chart {{ chart.title }}
+						<p>
+							{{ chart.title
+							}}<span
+								class="absolute right-3 hover:cursor-pointer"
+								@click="removeChart(index)"
+								>X</span
+							>
+						</p>
 						<BarChart
 							v-if="chart.component == 'BarChart'"
 							:chartId="chart.id"
@@ -80,6 +87,8 @@
 	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
 	import { getTimeInZones } from '../utils/utils';
+	import { v4 as uuidv4 } from 'uuid';
+
 	export default {
 		name: 'dashboard-page',
 		components: {
@@ -95,7 +104,6 @@
 				chartListIsShown: false,
 				chartList: [
 					{
-						id: 0,
 						title: 'Time in Hr/Zones',
 						order: 0,
 						component: 'BarChart',
@@ -107,7 +115,6 @@
 						},
 					},
 					{
-						id: 0,
 						title: 'Time in Pw/Zones',
 						order: 0,
 						component: 'BarChart',
@@ -165,10 +172,13 @@
 			},
 			addChartToList(chart) {
 				let newChart = { ...chart };
-				newChart.id = this.userCharts.length;
+				const newId = uuidv4();
+				console.log('uuid', newId);
+				newChart.id = newId;
 				newChart.order = this.userCharts.length;
 				this.userCharts.push(newChart);
 				this.showChartList();
+				this.saveChartDataToDB();
 			},
 			fetchDataInDateRange() {
 				this.loading = true;
@@ -221,6 +231,15 @@
 				});
 				this.userCharts = newCharts;
 				this.loading = false;
+				this.saveChartDataToDB();
+			},
+			removeChart(index) {
+				console.log('index', index);
+				this.userCharts.splice(index, 1);
+				this.$store.commit('setUserCharts', this.userCharts);
+				this.saveChartDataToDB();
+			},
+			saveChartDataToDB() {
 				axios.post(
 					import.meta.env.VITE_SERVER_URI +
 						'charts/' +
@@ -246,10 +265,6 @@
 				this.fetchCharts();
 			else this.userCharts = this.$store.getters.getUserCharts;
 
-			console.log(
-				'mounted charts',
-				this.$store.getters.getUserChartsLength
-			);
 			this.fetchDataInDateRange();
 		},
 	};

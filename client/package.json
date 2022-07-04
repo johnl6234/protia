@@ -13,6 +13,7 @@
         "dayjs": "^1.11.3",
         "mapbox-gl": "^2.9.1",
         "moment": "^2.29.3",
+        "uuid": "^8.3.2",
         "vue": "^3.2.37",
         "vue-material-design-icons": "^5.0.0",
         "vue-router": "^4.0.16",

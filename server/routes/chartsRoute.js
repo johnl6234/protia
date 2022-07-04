@@ -24,9 +24,7 @@ router.get('/:userId', (req, res, next) => {
 
 router.post('/:userId', (req, res, next) => {
 	const { userId } = req.params;
-	console.log('charts', userId);
 	const { charts } = req.body;
-	console.log('body', req.body);
 
 	MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true }).then(
 		async client => {
@@ -38,7 +36,8 @@ router.post('/:userId', (req, res, next) => {
 						$set: {
 							charts: charts,
 						},
-					}
+					},
+					{ upsert: true }
 				)
 				.then(response => {
 					if (response) {

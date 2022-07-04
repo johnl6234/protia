@@ -8,7 +8,7 @@
 	export default {
 		name: 'bar-chart',
 		props: {
-			chartId: Number,
+			chartId: String,
 			chartData: Object,
 		},
 		data() {
