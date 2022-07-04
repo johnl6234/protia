@@ -5,9 +5,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const hash = require('pbkdf2-password')();
 
 router.post('/', async (req, res, next) => {
-	console.log('body', req.body);
 	const { username, password } = req.body;
-
 	MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true }).then(
 		async client => {
 			const db = client.db('training');
