@@ -3,7 +3,7 @@
 		<h1 class="border-b text-blue-500 text-xl font-light border-zinc-400">
 			Heart Rate
 		</h1>
-
+		// TODO save zones
 		<div class="w-3/4 mx-auto mt-5">
 			<div class="grid grid-cols-4 mb-1">
 				<label for="based-on">Based on:</label>

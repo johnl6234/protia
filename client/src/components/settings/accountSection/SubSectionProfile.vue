@@ -573,6 +573,7 @@
 		methods: {
 			stoppedEditing() {
 				this.$store.commit('setTempData', this.userData);
+				this.$store.commit('setHasUnsavedChanges', true);
 			},
 			onFileChange(event) {
 				this.files = event.target.files;
@@ -583,7 +584,6 @@
 			},
 		},
 		created() {
-			//this.username = this.$store.getters.getUsername;
 			this.userData = this.$store.getters.getUserData;
 		},
 		components: { DropZone },

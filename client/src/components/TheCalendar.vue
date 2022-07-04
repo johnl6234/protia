@@ -2,7 +2,7 @@
 	<calendar-view
 		:show-date="showDate"
 		:startingDayOfWeek="1"
-		:items="activities"
+		:items="calendarItems"
 		@click-item="eventClicked"
 		@click-date="dateClicked"
 		class="theme-default"
@@ -14,11 +14,18 @@
 			/>
 		</template>
 	</calendar-view>
+
 	<modal-quick-view
-		:open="showModal"
+		:open="showActivityModal"
 		:workoutId="workoutId"
 		@toggleModal="toggleModal"
 	></modal-quick-view>
+
+	<modal-create-workout
+		v-if="showWorkoutModal"
+		:date="workoutDate"
+		@toggle="toggleWorkoutModal"
+	></modal-create-workout>
 </template>
 <script>
 	import { CalendarView, CalendarViewHeader } from 'vue-simple-calendar';
@@ -26,25 +33,31 @@
 	import '../../node_modules/vue-simple-calendar/static/css/default.css';
 	import axios from 'axios';
 	import ModalQuickView from './modal/ModalQuickView.vue';
-
+	import ModalCreateWorkout from './modal/ModalCreateWorkout.vue';
 	export default {
 		name: 'calendar-page',
-		data: function () {
-			return {
-				workoutId: null,
-				showModal: false,
-				showDate: new Date(),
-				activities: [],
-			};
-		},
 		components: {
 			CalendarView,
 			CalendarViewHeader,
 			ModalQuickView,
+			ModalCreateWorkout,
 		},
+		data: function () {
+			return {
+				workoutId: null,
+				showActivityModal: false,
+				showDate: new Date(),
+				calendarItems: [],
+				activities: [],
+				showWorkoutModal: false,
+				workoutDate: null,
+				workouts: [],
+			};
+		},
+
 		methods: {
 			toggleModal() {
-				this.showModal = !this.showModal;
+				this.showActivityModal = !this.showActivityModal;
 			},
 			setShowDate(d) {
 				this.showDate = d;
@@ -55,6 +68,11 @@
 			},
 			dateClicked(item) {
 				console.log('date', item);
+				this.workoutDate = item;
+				this.toggleWorkoutModal();
+			},
+			toggleWorkoutModal() {
+				this.showWorkoutModal = !this.showWorkoutModal;
 			},
 			async getActivities() {
 				await axios
@@ -70,7 +88,7 @@
 							activity.id = activity._id;
 							activity.classes = [activity.session.sport];
 						});
-						this.activities = res.data.activities;
+						this.calendarItems.push(...res.data.activities);
 						this.$store.commit(
 							'setUserActivities',
 							res.data.activities
@@ -81,7 +99,10 @@
 		created() {
 			if (this.$store.getters.getUserActivitiesLength < 1)
 				this.getActivities();
-			else this.activities = this.$store.getters.getUserActivities;
+			else
+				this.calendarItems.push(
+					...this.$store.getters.getUserActivities
+				);
 		},
 	};
 </script>
@@ -90,6 +111,9 @@
 		height: 90vh;
 	}
 
+	.cv-day:hover {
+		cursor: pointer;
+	}
 	.walking {
 		background-color: orange !important;
 		color: white;
@@ -110,7 +134,7 @@
 		color: white;
 	}
 
-	.isHovered {
+	/* .isHovered {
 		cursor: pointer;
-	}
+	} */
 </style>

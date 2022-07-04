@@ -1,8 +1,8 @@
 <template>
 	<SubSectionProfile ref="Profile" class="w-full p-3" />
-	<SubSectionSettings ref="Settings" class="w-full p-3" />
-	<SubSectionEmail ref="Email Options" class="w-full p-3 h-96" />
-	<SubSectionCalendar ref="Calendar" class="w-full p-3 h-96" />
+	<SubSectionSettings ref="Settings" class="w-full p-3 min-h" />
+	<SubSectionEmail ref="Email Options" class="w-full p-3 min-h" />
+	<SubSectionCalendar ref="Calendar" class="w-full p-3 min-h" />
 </template>
 <script>
 	import SubSectionProfile from './SubSectionProfile.vue';
@@ -29,3 +29,8 @@
 		},
 	};
 </script>
+<style scoped>
+	.min-h {
+		min-height: 200px !important;
+	}
+</style>

@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-row mb-10 dashboard">
+	<div class="flex flex-row mb-10 dashboard w-full">
 		<!-- Loading overlay -->
 		<div
 			v-if="loading"

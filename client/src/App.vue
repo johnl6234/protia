@@ -9,9 +9,9 @@
 	<AuthView v-if="!this.$store.getters.isLoggedIn" />
 	<div v-else class="app-container overflow-hidden md:w-full lg:w-5/6">
 		<TheTopNav />
-		<div class="flex flex-row">
+		<div class="flex flex-row h-full">
 			<TheSideNav />
-			<RouterView class="w-full" />
+			<RouterView />
 		</div>
 	</div>
 </template>
@@ -63,6 +63,7 @@
 
 	.app-container {
 		background-color: var(--color-grey-1);
+		height: 98vh;
 		margin: auto;
 	}
 </style>

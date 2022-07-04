@@ -6,6 +6,7 @@ import ProgressView from '../views/ProgressView.vue';
 import AuthView from '../views/AuthView.vue';
 import SettingsView from '../views/SettingsView.vue';
 import UploadView from '../views/UploadView.vue';
+import CreateWorkoutView from '../views/CreateWorkoutView.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,12 @@ const router = createRouter({
 			path: '/upload',
 			name: 'upload',
 			component: UploadView,
+		},
+		{
+			path: '/createWorkout/:type',
+			name: 'createWorkout',
+			component: CreateWorkoutView,
+			props: true,
 		},
 	],
 });

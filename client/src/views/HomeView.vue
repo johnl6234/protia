@@ -1,5 +1,5 @@
 <template>
-	<div class="home grid grid-cols-4 pt-3">
+	<div class="home grid grid-cols-4 pt-3 w-full">
 		<div class="px-3 bg-zinc-300">left Column</div>
 		<div class="px-3 col-span-2">
 			<h1

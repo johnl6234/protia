@@ -1,7 +1,7 @@
 <template>
-	<SubSectionHeartRate ref="Heart Rate" class="w-full h-screen" />
-	<SubSectionPower ref="Power" class="w-full h-screen" />
-	<SubSectionPaceSpeed ref="Speed/Pace" class="w-full h-screen" />
+	<SubSectionHeartRate ref="Heart Rate" class="w-full half-screen" />
+	<SubSectionPower ref="Power" class="w-full half-screen" />
+	<!--  <SubSectionPaceSpeed ref="Speed/Pace" class="w-full" />    -->
 </template>
 <script>
 	import SubSectionHeartRate from './SubSectionHeartRate.vue';
@@ -25,3 +25,9 @@
 		},
 	};
 </script>
+
+<style scoped>
+	.half-screen {
+		height: 50vh;
+	}
+</style>

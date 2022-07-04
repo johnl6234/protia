@@ -124,8 +124,10 @@
 						data
 					)
 					.then(response => {
-						if (response.data.modifiedCount > 0)
+						if (response.data.modifiedCount > 0) {
 							this.$store.commit('setUserData', data);
+							this.$store.commit('setHasUnsavedChanges', false);
+						}
 					});
 			},
 		},
@@ -134,6 +136,23 @@
 			this.displayLink = this.sectionsArray[0].name;
 			this.currentSection = this.sectionsArray[0].component;
 			this.currentSubSection = this.sectionsArray[0].subLinks[0];
+		},
+		beforeRouteLeave(to, from, next) {
+			console.log(
+				'state changes',
+				this.$store.getters.getHasUnsavedChanges
+			);
+			if (!this.$store.getters.getHasUnsavedChanges) {
+				next();
+			} else {
+				const userWantsToLeave = confirm(
+					'Are you sure, You have unsaved Changes'
+				);
+				if (userWantsToLeave) {
+					this.$store.commit('clearTempData');
+				}
+				next(userWantsToLeave);
+			}
 		},
 	};
 </script>

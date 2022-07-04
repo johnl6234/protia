@@ -34,24 +34,29 @@
 </script>
 
 <script>
+	import { markRaw } from 'vue';
 	export default {
 		name: 'side-nav',
 		data() {
 			return {
 				sideBarOpen: true,
 				navigation: [
-					{ name: 'Home', to: 'home', icon: HomeOutline },
+					{ name: 'Home', to: 'home', icon: markRaw(HomeOutline) },
 					{
 						name: 'Calendar',
 						to: 'calendar',
-						icon: CalendarMonthOutline,
+						icon: markRaw(CalendarMonthOutline),
 					},
 					{
 						name: 'Dashboard',
 						to: 'dashboard',
-						icon: ViewDashboardOutline,
+						icon: markRaw(ViewDashboardOutline),
 					},
-					{ name: 'Progress', to: 'progress', icon: ChartLine },
+					{
+						name: 'Progress',
+						to: 'progress',
+						icon: markRaw(ChartLine),
+					},
 				],
 			};
 		},

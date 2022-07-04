@@ -1,5 +1,5 @@
 <template>
-	<div class="atp-view">
+	<div class="p-3 w-full">
 		<ProgressChart v-if="datesArray !== null" :datesArray="datesArray" />
 		<div class="table-view"></div>
 	</div>

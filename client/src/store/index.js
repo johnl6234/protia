@@ -12,6 +12,7 @@ const store = createStore({
 			userWorkouts: [],
 			userActivities: [],
 			tempData: {},
+			hasUnsavedChanges: false,
 			mapPoint: 0,
 			dateRange: {
 				name: 'Last 7 days',
@@ -43,6 +44,9 @@ const store = createStore({
 				state.tempData[key] = value;
 			}
 		},
+		clearTempData(state) {
+			state.tempData = {};
+		},
 		setUserCharts(state, data) {
 			state.userCharts = data;
 		},
@@ -57,6 +61,9 @@ const store = createStore({
 		},
 		setDateRange(state, range) {
 			state.dateRange = range;
+		},
+		setHasUnsavedChanges(state, changed) {
+			state.hasUnsavedChanges = changed;
 		},
 	},
 	getters: {
@@ -98,6 +105,9 @@ const store = createStore({
 		},
 		setDateRange(state) {
 			return state.dateRange;
+		},
+		getHasUnsavedChanges(state) {
+			return state.hasUnsavedChanges;
 		},
 	},
 });
