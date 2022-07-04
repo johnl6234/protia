@@ -147,6 +147,7 @@
 				this.userCharts = chartsArray;
 			},
 			fetchCharts() {
+				console.log('getting charts');
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
@@ -154,8 +155,9 @@
 							this.$store.getters.getUserData._id
 					)
 					.then(res => {
+						console.log('res', res);
 						this.$store.commit('setUserCharts', res.data);
-						this.userCharts = res.data;
+						this.userCharts = res.data.charts;
 					});
 			},
 			showChartList() {
@@ -219,6 +221,14 @@
 				});
 				this.userCharts = newCharts;
 				this.loading = false;
+				axios.post(
+					import.meta.env.VITE_SERVER_URI +
+						'charts/' +
+						this.$store.getters.getUserData._id,
+					{
+						charts: this.userCharts,
+					}
+				);
 			},
 		},
 		watch: {
@@ -227,12 +237,19 @@
 			},
 			userCharts(old, val) {
 				console.log('charts', old, val);
+				this.$store.commit('setUserCharts', this.userCharts);
 			},
 		},
+
 		mounted() {
-			if (this.$store.getters.getUserChartsLength < 0) this.fetchCharts();
+			if (this.$store.getters.getUserChartsLength <= 0)
+				this.fetchCharts();
 			else this.userCharts = this.$store.getters.getUserCharts;
 
+			console.log(
+				'mounted charts',
+				this.$store.getters.getUserChartsLength
+			);
 			this.fetchDataInDateRange();
 		},
 	};
