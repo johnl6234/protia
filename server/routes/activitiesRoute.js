@@ -23,6 +23,7 @@ router.get('/dateRange', async (req, res, next) => {
 			.collection('activities')
 			.find({ dateStamp: { $gte: fromDate, $lt: toDate } })
 			.toArray();
+		client.close();
 	});
 	let stats = await getStats(activities);
 	let data = {

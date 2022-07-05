@@ -25,7 +25,10 @@ router.post('/:userId', async (req, res, next) => {
 			}
 			db.collection('activities').insertMany(parsedFiles);
 		})
-		.then(result => res.send(result));
+		.then(result => {
+			client.close();
+			res.send(result);
+		});
 	res.end();
 });
 

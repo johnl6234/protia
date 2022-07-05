@@ -16,8 +16,9 @@ router.post('/:userId', async (req, res, next) => {
 				.updateOne({ _id: ObjectId(userId) }, { $set: req.body });
 			console.log('USER', user);
 			if (user) {
+				client.close();
+				res.send(user);
 			}
-			res.send(user);
 		}
 	);
 });

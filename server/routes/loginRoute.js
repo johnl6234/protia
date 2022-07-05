@@ -13,6 +13,7 @@ router.post('/', async (req, res, next) => {
 				.collection('users')
 				.findOne({ username: username });
 			if (user) {
+				client.close();
 				hash(
 					{ password: password, salt: user.salt },
 					function (err, pass, salt, hash) {
@@ -38,6 +39,7 @@ router.post('/', async (req, res, next) => {
 					}
 				);
 			} else {
+				client.close();
 				console.log('NO USER');
 				res.send({ error: 'User not found' });
 			}

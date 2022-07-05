@@ -1,26 +1,22 @@
 import { createStore } from 'vuex';
-
+import chartsModule from './modules/charts/index';
+import activitiesModule from './modules/activities/index';
 // Create a new store instance.
 const store = createStore({
+	modules: {
+		chartsModule,
+		activitiesModule,
+	},
 	state() {
 		return {
 			loggedIn: false, // TODO set true for testing
 			username: '',
 			userData: {},
 			userStats: {},
-			userCharts: [],
 			userWorkouts: [],
-			userActivities: [],
 			tempData: {},
 			hasUnsavedChanges: false,
 			mapPoint: 0,
-			dateRange: {
-				name: 'Last 7 days',
-				range: {
-					beforeToday: 7,
-					afterToday: 0,
-				},
-			},
 		};
 	},
 	mutations: {
@@ -47,21 +43,15 @@ const store = createStore({
 		clearTempData(state) {
 			state.tempData = {};
 		},
-		setUserCharts(state, data) {
-			state.userCharts = data;
-		},
+
 		setUserWorkouts(state, data) {
 			state.userWorkouts = data;
 		},
-		setUserActivities(state, activities) {
-			state.userActivities = activities;
-		},
+
 		setMapPoint(state, point) {
 			state.mapPoint = point;
 		},
-		setDateRange(state, range) {
-			state.dateRange = range;
-		},
+
 		setHasUnsavedChanges(state, changed) {
 			state.hasUnsavedChanges = changed;
 		},
@@ -82,30 +72,18 @@ const store = createStore({
 		getTempData(state) {
 			return state.tempData;
 		},
-		getUserCharts(state) {
-			return state.userCharts;
-		},
-		getUserChartsLength(state) {
-			return state.userCharts.length;
-		},
+
 		getUserWorkouts(state) {
 			return state.userWorkouts;
 		},
 		getUserWorkoutsLength(state) {
 			return state.userWorkouts.length;
 		},
-		getUserActivities(state) {
-			return state.userActivities;
-		},
-		getUserActivitiesLength(state) {
-			return state.userActivities.length;
-		},
+
 		getMapPoint(state) {
 			return state.mapPoint;
 		},
-		setDateRange(state) {
-			return state.dateRange;
-		},
+
 		getHasUnsavedChanges(state) {
 			return state.hasUnsavedChanges;
 		},

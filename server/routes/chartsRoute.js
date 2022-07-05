@@ -11,6 +11,7 @@ router.get('/:userId', (req, res, next) => {
 			const userCharts = await db
 				.collection('charts')
 				.findOne({ owner: ObjectId(userId) });
+			client.close();
 			if (userCharts) {
 				console.log('charts res', userCharts);
 				res.send(userCharts);
@@ -40,6 +41,7 @@ router.post('/:userId', (req, res, next) => {
 					{ upsert: true }
 				)
 				.then(response => {
+					client.close();
 					if (response) {
 						console.log('charts', response);
 						res.send(response);

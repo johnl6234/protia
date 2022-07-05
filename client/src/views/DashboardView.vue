@@ -87,7 +87,6 @@
 	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
 	import { getTimeInZones } from '../utils/utils';
-	import { v4 as uuidv4 } from 'uuid';
 
 	export default {
 		name: 'dashboard-page',
@@ -102,29 +101,6 @@
 			return {
 				loading: false,
 				chartListIsShown: false,
-				chartList: [
-					{
-						title: 'Time in Hr/Zones',
-						order: 0,
-						component: 'BarChart',
-						dataName: 'heart_rate',
-						data: {
-							columns: [
-								['heart_rate', 30, 200, 100, 400, 150, 250],
-							],
-						},
-					},
-					{
-						title: 'Time in Pw/Zones',
-						order: 0,
-						component: 'BarChart',
-						dataName: 'power',
-						data: {
-							columns: [['power', 120, 320, 230, 120, 160, 430]],
-						},
-					},
-				],
-				userCharts: [],
 				rangedChartData: {},
 			};
 		},
@@ -163,27 +139,21 @@
 					)
 					.then(res => {
 						console.log('res', res);
-						this.$store.commit('setUserCharts', res.data);
-						this.userCharts = res.data.charts;
+						this.$store.dispatch('setUserCharts', res.data);
 					});
 			},
 			showChartList() {
 				this.chartListIsShown = !this.chartListIsShown;
 			},
 			addChartToList(chart) {
-				let newChart = { ...chart };
-				const newId = uuidv4();
-				console.log('uuid', newId);
-				newChart.id = newId;
-				newChart.order = this.userCharts.length;
-				this.userCharts.push(newChart);
+				this.$store.dispatch('addChartToUserList', chart);
 				this.showChartList();
 				this.saveChartDataToDB();
 			},
 			fetchDataInDateRange() {
 				this.loading = true;
 
-				let dateRange = this.$store.getters.setDateRange;
+				let dateRange = this.$store.getters.getDateRange;
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
@@ -213,12 +183,21 @@
 				let sortedHeartData = getTimeInZones(zones, heartData);
 				let sortedPowerData = getTimeInZones(zones, powerData);
 
-				this.chartList.find(
-					chart => chart.dataName == 'heart_rate'
-				).data.columns = sortedHeartData;
-				this.chartList.find(
-					chart => chart.dataName == 'power'
-				).data.columns = sortedPowerData;
+				this.$store.dispatch('setChartData', {
+					name: 'heart_rate',
+					data: sortedHeartData,
+				});
+				this.$store.dispatch('setChartData', {
+					name: 'power',
+					data: sortedPowerData,
+				});
+
+				// chartList.find(
+				// 	chart => chart.dataName == 'heart_rate'
+				// ).data.columns = sortedHeartData;
+				// chartList.find(
+				// 	chart => chart.dataName == 'power'
+				// ).data.columns = sortedPowerData;
 				this.rangedChartData = {
 					heart_rate: sortedHeartData,
 					power: sortedPowerData,
@@ -236,7 +215,7 @@
 			removeChart(index) {
 				console.log('index', index);
 				this.userCharts.splice(index, 1);
-				this.$store.commit('setUserCharts', this.userCharts);
+				this.$store.dispatch('setUserCharts', this.userCharts);
 				this.saveChartDataToDB();
 			},
 			saveChartDataToDB() {
@@ -256,10 +235,14 @@
 			},
 			userCharts(old, val) {
 				console.log('charts', old, val);
-				this.$store.commit('setUserCharts', this.userCharts);
+				this.$store.dispatch('setUserCharts', this.userCharts);
 			},
 		},
-
+		computed: {
+			userCharts() {
+				return this.$store.getters.getChartList;
+			},
+		},
 		mounted() {
 			if (this.$store.getters.getUserChartsLength <= 0)
 				this.fetchCharts();

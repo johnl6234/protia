@@ -21,6 +21,7 @@ MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true }).then(
 		//        console.log(result)
 		//    })
 		//    .catch(error => console.error(error))
+		client.close();
 	}
 );
 

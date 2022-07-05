@@ -10,6 +10,7 @@ router.post('/', function (req, res, next) {
 			let user = await db
 				.collection('users')
 				.findOne({ _id: ObjectId(req.userId) });
+			client.close();
 			if (user) {
 				res.json({
 					success: 'Logged in successfully',
