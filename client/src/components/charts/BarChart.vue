@@ -1,5 +1,5 @@
 <template>
-	<div :id="'barChart-' + chartId" class="w-full h-full"></div>
+	<div :id="chartId" class="w-full h-full"></div>
 </template>
 
 <script>
@@ -21,7 +21,7 @@
 				let chartId = this.chartId;
 				let chartData = this.chartData;
 				this.chart = bb.generate({
-					bindto: `#barChart-${chartId}`,
+					bindto: `#${chartId}`,
 					data: {
 						// for ESM import usage, import 'line' module and execute it as
 						type: bar(),

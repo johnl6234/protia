@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { makeId } from '../../../utils/utils';
 
 export default {
 	state() {
@@ -41,7 +42,7 @@ export default {
 			state.dateRange = range;
 		},
 		addChartToUserList(state, chart) {
-			chart.id = uuidv4();
+			chart.id = makeId(7); //uuidv4().replaceAll('-', '');
 			chart.order = state.userCharts.length;
 			state.userCharts.push(chart);
 		},
@@ -49,6 +50,14 @@ export default {
 			state.chartList.find(
 				chart => chart.dataName == payload.name
 			).data.columns = payload.data;
+		},
+		setUserChartData(state, payload) {
+			state.chartList.find(
+				chart => chart.dataName == payload.name
+			).data.columns = payload.data;
+		},
+		removeChart(state, index) {
+			state.userCharts.splice(index, 1);
 		},
 	},
 	getters: {
@@ -64,9 +73,6 @@ export default {
 		getDateRange(state) {
 			return state.dateRange;
 		},
-		getChartByDataName: state => name => {
-			console.log(name);
-		},
 	},
 	actions: {
 		setUserCharts(context, payload) {
@@ -80,6 +86,12 @@ export default {
 		},
 		setChartData(context, payload) {
 			context.commit('setChartData', payload);
+		},
+		setUserChartData(context, payload) {
+			context.commit('setUserChartData', payload);
+		},
+		removeChart(context, payload) {
+			context.commit('removeChart', payload);
 		},
 	},
 };

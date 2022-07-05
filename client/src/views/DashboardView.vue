@@ -39,17 +39,18 @@
 				<div
 					v-for="(chart, index) in userCharts"
 					:key="chart.id"
-					@drop="onDrop($event)"
+					:title="chart.id"
+					class="top-level"
 					@dragover.prevent
-					@dragenter.prevent
+					@dragenter.prevent="showDropZone"
 				>
 					<div
 						draggable="true"
 						@dragstart="startDrag($event, chart)"
-						:id="chart.id"
+						:title="chart.id"
 						class="w-64 bg-white m-2 p-2 rounded-md"
 					>
-						<p>
+						<p :title="chart.id">
 							{{ chart.title
 							}}<span
 								class="absolute right-3 hover:cursor-pointer"
@@ -59,16 +60,19 @@
 						</p>
 						<BarChart
 							v-if="chart.component == 'BarChart'"
+							:title="chart.id"
 							:chartId="chart.id"
 							:chartData="chart.data"
 						/>
 						<LineChart
 							v-if="chart.component == 'LineChart'"
+							:title="chart.id"
 							:chartId="chart.id"
 							:chartData="chart.data"
 						/>
 						<PieChart
 							v-if="chart.component == 'PieChart'"
+							:title="chart.id"
 							:chartId="chart.id"
 							:chartData="chart.data"
 						/>
@@ -111,14 +115,22 @@
 				evt.dataTransfer.setData('itemID', item.id);
 			},
 			onDrop(evt) {
+				let element = evt.target.parentElement;
+				while (element.id == '') {
+					element = element.parentElement;
+				}
 				let droppedId = evt.dataTransfer.getData('itemID');
-				const elementId = evt.toElement.id;
+				const elementId = element.title;
 				this.moveInArray(droppedId, elementId);
 			},
 			moveInArray(movingId, placeId) {
-				let chartsArray = this.userCharts.map(chart => chart);
+				let chartsArray = this.$store.getters.getUserCharts.map(
+					chart => chart
+				);
 				let placeChart = chartsArray.find(el => el.id == placeId);
-				let toOrder = placeChart.order;
+				let toOrder;
+				if (placeChart) toOrder = placeChart.order;
+				else toOrder = this.$store.getters.getUserChartsLength + 1;
 				chartsArray.forEach(chart => {
 					if (chart.order >= toOrder && chart.id != movingId)
 						chart.order++;
@@ -127,9 +139,12 @@
 				let droppedChart = chartsArray.find(el => el.id == movingId);
 				droppedChart.order = toOrder;
 				chartsArray.sort((a, b) => a.order - b.order);
-				this.userCharts = chartsArray;
+				chartsArray.forEach(
+					(chart, index) => (chart.order = index + 1)
+				);
+				this.$store.dispatch('setUserCharts', chartsArray);
 			},
-			fetchCharts() {
+			fetchUserCharts() {
 				console.log('getting charts');
 				axios
 					.get(
@@ -139,7 +154,7 @@
 					)
 					.then(res => {
 						console.log('res', res);
-						this.$store.dispatch('setUserCharts', res.data);
+						this.$store.dispatch('setUserCharts', res.data.charts);
 					});
 			},
 			showChartList() {
@@ -191,31 +206,24 @@
 					name: 'power',
 					data: sortedPowerData,
 				});
+				this.$store.dispatch('setUserChartData', {
+					name: 'heart_rate',
+					data: sortedHeartData,
+				});
+				this.$store.dispatch('setUserChartData', {
+					name: 'power',
+					data: sortedPowerData,
+				});
 
-				// chartList.find(
-				// 	chart => chart.dataName == 'heart_rate'
-				// ).data.columns = sortedHeartData;
-				// chartList.find(
-				// 	chart => chart.dataName == 'power'
-				// ).data.columns = sortedPowerData;
 				this.rangedChartData = {
 					heart_rate: sortedHeartData,
 					power: sortedPowerData,
 				};
-			},
-			updateChartsData() {
-				let newCharts = [...this.userCharts];
-				newCharts.forEach(chart => {
-					chart.data.columns = this.rangedChartData[chart.dataName];
-				});
-				this.userCharts = newCharts;
 				this.loading = false;
 				this.saveChartDataToDB();
 			},
 			removeChart(index) {
-				console.log('index', index);
-				this.userCharts.splice(index, 1);
-				this.$store.dispatch('setUserCharts', this.userCharts);
+				this.$store.dispatch('removeChart', index);
 				this.saveChartDataToDB();
 			},
 			saveChartDataToDB() {
@@ -224,29 +232,22 @@
 						'charts/' +
 						this.$store.getters.getUserData._id,
 					{
-						charts: this.userCharts,
+						charts: this.$store.getters.getUserCharts,
 					}
 				);
 			},
 		},
-		watch: {
-			rangedChartData(old, newVal) {
-				this.updateChartsData();
-			},
-			userCharts(old, val) {
-				console.log('charts', old, val);
-				this.$store.dispatch('setUserCharts', this.userCharts);
-			},
-		},
 		computed: {
 			userCharts() {
+				return this.$store.getters.getUserCharts;
+			},
+			chartList() {
 				return this.$store.getters.getChartList;
 			},
 		},
 		mounted() {
-			if (this.$store.getters.getUserChartsLength <= 0)
-				this.fetchCharts();
-			else this.userCharts = this.$store.getters.getUserCharts;
+			if (this.$store.getters.getUserChartsLength < 1)
+				this.fetchUserCharts();
 
 			this.fetchDataInDateRange();
 		},
