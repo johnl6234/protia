@@ -31,7 +31,6 @@
 	import { CalendarView, CalendarViewHeader } from 'vue-simple-calendar';
 	import '../../node_modules/vue-simple-calendar/dist/style.css';
 	import '../../node_modules/vue-simple-calendar/static/css/default.css';
-	import axios from 'axios';
 	import ModalQuickView from './modal/ModalQuickView.vue';
 	import ModalCreateWorkout from './modal/ModalCreateWorkout.vue';
 	export default {
@@ -47,7 +46,6 @@
 				workoutId: null,
 				showActivityModal: false,
 				showDate: new Date(),
-				calendarItems: [],
 				activities: [],
 				showWorkoutModal: false,
 				workoutDate: null,
@@ -74,35 +72,23 @@
 			toggleWorkoutModal() {
 				this.showWorkoutModal = !this.showWorkoutModal;
 			},
-			async getActivities() {
-				await axios
-					.get(
-						import.meta.env.VITE_SERVER_URI +
-							'activities/' +
-							this.$store.getters.getUserData._id
-					)
-					.then(res => {
-						res.data.activities.forEach(activity => {
-							activity.title = activity.session.sport;
-							activity.startDate = activity.date;
-							activity.id = activity._id;
-							activity.classes = [activity.session.sport];
-						});
-						this.calendarItems.push(...res.data.activities);
-						this.$store.commit(
-							'setUserActivities',
-							res.data.activities
-						);
-					});
+		},
+		computed: {
+			calendarItems() {
+				return [
+					...this.$store.getters.getUserActivities,
+					...this.$store.getters.getUserWorkouts,
+				];
+			},
+		},
+		watch: {
+			calendarItems(newVal, old) {
+				console.log('old', old, 'new', newVal);
 			},
 		},
 		created() {
 			if (this.$store.getters.getUserActivitiesLength < 1)
-				this.getActivities();
-			else
-				this.calendarItems.push(
-					...this.$store.getters.getUserActivities
-				);
+				this.$store.dispatch('getActivities');
 		},
 	};
 </script>
@@ -133,8 +119,8 @@
 		background-color: blue !important;
 		color: white;
 	}
-
-	/* .isHovered {
-		cursor: pointer;
-	} */
+	.workout {
+		background-color: rgb(143, 177, 188) !important;
+		color: white;
+	}
 </style>
