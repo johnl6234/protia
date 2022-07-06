@@ -1,19 +1,3 @@
-<!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 <template>
 	<div
 		class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
@@ -145,7 +129,7 @@
 							delete res.data.hash;
 							delete res.data.salt;
 							delete res.data.success;
-							this.$store.commit('setUserData', res.data);
+							this.$store.dispatch('setUserData', res.data);
 							localStorage.setItem(
 								'accessToken',
 								res.data.accessToken

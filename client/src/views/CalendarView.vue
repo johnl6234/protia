@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import TheCalendar from '../components/TheCalendar.vue';
+	import TheCalendar from '../components/base/TheCalendar.vue';
 	export default {
 		components: {
 			TheCalendar,

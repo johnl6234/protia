@@ -1,4 +1,5 @@
 <template>
+	<BaseOverlay :loading="loading" />
 	<calendar-view
 		:show-date="showDate"
 		:startingDayOfWeek="1"
@@ -29,10 +30,11 @@
 </template>
 <script>
 	import { CalendarView, CalendarViewHeader } from 'vue-simple-calendar';
-	import '../../node_modules/vue-simple-calendar/dist/style.css';
-	import '../../node_modules/vue-simple-calendar/static/css/default.css';
-	import ModalQuickView from './modal/ModalQuickView.vue';
-	import ModalCreateWorkout from './modal/ModalCreateWorkout.vue';
+	import '../../../node_modules/vue-simple-calendar/dist/style.css';
+	import '../../../node_modules/vue-simple-calendar/static/css/default.css';
+	import ModalQuickView from '../modal/ModalQuickView.vue';
+	import ModalCreateWorkout from '../modal/ModalCreateWorkout.vue';
+	import BaseOverlay from './BaseOverlay.vue';
 	export default {
 		name: 'calendar-page',
 		components: {
@@ -40,9 +42,11 @@
 			CalendarViewHeader,
 			ModalQuickView,
 			ModalCreateWorkout,
+			BaseOverlay,
 		},
 		data: function () {
 			return {
+				loading: false,
 				workoutId: null,
 				showActivityModal: false,
 				showDate: new Date(),
@@ -65,7 +69,6 @@
 				this.toggleModal();
 			},
 			dateClicked(item) {
-				console.log('date', item);
 				this.workoutDate = item;
 				this.toggleWorkoutModal();
 			},
@@ -81,14 +84,12 @@
 				];
 			},
 		},
-		watch: {
-			calendarItems(newVal, old) {
-				console.log('old', old, 'new', newVal);
-			},
-		},
-		created() {
-			if (this.$store.getters.getUserActivitiesLength < 1)
-				this.$store.dispatch('getActivities');
+		async created() {
+			if (this.$store.getters.getUserActivitiesLength < 1) {
+				this.loading = true;
+				await this.$store.dispatch('getActivities');
+				this.loading = false;
+			}
 		},
 	};
 </script>

@@ -1,28 +1,13 @@
 <template>
 	<div class="flex flex-row mb-10 dashboard w-full">
 		<!-- Loading overlay -->
-		<div
-			v-if="loading"
-			class="absolute top-0 left-0 w-full h-screen bg-black opacity-50 z-50"
-		></div>
+		<BaseOverlay :loading="loading" />
+
 		<div class="flex flex-col w-40 bg-slate-50">
-			<button
-				@click="showChartList"
-				class="flex justify-center bg-neutral-200 m-3 rounded-lg p-3"
-			>
-				<ChartBar class="chart-button" />
-			</button>
-			<div v-if="chartListIsShown" class="p-3">
-				<div
-					v-for="chart in chartList"
-					:key="chart"
-					:id="chart.id"
-					@click="addChartToList(chart)"
-					class="cursor-pointer"
-				>
-					{{ chart.title }}
-				</div>
-			</div>
+			<ChartListDrop
+				:chartList="chartList"
+				@addChartToList="addChartToList"
+			/>
 		</div>
 		<div class="flex flex-col w-full bg-gray-300">
 			<!-- Date range dropdown -->
@@ -91,6 +76,8 @@
 	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
 	import { getTimeInZones } from '../utils/utils';
+	import BaseOverlay from '../components/base/BaseOverlay.vue';
+	import ChartListDrop from '../components/dashboard/ChartListDrop.vue';
 
 	export default {
 		name: 'dashboard-page',
@@ -100,6 +87,8 @@
 			PieChart,
 			ChartBar,
 			DateRange,
+			BaseOverlay,
+			ChartListDrop,
 		},
 		data() {
 			return {

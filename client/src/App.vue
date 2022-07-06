@@ -1,8 +1,8 @@
 <script setup>
 	import { RouterLink, RouterView } from 'vue-router';
-	import TheTopNav from './components/TheTopNav.vue';
+	import TheTopNav from './components/base/TheTopNav.vue';
 	import AuthView from './views/AuthView.vue';
-	import TheSideNav from './components/TheSideNav.vue';
+	import TheSideNav from './components/base/TheSideNav.vue';
 </script>
 
 <template>

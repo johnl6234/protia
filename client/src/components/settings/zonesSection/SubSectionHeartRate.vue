@@ -32,155 +32,35 @@
 				<div class="text-center">bpm</div>
 				<div class="text-center">%</div>
 			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone1bpm"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone1percent"
-						@change="calculateBpm"
-					/><span>%</span>
-				</div>
-				<div>Zone 1 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone2bpm"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone2percent"
-						@change="calculateBpm"
-					/><span>%</span>
-				</div>
-				<div>Zone 2 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone3bpm"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone3percent"
-						@change="calculateBpm"
-					/><span>%</span>
-				</div>
-				<div>Zone 3 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone4bpm"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone4percent"
-						@change="calculateBpm"
-					/><span>%</span>
-				</div>
-				<div>Zone 4 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone5bpm"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone5percent"
-						@change="calculateBpm"
-					/><span>%</span>
-				</div>
-				<div>Zone 5 Max</div>
+			<!-- Display Zones -->
+			<div>
+				<ZoneInput v-for="zone in zones" :zoneData="zone" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import ZoneInput from './zoneComponents/ZoneInput.vue';
 	export default {
 		name: 'heartRate-section',
+		components: { ZoneInput },
 		data() {
 			return {
 				basedOn: 'thresholdHR',
 				maxHr: 185,
 				ltThreshold: 168,
-				zone1bpm: 135,
-				zone1percent: null,
-				zone2bpm: 150,
-				zone2percent: null,
-				zone3bpm: 156,
-				zone3percent: null,
-				zone4bpm: 157,
-				zone4percent: null,
-				zone5bpm: 167,
-				zone5percent: null,
 			};
 		},
-		methods: {
-			calculateBpm() {
-				console.log('change');
-				this.zone1bpm = Math.round(
-					this.percentageOf(this.zone1percent, this.ltThreshold)
-				);
-				this.zone2bpm = Math.round(
-					this.percentageOf(this.zone2percent, this.ltThreshold)
-				);
-				this.zone3bpm = Math.round(
-					this.percentageOf(this.zone3percent, this.ltThreshold)
-				);
-				this.zone4bpm = Math.round(
-					this.percentageOf(this.zone4percent, this.ltThreshold)
-				);
-				this.zone5bpm = Math.round(
-					this.percentageOf(this.zone5percent, this.ltThreshold)
-				);
-			},
-			calculatePercentage() {
-				this.zone1percent = Math.round(
-					this.percentage(this.zone1bpm, this.ltThreshold)
-				);
-				this.zone2percent = Math.round(
-					this.percentage(this.zone2bpm, this.ltThreshold)
-				);
-				this.zone3percent = Math.round(
-					this.percentage(this.zone3bpm, this.ltThreshold)
-				);
-				this.zone4percent = Math.round(
-					this.percentage(this.zone4bpm, this.ltThreshold)
-				);
-				this.zone5percent = Math.round(
-					this.percentage(this.zone5bpm, this.ltThreshold)
-				);
-			},
-			percentageOf(partialValue, totalValue) {
-				return (totalValue / 100) * partialValue;
-			},
-			percentage(partialValue, totalValue) {
-				return (100 * partialValue) / totalValue;
+		watch: {
+			zones(newVal, oldVal) {
+				console.log('zones old', oldVal, 'new', newVal);
 			},
 		},
-		created() {
-			this.calculatePercentage();
+		computed: {
+			zones() {
+				return this.$store.getters.getZones.heart_rate;
+			},
 		},
 	};
 </script>
-<style scoped>
-	/* div {
-		border: 1px solid red;
-	} */
-</style>

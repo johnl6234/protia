@@ -1,5 +1,6 @@
 <template>
 	<div class="flex flex-row bg-zinc-200 settings pl-3 mt-3">
+		<FlashMessage group="push-messages" position="top left" />
 		<!-- Side navigation -->
 		<div class="flex flex-col w-fit border-r border-zinc-400 nav-section">
 			<ul class="p-0">
@@ -103,6 +104,7 @@
 				currentSection: null,
 				currentSubSection: null,
 				UserData: {},
+				message: '',
 			};
 		},
 		methods: {
@@ -117,6 +119,9 @@
 			},
 			saveData() {
 				let data = this.$store.getters.getTempData;
+				data.zones = this.$store.getters.getZones;
+				data.maxHr = this.$store.getters.getMaxHr;
+				data.ltThreshold = this.$store.getters.getLtThreshold;
 				let userId = this.$store.getters.getUserData._id;
 				axios
 					.post(
@@ -127,6 +132,26 @@
 						if (response.data.modifiedCount > 0) {
 							this.$store.commit('setUserData', data);
 							this.$store.commit('setHasUnsavedChanges', false);
+							this.message = 'Data Saved Successfully';
+							this.$flashMessage.show({
+								type: 'success',
+								title: 'Success',
+								time: 5000,
+								text: 'Settings saved successfully',
+								position: 'top left',
+								group: 'push-messages',
+								blockClass: 'z-50 translate-x-full',
+							});
+						} else {
+							this.$flashMessage.show({
+								type: 'error',
+								title: 'Error',
+								time: 5000,
+								position: 'top left',
+								text: 'Settings Not Saved!!',
+								group: 'push-messages',
+								blockClass: 'z-50 translate-x-full',
+							});
 						}
 					});
 			},
@@ -138,10 +163,6 @@
 			this.currentSubSection = this.sectionsArray[0].subLinks[0];
 		},
 		beforeRouteLeave(to, from, next) {
-			console.log(
-				'state changes',
-				this.$store.getters.getHasUnsavedChanges
-			);
 			if (!this.$store.getters.getHasUnsavedChanges) {
 				next();
 			} else {
