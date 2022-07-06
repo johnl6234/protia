@@ -7,10 +7,7 @@
 	import 'billboard.js/dist/billboard.css';
 	export default {
 		name: 'bar-chart',
-		props: {
-			chartId: String,
-			chartData: Object,
-		},
+		props: ['chartId', 'chartData'],
 		data() {
 			return {
 				chart: null,

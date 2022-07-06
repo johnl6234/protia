@@ -41,19 +41,23 @@ export default {
 			state.dateRange = range;
 		},
 		addChartToUserList(state, chart) {
-			chart.id = makeId(7); //uuidv4().replaceAll('-', '');
+			chart.id = makeId(7);
 			chart.order = state.userCharts.length;
 			state.userCharts.push(chart);
 		},
-		setChartData(state, payload) {
-			state.chartList.find(
-				chart => chart.dataName == payload.name
-			).data.columns = payload.data;
+		// change data for all displayed charts with datename
+		changeUserChartData(state, payload) {
+			state.userCharts.forEach(chart => {
+				if (chart.dataName == payload.name)
+					chart.data.columns = payload.data;
+			});
 		},
-		setUserChartData(state, payload) {
-			state.chartList.find(
-				chart => chart.dataName == payload.name
-			).data.columns = payload.data;
+		// change data for new charts
+		changeChartData(state, payload) {
+			state.chartList.forEach(chart => {
+				if (chart.dataName == payload.name)
+					chart.data.columns = payload.data;
+			});
 		},
 		removeChart(state, index) {
 			state.userCharts.splice(index, 1);
@@ -83,11 +87,9 @@ export default {
 		addChartToUserList(context, payload) {
 			context.commit('addChartToUserList', payload);
 		},
-		setChartData(context, payload) {
-			context.commit('setChartData', payload);
-		},
 		setUserChartData(context, payload) {
-			context.commit('setUserChartData', payload);
+			context.commit('changeChartData', payload);
+			context.commit('changeUserChartData', payload);
 		},
 		removeChart(context, payload) {
 			context.commit('removeChart', payload);

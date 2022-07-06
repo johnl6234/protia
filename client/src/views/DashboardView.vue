@@ -184,14 +184,6 @@
 					powerData
 				);
 
-				this.$store.dispatch('setChartData', {
-					name: 'heart_rate',
-					data: sortedHeartData,
-				});
-				this.$store.dispatch('setChartData', {
-					name: 'power',
-					data: sortedPowerData,
-				});
 				this.$store.dispatch('setUserChartData', {
 					name: 'heart_rate',
 					data: sortedHeartData,
@@ -231,9 +223,14 @@
 				return this.$store.getters.getChartList;
 			},
 		},
+		watch: {
+			userCharts(newVal, oldVal) {
+				console.log('new', newVal, 'old', oldVal);
+			},
+		},
 		mounted() {
-			if (this.$store.getters.getUserChartsLength < 1)
-				this.fetchUserCharts();
+			//if (this.$store.getters.getUserChartsLength < 1)
+			this.fetchUserCharts();
 
 			this.fetchDataInDateRange();
 		},
