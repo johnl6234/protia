@@ -1,6 +1,6 @@
 <template>
 	<div class="flex flex-row bg-zinc-200 settings pl-3 mt-3">
-		<FlashMessage group="push-messages" position="top left" />
+		<FlashMessage position="top left" />
 		<!-- Side navigation -->
 		<div class="flex flex-col w-fit border-r border-zinc-400 nav-section">
 			<ul class="p-0">
@@ -138,7 +138,6 @@
 								title: 'Success',
 								time: 5000,
 								text: 'Settings saved successfully',
-								group: 'push-messages',
 								blockClass: 'z-50 translate-x-full',
 							});
 						} else {
@@ -147,7 +146,6 @@
 								title: 'Error',
 								time: 5000,
 								text: 'Settings Not Saved!!',
-								group: 'push-messages',
 								blockClass: 'z-50 translate-x-full',
 							});
 						}
@@ -161,6 +159,8 @@
 			this.currentSubSection = this.sectionsArray[0].subLinks[0];
 		},
 		beforeRouteLeave(to, from, next) {
+			this.$flashMessage.removeAll();
+
 			if (!this.$store.getters.getHasUnsavedChanges) {
 				next();
 			} else {

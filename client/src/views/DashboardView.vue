@@ -231,7 +231,6 @@
 		mounted() {
 			//if (this.$store.getters.getUserChartsLength < 1)
 			this.fetchUserCharts();
-
 			this.fetchDataInDateRange();
 		},
 	};
