@@ -22,31 +22,14 @@
 		created() {
 			let token = localStorage.getItem('accessToken');
 			if (token) {
-				axios
-					.post(
-						import.meta.env.VITE_SERVER_URI + 'auth',
-						{},
-						{
-							headers: {
-								'x-access-token': token,
-							},
-						}
-					)
-					.then(res => {
-						if (res.data.success) {
-							this.$store.commit('setUserData', res.data.user);
-							this.$store.commit('login');
-						}
-					});
+				this.$store.dispatch('autoLogin', token);
 			}
 		},
 	};
 </script>
 <style>
 	@import '@/assets/base.css';
-
 	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
-
 	@tailwind base;
 	@tailwind components;
 	@tailwind utilities;

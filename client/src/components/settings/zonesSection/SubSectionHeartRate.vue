@@ -52,11 +52,6 @@
 				ltThreshold: 168,
 			};
 		},
-		watch: {
-			zones(newVal, oldVal) {
-				console.log('zones old', oldVal, 'new', newVal);
-			},
-		},
 		computed: {
 			zones() {
 				return this.$store.getters.getZones.heart_rate;

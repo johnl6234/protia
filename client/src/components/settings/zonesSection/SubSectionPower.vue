@@ -153,7 +153,6 @@
 		},
 		methods: {
 			calculateWatts() {
-				console.log('change');
 				this.zone1Watts = Math.round(
 					this.percentageOf(this.zone1percent, this.FTP)
 				);

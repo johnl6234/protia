@@ -1,8 +1,14 @@
 <template>
 	<div class="grid grid-cols-3 w-80 mb-1">
-		<input class="mx-3" v-model="zone.bpm" @change="calculatePercentage" />
+		<input
+			type="number"
+			class="mx-3"
+			v-model="zone.bpm"
+			@change="calculatePercentage"
+		/>
 		<div class="grid grid-cols-3">
 			<input
+				type="number"
 				class="mx-3 col-span-2"
 				v-model="zone.percent"
 				@change="calculateBpm"
@@ -25,17 +31,19 @@
 		},
 		methods: {
 			calculateBpm() {
-				console.log('change bpm');
 				this.zone.bpm = Math.round(
 					this.percentageOf(this.zone.percent, this.ltThreshold)
 				);
+				this.$store.dispatch('changeZone', {
+					name: 'heart_rate',
+					zone: this.zone,
+				});
 			},
 			calculatePercentage() {
-				console.log('change percent');
 				this.zone.percent = Math.round(
 					this.percentage(this.zone.bpm, this.ltThreshold)
 				);
-				this.$store.dispatch('setZones', {
+				this.$store.dispatch('changeZone', {
 					name: 'heart_rate',
 					zone: this.zone,
 				});

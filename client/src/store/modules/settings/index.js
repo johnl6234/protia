@@ -8,7 +8,10 @@ export default {
 			hasUnsavedChanges: false,
 			maxHr: 185,
 			ltThreshold: 168,
-			zones: {},
+			zones: {
+				heart_rate: [],
+				power: [],
+			},
 		};
 	},
 	mutations: {
@@ -16,12 +19,6 @@ export default {
 			state.username = username;
 		},
 		setUserData(state, userData) {
-			state.zones = userData.zones;
-			state.maxHr = userData.maxHr;
-			state.ltThreshold = userData.ltThreshold;
-			delete userData.zones;
-			delete userData.maxHr;
-			delete userData.ltThreshold;
 			state.userData = userData;
 		},
 		setUserStats(state, userStats) {
@@ -38,14 +35,26 @@ export default {
 		setHasUnsavedChanges(state, changed) {
 			state.hasUnsavedChanges = changed;
 		},
-		setZones(state, payload) {
+		changeZone(state, payload) {
 			state.zones[payload.name][payload.zone.number - 1].bpm =
 				payload.zone.bpm;
 			state.zones[payload.name][payload.zone.number - 1].percent =
 				payload.zone.percent;
 		},
+		setInitialZones(state, payload) {
+			state.zones = payload;
+		},
+		setMaxHr(state, payload) {
+			state.maxHr = payload;
+		},
+		setLtThreshold(state, payload) {
+			state.ltThreshold = payload;
+		},
 	},
 	getters: {
+		getUserId(state) {
+			return state.userData._id;
+		},
 		getUsername(state) {
 			return state.username;
 		},
@@ -73,6 +82,13 @@ export default {
 	},
 	actions: {
 		setUserData(context, payload) {
+			context.commit('setInitialZones', payload.zones);
+			context.commit('setMaxHr', payload.maxHr);
+			context.commit('setLtThreshold', payload.ltThreshold);
+			delete payload.zones;
+			delete payload.maxHr;
+			delete payload.ltThreshold;
+
 			context.commit('setUserData', payload);
 		},
 		setUserStats(context, payload) {
@@ -87,9 +103,9 @@ export default {
 		setHasUnsavedChanges(context, payload) {
 			context.commit('setHasUnsavedChanges', payload);
 		},
-		setZones(context, payload) {
+		changeZone(context, payload) {
 			context.commit('setHasUnsavedChanges', true);
-			context.commit('setZones', payload);
+			context.commit('changeZone', payload);
 		},
 	},
 };

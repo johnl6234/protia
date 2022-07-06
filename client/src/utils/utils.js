@@ -1,4 +1,4 @@
-export const getTimeInZones = (zones, data) => {
+export const getTimeInZones = (name, zones, data) => {
 	let zonesArrays = {
 		zone1: 0,
 		zone2: 0,
@@ -8,35 +8,36 @@ export const getTimeInZones = (zones, data) => {
 		zone6: 0,
 		zone7: 0,
 	};
-	if (zones.name === 'heart_rate') {
+	if (name === 'heart_rate') {
 		data.forEach(dataPoint => {
-			if (dataPoint < zones.z1) zonesArrays.zone1++;
-			if (dataPoint > zones.z1 && dataPoint < zones.z2)
+			if (dataPoint < zones[0].bpm) zonesArrays.zone1++;
+			if (dataPoint > zones[0].bpm && dataPoint < zones[1].bpm)
 				zonesArrays.zone2++;
-			if (dataPoint > zones.z2 && dataPoint < zones.z3)
+			if (dataPoint > zones[1].bpm && dataPoint < zones[2].bpm)
 				zonesArrays.zone3++;
-			if (dataPoint > zones.z3 && dataPoint < zones.z4)
+			if (dataPoint > zones[2].bpm && dataPoint < zones[3].bpm)
 				zonesArrays.zone4++;
-			if (dataPoint > zones.z4) zonesArrays.zone5++;
+			if (dataPoint > zones[3].bpm) zonesArrays.zone5++;
 		});
 		delete zonesArrays.zone6;
 		delete zonesArrays.zone7;
-	} else if (zones.name === 'power') {
+	} else if (name === 'power') {
 		data.forEach(dataPoint => {
-			if (dataPoint < zones.z1) zonesArrays.zone1++;
-			if (dataPoint > zones.z1 && dataPoint < zones.z2)
+			if (dataPoint < zones[0].bpm) zonesArrays.zone1++;
+			if (dataPoint > zones[0].bpm && dataPoint < zones[1].bpm)
 				zonesArrays.zone2++;
-			if (dataPoint > zones.z2 && dataPoint < zones.z3)
+			if (dataPoint > zones[1].bpm && dataPoint < zones[2].bpm)
 				zonesArrays.zone3++;
-			if (dataPoint > zones.z3 && dataPoint < zones.z4)
+			if (dataPoint > zones[2].bpm && dataPoint < zones[3].bpm)
 				zonesArrays.zone4++;
-			if (dataPoint > zones.z4 && dataPoint < zones.z5)
-				zonesArrays.zone4++;
-			if (dataPoint > zones.z5 && dataPoint < zones.z6)
-				zonesArrays.zone4++;
-			if (dataPoint > zones.z6) zonesArrays.zone4++;
+			if (dataPoint > zones[3].bpm && dataPoint < zones[4].bpm)
+				zonesArrays.zone5++;
+			if (dataPoint > zones[4].bpm && dataPoint < zones[5].bpm)
+				zonesArrays.zone6++;
+			if (dataPoint > zones[5].bpm) zonesArrays.zone7++;
 		});
 	}
+
 	return objectToColumns(zonesArrays);
 };
 

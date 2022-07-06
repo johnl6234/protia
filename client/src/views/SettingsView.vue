@@ -138,7 +138,6 @@
 								title: 'Success',
 								time: 5000,
 								text: 'Settings saved successfully',
-								position: 'top left',
 								group: 'push-messages',
 								blockClass: 'z-50 translate-x-full',
 							});
@@ -147,7 +146,6 @@
 								type: 'error',
 								title: 'Error',
 								time: 5000,
-								position: 'top left',
 								text: 'Settings Not Saved!!',
 								group: 'push-messages',
 								blockClass: 'z-50 translate-x-full',

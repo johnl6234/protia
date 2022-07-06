@@ -134,15 +134,13 @@
 				this.$store.dispatch('setUserCharts', chartsArray);
 			},
 			fetchUserCharts() {
-				console.log('getting charts');
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
 							'charts/' +
-							this.$store.getters.getUserData._id
+							this.$store.getters.getUserId
 					)
 					.then(res => {
-						console.log('res', res);
 						this.$store.dispatch('setUserCharts', res.data.charts);
 					});
 			},
@@ -156,7 +154,6 @@
 			},
 			fetchDataInDateRange() {
 				this.loading = true;
-
 				let dateRange = this.$store.getters.getDateRange;
 				axios
 					.get(
@@ -169,23 +166,23 @@
 					});
 			},
 			groupChartData(chartDataInRange) {
-				const zones = {
-					name: 'heart_rate',
-					// maximum value
-					z1: 135,
-					z2: 150,
-					z3: 156,
-					z4: 167,
-					z5: 255,
-				};
+				const zones = this.$store.getters.getZones;
 				let heartData = [];
 				let powerData = [];
 				chartDataInRange.forEach(activity => {
 					heartData.push(...activity.heart_rate);
 					powerData.push(...activity.power);
 				});
-				let sortedHeartData = getTimeInZones(zones, heartData);
-				let sortedPowerData = getTimeInZones(zones, powerData);
+				let sortedHeartData = getTimeInZones(
+					'heart_rate',
+					zones.heart_rate,
+					heartData
+				);
+				let sortedPowerData = getTimeInZones(
+					'power',
+					zones.power,
+					powerData
+				);
 
 				this.$store.dispatch('setChartData', {
 					name: 'heart_rate',
@@ -219,7 +216,7 @@
 				axios.post(
 					import.meta.env.VITE_SERVER_URI +
 						'charts/' +
-						this.$store.getters.getUserData._id,
+						this.$store.getters.getUserId,
 					{
 						charts: this.$store.getters.getUserCharts,
 					}

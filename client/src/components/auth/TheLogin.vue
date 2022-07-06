@@ -97,8 +97,6 @@
 </template>
 <script setup></script>
 <script>
-	import axios from 'axios';
-
 	export default {
 		data() {
 			return {
@@ -121,24 +119,7 @@
 					username: this.username,
 					password: this.password,
 				};
-				axios
-					.post(import.meta.env.VITE_SERVER_URI + 'login', data)
-					.then(res => {
-						if (res.data.success) {
-							this.$store.commit('login');
-							delete res.data.hash;
-							delete res.data.salt;
-							delete res.data.success;
-							this.$store.dispatch('setUserData', res.data);
-							localStorage.setItem(
-								'accessToken',
-								res.data.accessToken
-							);
-							this.$router.push({ path: '/' });
-						} else {
-							this.message = res.data.error;
-						}
-					});
+				this.$store.dispatch('login', data);
 			},
 		},
 	};
