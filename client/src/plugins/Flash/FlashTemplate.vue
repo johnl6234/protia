@@ -1,5 +1,6 @@
 <template>
-	<div id="flash-view-target" class="hide flash" @click="$flash.close()">
+	<div id="flash-view-target" class="hide flash">
+		<!-- @click="$flash.close()"> -->
 		<div id="flash-title"></div>
 		<div id="flash-message"></div>
 	</div>
