@@ -41,6 +41,9 @@ export default {
 			state.zones[payload.name][payload.zone.number - 1].percent =
 				payload.zone.percent;
 		},
+		changeAllZones(state, payload) {
+			state.zones[payload.name] = payload.zones;
+		},
 		setInitialZones(state, payload) {
 			state.zones = payload;
 		},
@@ -106,6 +109,14 @@ export default {
 		changeZone(context, payload) {
 			context.commit('setHasUnsavedChanges', true);
 			context.commit('changeZone', payload);
+		},
+		changeAllZones(context, payload) {
+			context.commit('setHasUnsavedChanges', true);
+			context.commit('changeAllZones', payload);
+		},
+		setLtThreshold(context, payload) {
+			context.commit('setHasUnsavedChanges', true);
+			context.commit('setLtThreshold', payload);
 		},
 	},
 };

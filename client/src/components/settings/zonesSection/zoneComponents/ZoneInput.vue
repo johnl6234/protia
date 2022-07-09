@@ -60,9 +60,15 @@
 				return this.$store.getters.getLtThreshold;
 			},
 		},
+		watch: {
+			zoneData(newVal, oldVal) {
+				console.log('new zoneData', newVal, 'old', oldVal);
+				this.zone = newVal;
+			},
+		},
 		created() {
 			this.zone = this.zoneData;
-			this.calculatePercentage();
+			//this.calculatePercentage();
 		},
 	};
 </script>

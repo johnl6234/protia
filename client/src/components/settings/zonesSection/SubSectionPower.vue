@@ -193,6 +193,16 @@
 				return (100 * partialValue) / totalValue;
 			},
 		},
+		watch: {
+			FTP() {
+				// Zone 1 Less than 55% of FTPw
+				// Zone 2 55% to 74% of FTPw
+				// Zone 3 75% to 89% of FTPw
+				// Zone 4 90% to 104% of FTPw
+				// Zone 5 105% to 120% of FTPw
+				// Zone 6 More than 120% of FTPw
+			},
+		},
 		created() {
 			this.calculatePercentage();
 		},

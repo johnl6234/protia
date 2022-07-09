@@ -77,7 +77,7 @@
 								:type="'password'"
 								v-model="userData.password"
 								:name="'password'"
-								:autocomplete="'password'"
+								:autocomplete="'new-password'"
 								:text="'Password'"
 								@focusout="stoppedEditing"
 							/>
@@ -85,7 +85,7 @@
 								:type="'password'"
 								v-model="userData.reTypePassword"
 								:name="'reTypePassword'"
-								:autocomplete="'password'"
+								:autocomplete="'new-password'"
 								:text="'ReType Password'"
 								@focusout="stoppedEditing"
 							/>

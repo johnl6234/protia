@@ -1,6 +1,5 @@
 <template>
 	<div class="flex flex-row bg-zinc-200 settings pl-3 mt-3">
-		<FlashMessage position="top left" />
 		<!-- Side navigation -->
 		<div class="flex flex-col w-fit border-r border-zinc-400 nav-section">
 			<ul class="p-0">
@@ -123,6 +122,7 @@
 				data.maxHr = this.$store.getters.getMaxHr;
 				data.ltThreshold = this.$store.getters.getLtThreshold;
 				let userId = this.$store.getters.getUserData._id;
+
 				axios
 					.post(
 						import.meta.env.VITE_SERVER_URI + 'user/' + userId,
@@ -133,21 +133,9 @@
 							this.$store.commit('setUserData', data);
 							this.$store.commit('setHasUnsavedChanges', false);
 							this.message = 'Data Saved Successfully';
-							this.$flashMessage.show({
-								type: 'success',
-								title: 'Success',
-								time: 5000,
-								text: 'Settings saved successfully',
-								blockClass: 'z-50 translate-x-full',
-							});
+							console.log('data saved');
 						} else {
-							this.$flashMessage.show({
-								type: 'error',
-								title: 'Error',
-								time: 5000,
-								text: 'Settings Not Saved!!',
-								blockClass: 'z-50 translate-x-full',
-							});
+							console.log('data failed to save');
 						}
 					});
 			},

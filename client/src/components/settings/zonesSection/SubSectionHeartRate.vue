@@ -17,6 +17,7 @@
 							class="mx-3"
 							id="lthr"
 							v-model="ltThreshold"
+							@change="changeLTHR"
 						/><label for="lthr">hr Lt</label>
 					</div>
 					<div class="grid grid-cols-2">
@@ -34,7 +35,7 @@
 			</div>
 			<!-- Display Zones -->
 			<div>
-				<ZoneInput v-for="zone in zones" :zoneData="zone" />
+				<ZoneInput v-for="zone in hrZones" :zoneData="zone" />
 			</div>
 		</div>
 	</div>
@@ -50,12 +51,67 @@
 				basedOn: 'thresholdHR',
 				maxHr: 185,
 				ltThreshold: 168,
+				hrZones: [],
 			};
+		},
+		methods: {
+			changeLTHR() {
+				console.log('change LTHR');
+				const newHrZones = [
+					{
+						number: 1,
+						bpm: Math.round((this.ltThreshold / 100) * 85),
+						percent: 85,
+					},
+					{
+						number: 2,
+						bpm: Math.round((this.ltThreshold / 100) * 89),
+						percent: 89,
+					},
+					{
+						number: 3,
+						bpm: Math.round((this.ltThreshold / 100) * 94),
+						percent: 94,
+					},
+					{
+						number: 4,
+						bpm: Math.round((this.ltThreshold / 100) * 99),
+						percent: 99,
+					},
+					{
+						number: 5,
+						bpm: Math.round((this.ltThreshold / 100) * 106),
+						percent: 106,
+					},
+				];
+				let payload = {
+					name: 'heart_rate',
+					zones: newHrZones,
+				};
+				this.$store.dispatch('changeAllZones', payload);
+				this.$store.dispatch('setLtThreshold', this.ltThreshold);
+				// Zone 1 Less than 85% of LTHR
+				// Zone 2 85% to 89% of LTHR
+				// Zone 3 90% to 94% of LTHR
+				// Zone 4 95% to 99% of LTHR
+				// Zone 5a 100% to 102% of LTHR
+				// Zone 5b 103% to 106% of LTHR
+				// Zone 5c More than 106% of LTHR
+			},
+		},
+		watch: {
+			zones(newZones) {
+				console.log('changed zones');
+				this.hrZones = newZones;
+			},
 		},
 		computed: {
 			zones() {
 				return this.$store.getters.getZones.heart_rate;
 			},
+		},
+		created() {
+			this.hrZones = this.zones;
 		},
 	};
 </script>
