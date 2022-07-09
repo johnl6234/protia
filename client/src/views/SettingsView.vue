@@ -43,6 +43,7 @@
 		</div>
 		<!-- Main container -->
 		<div class="flex flex-col w-full mr-3">
+			<FlashMessage />
 			<div class="component-container p-3 bg-zinc-300 mb-12">
 				<!-- Display selected section -->
 				<component
@@ -71,12 +72,14 @@
 	import { markRaw } from 'vue';
 	import SectionAccountVue from '../components/settings/accountSection/SectionAccount.vue';
 	import SectionZonesVue from '../components/settings/zonesSection/SectionZones.vue';
+	import FlashMessage from '../plugins/Flash/FlashTemplate.vue';
 	const SectionAccount = markRaw(SectionAccountVue);
 	const SectionZones = markRaw(SectionZonesVue);
 
 	export default {
 		name: 'user-settings',
 		components: {
+			FlashMessage,
 			SectionAccount,
 			SectionZones,
 		},
@@ -129,13 +132,24 @@
 						data
 					)
 					.then(response => {
+						console.log('saved', response.data);
 						if (response.data.modifiedCount > 0) {
 							this.$store.commit('setUserData', data);
 							this.$store.commit('setHasUnsavedChanges', false);
 							this.message = 'Data Saved Successfully';
 							console.log('data saved');
+							this.$flash({
+								type: 'success',
+								title: 'Success',
+								message: 'Data Saved Successfully',
+							});
 						} else {
 							console.log('data failed to save');
+							this.$flash({
+								type: 'error',
+								title: 'Error',
+								message: 'Data Faild To Save',
+							});
 						}
 					});
 			},
