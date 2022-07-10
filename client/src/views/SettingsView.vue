@@ -161,8 +161,6 @@
 			this.currentSubSection = this.sectionsArray[0].subLinks[0];
 		},
 		beforeRouteLeave(to, from, next) {
-			this.$flashMessage.removeAll();
-
 			if (!this.$store.getters.getHasUnsavedChanges) {
 				next();
 			} else {

@@ -19,6 +19,7 @@
 				<div class="text-center">Watts</div>
 				<div class="text-center">%</div>
 			</div>
+			<!-- Display Zones -->
 			<div>
 				<ZoneInputPower v-for="zone in powerZones" :zoneData="zone" />
 			</div>
