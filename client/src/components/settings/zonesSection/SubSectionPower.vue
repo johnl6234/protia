@@ -3,14 +3,15 @@
 		<h1 class="border-b text-blue-500 text-xl font-light border-zinc-400">
 			Power
 		</h1>
-		// TODO save zones
 		<div class="w-3/4 mx-auto mt-5">
 			<div class="grid grid-cols-4 mb-1">
 				<div class="grid grid-cols-2">
-					<input class="mx-3" id="ftp" v-model="FTP" /><label
-						for="ftp"
-						>FTP</label
-					>
+					<input
+						class="mx-3"
+						id="ftp"
+						v-model="FTP"
+						@change="changeFTP"
+					/><label for="ftp">FTP</label>
 				</div>
 			</div>
 
@@ -18,193 +19,89 @@
 				<div class="text-center">Watts</div>
 				<div class="text-center">%</div>
 			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone1Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone1percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 1 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone2Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone2percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 2 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone3Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone3percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 3 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone4Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone4percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 4 Max</div>
-			</div>
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone5Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone5percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 5 Max</div>
-			</div>
-
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone6Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone6percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 6 Max</div>
-			</div>
-
-			<div class="grid grid-cols-3 w-80 mb-1">
-				<input
-					class="mx-3"
-					v-model="zone7Watts"
-					@change="calculatePercentage"
-				/>
-				<div class="grid grid-cols-3">
-					<input
-						class="mx-3 col-span-2"
-						v-model="zone7percent"
-						@change="calculateWatts"
-					/><span>%</span>
-				</div>
-				<div>Zone 7 Max</div>
+			<div>
+				<ZoneInputPower v-for="zone in powerZones" :zoneData="zone" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import ZoneInputPower from './zoneComponents/ZoneInputPower.vue';
 	export default {
 		name: 'power-section',
+		components: { ZoneInputPower },
 		data() {
 			return {
 				FTP: 168,
-				zone1Watts: 135,
-				zone1percent: null,
-				zone2Watts: 150,
-				zone2percent: null,
-				zone3Watts: 156,
-				zone3percent: null,
-				zone4Watts: 157,
-				zone4percent: null,
-				zone5Watts: 167,
-				zone5percent: null,
-				zone6Watts: 167,
-				zone6percent: null,
-				zone7Watts: 167,
-				zone7percent: null,
+				powerZones: [],
 			};
 		},
 		methods: {
-			calculateWatts() {
-				this.zone1Watts = Math.round(
-					this.percentageOf(this.zone1percent, this.FTP)
-				);
-				this.zone2Watts = Math.round(
-					this.percentageOf(this.zone2percent, this.FTP)
-				);
-				this.zone3Watts = Math.round(
-					this.percentageOf(this.zone3percent, this.FTP)
-				);
-				this.zone4Watts = Math.round(
-					this.percentageOf(this.zone4percent, this.FTP)
-				);
-				this.zone5Watts = Math.round(
-					this.percentageOf(this.zone5percent, this.FTP)
-				);
-			},
-			calculatePercentage() {
-				this.zone1percent = Math.round(
-					this.percentage(this.zone1Watts, this.FTP)
-				);
-				this.zone2percent = Math.round(
-					this.percentage(this.zone2Watts, this.FTP)
-				);
-				this.zone3percent = Math.round(
-					this.percentage(this.zone3Watts, this.FTP)
-				);
-				this.zone4percent = Math.round(
-					this.percentage(this.zone4Watts, this.FTP)
-				);
-				this.zone5percent = Math.round(
-					this.percentage(this.zone5Watts, this.FTP)
-				);
-			},
-			percentageOf(partialValue, totalValue) {
-				return (totalValue / 100) * partialValue;
-			},
-			percentage(partialValue, totalValue) {
-				return (100 * partialValue) / totalValue;
+			changeFTP() {
+				console.log('change FTP');
+				const newPowerZones = [
+					{
+						number: 1,
+						watts: Math.round((this.FTP / 100) * 55),
+						percent: 55,
+					},
+					{
+						number: 2,
+						watts: Math.round((this.FTP / 100) * 75),
+						percent: 75,
+					},
+					{
+						number: 3,
+						watts: Math.round((this.FTP / 100) * 90),
+						percent: 90,
+					},
+					{
+						number: 4,
+						watts: Math.round((this.FTP / 100) * 105),
+						percent: 105,
+					},
+					{
+						number: 5,
+						watts: Math.round((this.FTP / 100) * 120),
+						percent: 120,
+					},
+
+					{
+						number: 6,
+						watts: Math.round((this.FTP / 100) * 200),
+						percent: 200,
+					},
+
+					{
+						number: 7,
+						watts: Math.round((this.FTP / 100) * 400),
+						percent: 400,
+					},
+				];
+				let payload = {
+					name: 'power',
+					zones: newPowerZones,
+				};
+				this.$store.dispatch('changeAllZones', payload);
+				this.$store.dispatch('setFtp', this.ftp);
 			},
 		},
 		watch: {
-			FTP() {
-				// Zone 1 Less than 55% of FTPw
-				// Zone 2 55% to 74% of FTPw
-				// Zone 3 75% to 89% of FTPw
-				// Zone 4 90% to 104% of FTPw
-				// Zone 5 105% to 120% of FTPw
-				// Zone 6 More than 120% of FTPw
+			zones(newZones) {
+				console.log('changed zones');
+				this.powerZones = newZones;
+			},
+		},
+		computed: {
+			zones() {
+				return this.$store.getters.getZones.power;
 			},
 		},
 		created() {
-			this.calculatePercentage();
+			console.log('power', this.zones);
+			this.powerZones = this.zones;
+			this.FTP = this.$store.getters.getFtp;
 		},
 	};
 </script>

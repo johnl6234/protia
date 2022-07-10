@@ -8,6 +8,7 @@ export default {
 			hasUnsavedChanges: false,
 			maxHr: 185,
 			ltThreshold: 168,
+			ftp: 200,
 			zones: {
 				heart_rate: [],
 				power: [],
@@ -53,6 +54,9 @@ export default {
 		setLtThreshold(state, payload) {
 			state.ltThreshold = payload;
 		},
+		setFtp(state, payload) {
+			state.ftp = payload;
+		},
 	},
 	getters: {
 		getUserId(state) {
@@ -82,16 +86,16 @@ export default {
 		getZones(state) {
 			return state.zones;
 		},
+		getFtp(state) {
+			return state.ftp;
+		},
 	},
 	actions: {
 		setUserData(context, payload) {
+			console.log('userdata', payload);
 			context.commit('setInitialZones', payload.zones);
 			context.commit('setMaxHr', payload.maxHr);
-			context.commit('setLtThreshold', payload.ltThreshold);
-			delete payload.zones;
-			delete payload.maxHr;
-			delete payload.ltThreshold;
-
+			context.commit('setLtThreshold', Number(payload.ltThreshold));
 			context.commit('setUserData', payload);
 		},
 		setUserStats(context, payload) {
@@ -117,6 +121,9 @@ export default {
 		setLtThreshold(context, payload) {
 			context.commit('setHasUnsavedChanges', true);
 			context.commit('setLtThreshold', payload);
+		},
+		setFtp(context, payload) {
+			context.commit('setFtp', payload);
 		},
 	},
 };

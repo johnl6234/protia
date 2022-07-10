@@ -19,6 +19,7 @@ router.post('/', async (req, res, next) => {
 					function (err, pass, salt, hash) {
 						if (err) return fn(err);
 						if (hash === user.hash) {
+							console.log('User data', user);
 							console.log('SUCCESS');
 							var token = jwt.sign(
 								{ id: user._id },

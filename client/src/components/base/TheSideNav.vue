@@ -64,6 +64,23 @@
 			toggleSideBar() {
 				this.sideBarOpen = !this.sideBarOpen;
 			},
+			onResize() {
+				if (window.innerWidth < 1024) {
+					this.sideBarOpen = false;
+				} else {
+					this.sideBarOpen = true;
+				}
+			},
+		},
+		mounted() {
+			this.$nextTick(() => {
+				window.addEventListener('resize', this.onResize);
+			});
+			this.onResize();
+		},
+
+		beforeDestroy() {
+			window.removeEventListener('resize', this.onResize);
 		},
 	};
 </script>

@@ -12,11 +12,14 @@ router.post('/', function (req, res, next) {
 				.findOne({ _id: ObjectId(req.userId) });
 			client.close();
 			if (user) {
-				res.json({
+				delete user.hash;
+				delete user.salt;
+				const data = {
 					success: 'Logged in successfully',
-					//id: user._id,
 					user: user,
-				});
+				};
+				console.log('auto data', data);
+				res.send(data);
 			}
 		}
 	);
