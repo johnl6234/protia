@@ -197,6 +197,7 @@
 					heart_rate: sortedHeartData,
 					power: sortedPowerData,
 				};
+				console.log('chart data', this.rangedChartData);
 				this.loading = false;
 				this.saveChartDataToDB();
 			},

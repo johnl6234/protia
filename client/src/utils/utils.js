@@ -23,18 +23,18 @@ export const getTimeInZones = (name, zones, data) => {
 		delete zonesArrays.zone7;
 	} else if (name === 'power') {
 		data.forEach(dataPoint => {
-			if (dataPoint < zones[0].bpm) zonesArrays.zone1++;
-			if (dataPoint > zones[0].bpm && dataPoint < zones[1].bpm)
+			if (dataPoint < zones[0].watts) zonesArrays.zone1++;
+			if (dataPoint > zones[0].watts && dataPoint < zones[1].watts)
 				zonesArrays.zone2++;
-			if (dataPoint > zones[1].bpm && dataPoint < zones[2].bpm)
+			if (dataPoint > zones[1].watts && dataPoint < zones[2].watts)
 				zonesArrays.zone3++;
-			if (dataPoint > zones[2].bpm && dataPoint < zones[3].bpm)
+			if (dataPoint > zones[2].watts && dataPoint < zones[3].watts)
 				zonesArrays.zone4++;
-			if (dataPoint > zones[3].bpm && dataPoint < zones[4].bpm)
+			if (dataPoint > zones[3].watts && dataPoint < zones[4].watts)
 				zonesArrays.zone5++;
-			if (dataPoint > zones[4].bpm && dataPoint < zones[5].bpm)
+			if (dataPoint > zones[4].watts && dataPoint < zones[5].watts)
 				zonesArrays.zone6++;
-			if (dataPoint > zones[5].bpm) zonesArrays.zone7++;
+			if (dataPoint > zones[5].watts) zonesArrays.zone7++;
 		});
 	}
 

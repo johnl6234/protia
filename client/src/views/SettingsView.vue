@@ -148,7 +148,7 @@
 							this.$flash({
 								type: 'error',
 								title: 'Error',
-								message: 'Data Faild To Save',
+								message: 'Data Failed To Save',
 							});
 						}
 					});
