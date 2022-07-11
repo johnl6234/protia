@@ -8,12 +8,13 @@ export default {
 					title: 'Test Workout',
 					startDate: '2022-07-05',
 					classes: ['workout'],
+					description: 'Description on Workout',
 					laps: [
 						{
 							type: 'warmup', // [warmup,coolDown,active,rest]
 							target: 'h-120', // h=heart rate, p=power, - value
-							duration: '60', // duration of workout
-							description: 'Description on workout',
+							duration: '60', // duration of lap
+							description: 'Description on Lap',
 						},
 					],
 				},
