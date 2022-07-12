@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="mb-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md"
+		class="mb-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md mx-auto"
 	>
 		<div :class="lap.type" class="px-4 py-1 text-slate-50 rounded-t-lg">
 			{{ lap.type }}

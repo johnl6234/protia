@@ -12,7 +12,10 @@
 			<router-link
 				v-for="item in navigation"
 				:key="item.name"
-				:to="{ name: item.to }"
+				:to="{
+					name: item.to,
+					params: item.params,
+				}"
 				class="px-3 py-2 rounded-md text-base font-medium text-gray-500 flex flex-row"
 				:aria-current="item.current ? 'page' : undefined"
 				><component :is="item.icon" />
@@ -31,6 +34,7 @@
 	import ArrowCollapseLeft from 'vue-material-design-icons/ArrowCollapseLeft.vue';
 	import ArrowExpandRight from 'vue-material-design-icons/ArrowExpandRight.vue';
 	import ChartLine from 'vue-material-design-icons/ChartLine.vue';
+	import Dumbell from 'vue-material-design-icons/Dumbbell.vue';
 </script>
 
 <script>
@@ -56,6 +60,14 @@
 						name: 'Progress',
 						to: 'progress',
 						icon: markRaw(ChartLine),
+					},
+					{
+						name: 'Create Workout',
+						to: 'createWorkout',
+						icon: markRaw(Dumbell),
+						params: {
+							type: 'run',
+						},
 					},
 				],
 			};
