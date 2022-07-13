@@ -38,7 +38,7 @@ app.use('/login', loginRoutes);
 app.use('/route', routeRouter);
 app.use('/user', userRoutes);
 app.use('/activities', activitiesRouter);
-app.use('/statsRoutes', statsRoutes);
+app.use('/stats', statsRoutes);
 app.use('/charts', chartsRouter);
 app.use('/upload', upload.array('file', 10), uploadRouter);
 

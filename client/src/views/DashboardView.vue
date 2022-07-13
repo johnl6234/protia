@@ -75,7 +75,7 @@
 	import axios from 'axios';
 	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
-	import { getTimeInZones } from '../utils/utils';
+	import { GetPeak, getTimeInZones } from '../utils/utils';
 	import BaseOverlay from '../components/base/BaseOverlay.vue';
 	import ChartListDrop from '../components/dashboard/ChartListDrop.vue';
 
@@ -173,6 +173,7 @@
 					heartData.push(...activity.heart_rate);
 					powerData.push(...activity.power);
 				});
+
 				let sortedHeartData = getTimeInZones(
 					'heart_rate',
 					zones.heart_rate,
@@ -197,7 +198,13 @@
 					heart_rate: sortedHeartData,
 					power: sortedPowerData,
 				};
-				console.log('chart data', this.rangedChartData);
+				let second3Peaks = GetPeak(powerData, 3);
+				let second10Peaks = GetPeak(powerData, 10);
+				let second30Peaks = GetPeak(powerData, 30);
+				this.$store.dispatch('setUserChartData', {
+					name: 'peakPower',
+					data: [[second3Peaks, second10Peaks, second30Peaks]],
+				});
 				this.loading = false;
 				this.saveChartDataToDB();
 			},

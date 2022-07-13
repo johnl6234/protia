@@ -11,7 +11,7 @@
 						Register for an Account
 					</h2>
 				</div>
-				<form class="mt-8 space-y-6" action="#" method="POST">
+				<form class="mt-8 space-y-6">
 					<input type="hidden" name="remember" value="true" />
 					<div class="rounded-md shadow-sm -space-y-px">
 						<div>
@@ -20,7 +20,7 @@
 							>
 							<input
 								id="name"
-								v-model="name"
+								v-model="username"
 								type="text"
 								autocomplete="name"
 								required="true"
@@ -91,7 +91,7 @@
 								class="absolute left-0 inset-y-0 flex items-center pl-3"
 							>
 							</span>
-							Sign in
+							Register
 						</button>
 					</div>
 				</form>
@@ -101,10 +101,11 @@
 </template>
 
 <script>
+	import axios from 'axios';
 	export default {
 		data() {
 			return {
-				name: '',
+				username: '',
 				email: '',
 				password: '',
 				passwordConfirm: '',
@@ -113,9 +114,11 @@
 		methods: {
 			submitRegister() {
 				if (
-					this.name === '' ||
+					this.username === '' ||
 					this.email === '' ||
 					this.password === '' ||
+					this.passwordConfirm === '' ||
+					!this.passwordsMatch ||
 					this.ValidateEmail(this.email.trim()) === null
 				) {
 					console.log('empty inputs');
@@ -124,6 +127,7 @@
 				}
 			},
 			ValidateEmail(email) {
+				console.log(email);
 				return String(email)
 					.toLowerCase()
 					.match(
@@ -131,9 +135,9 @@
 					);
 			},
 			RegisterUser() {
-				if (!this.isValidated) return;
+				console.log('register');
 				const data = {
-					name: this.name,
+					username: this.username,
 					email: this.email.trim().toLowerCase(),
 					password: this.password,
 				};
@@ -147,6 +151,11 @@
 							this.errorMsg = res.data.error;
 						}
 					});
+			},
+		},
+		computed: {
+			passwordsMatch() {
+				return this.password === this.passwordConfirm;
 			},
 		},
 	};

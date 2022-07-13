@@ -6,13 +6,11 @@ const hash = require('pbkdf2-password')();
 // get all activities
 router.post('/', async (req, res, next) => {
 	console.log('REQ register', req.body);
-	const { username, password, firstname, lastname, email } = req.body;
+	const { username, password, email } = req.body;
 	let userData = {
 		username: username,
 		email: email,
 		password: password,
-		firstname: firstname,
-		lastname: lastname,
 	};
 	await MongoClient.connect(process.env.MONGODB, {
 		useUnifiedTopology: true,
@@ -30,15 +28,18 @@ router.post('/', async (req, res, next) => {
 					useUnifiedTopology: true,
 				}).then(async client => {
 					const db = client.db('training');
-					await db.collection('users').insertOne({
+					const results = await db.collection('users').insertOne({
 						username,
 						salt,
 						hash,
 						email,
-						firstname,
-						lastname,
+						zones: defaultZones,
+						ltThreshold: 168,
+						maxHr: 185,
 					});
-					await db.collection('stats').insertOne({ username });
+					await db
+						.collection('stats')
+						.insertOne({ owner: results.insertedId });
 					client.close();
 					res.send({ success: 'account created successfully' });
 				});
@@ -48,3 +49,72 @@ router.post('/', async (req, res, next) => {
 });
 
 module.exports = router;
+
+const defaultZones = {
+	heart_rate: [
+		{
+			number: 1,
+			bpm: 143,
+			percent: 85,
+		},
+		{
+			number: 2,
+			bpm: 150,
+			percent: 89,
+		},
+		{
+			number: 3,
+			bpm: 158,
+			percent: 94,
+		},
+		{
+			number: 4,
+			bpm: 166,
+			percent: 99,
+		},
+		{
+			number: 5,
+			bpm: 178,
+			percent: 106,
+		},
+	],
+	power: [
+		{
+			number: 1,
+			watts: 110,
+			percent: 55,
+		},
+		{
+			number: 2,
+			watts: 150,
+			percent: 75,
+		},
+
+		{
+			number: 3,
+			watts: 180,
+			percent: 90,
+		},
+		{
+			number: 4,
+			watts: 210,
+			percent: 105,
+		},
+		{
+			number: 5,
+			watts: 240,
+			percent: 120,
+		},
+		{
+			number: 6,
+			watts: 400,
+			percent: 200,
+		},
+
+		{
+			number: 7,
+			watts: 800,
+			percent: 400,
+		},
+	],
+};

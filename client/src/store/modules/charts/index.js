@@ -22,6 +22,24 @@ export default {
 						columns: [['power', 120, 320, 230, 120, 160, 430]],
 					},
 				},
+				{
+					title: 'Peak Power',
+					order: 0,
+					component: 'LineChart',
+					dataName: 'peakPower',
+					data: {
+						columns: [
+							[
+								'x',
+								'3-sec',
+								'10-sec',
+								'30-sec',
+								'1-min',
+								'20-min',
+							],
+						],
+					},
+				},
 			],
 			userCharts: [],
 			dateRange: {
@@ -45,7 +63,7 @@ export default {
 			chart.order = state.userCharts.length;
 			state.userCharts.push(chart);
 		},
-		// change data for all displayed charts with datename
+		// change data for all displayed charts with dataName
 		changeUserChartData(state, payload) {
 			state.userCharts.forEach(chart => {
 				if (chart.dataName == payload.name)

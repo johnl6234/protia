@@ -19,14 +19,11 @@ router.post('/:userId', async (req, res, next) => {
 			}
 			for (file of parsedFiles) {
 				file.owner = ObjectId(userId);
-				// for test use with old files
-				//file.date = file.date.replace('2019', '2022')
-				//file.dateStamp = new Date(file.date)
 			}
-			db.collection('activities').insertMany(parsedFiles);
+			await db.collection('activities').insertMany(parsedFiles);
+			client.close();
 		})
 		.then(result => {
-			client.close();
 			res.send(result);
 		});
 	res.end();

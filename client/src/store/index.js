@@ -18,7 +18,6 @@ const store = createStore({
 	state() {
 		return {
 			loggedIn: false, // TODO set true for testing
-
 			mapPoint: 0,
 		};
 	},
@@ -59,7 +58,6 @@ const store = createStore({
 							res.data.accessToken
 						);
 						context.commit('login');
-						console.log('login payload', res.data);
 						context.dispatch('setUserData', res.data.user);
 						router.push({ path: '/' });
 					} else {

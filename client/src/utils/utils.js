@@ -48,15 +48,6 @@ const objectToColumns = object => {
 	}
 	return columns;
 };
-const zones = {
-	name: 'heart_rate',
-	// maximum value
-	z1: 135,
-	z2: 150,
-	z3: 156,
-	z4: 167,
-	z5: 255,
-};
 
 export function makeId(length) {
 	var result = '';
@@ -69,4 +60,28 @@ export function makeId(length) {
 		);
 	}
 	return result;
+}
+// data = [3,34,32,2,34,5,4,7,6,47,5,8,5,4,4,3,5,,57,6,4,3,5,23,23,5,6,]
+export function GetPeak(data, overTime) {
+	// data to be an array of values
+	// overTime to be number of seconds to average over
+	let dataArray = data.filter(
+		el => el !== 'undefined' && el != 0 && el != 65535
+	);
+	//iterate over data array
+	let peaks = [];
+	if (dataArray.length < overTime) {
+		console.log('no data', dataArray);
+		return;
+	}
+	for (let i = overTime; i < dataArray.length; i++) {
+		let average = 0;
+		for (let j = 0; j < overTime; j++) {
+			let index = i - j;
+			average += Number(dataArray[index]);
+		}
+		average /= Number(overTime);
+		peaks.push(Math.round(average));
+	}
+	console.log('peak', Math.max(...peaks));
 }
