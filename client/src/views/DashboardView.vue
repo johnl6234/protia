@@ -201,9 +201,20 @@
 				let second3Peaks = GetPeak(powerData, 3);
 				let second10Peaks = GetPeak(powerData, 10);
 				let second30Peaks = GetPeak(powerData, 30);
+				let minutePeaks = GetPeak(powerData, 60);
+				let minute20Peak = GetPeak(powerData, 60 * 60);
 				this.$store.dispatch('setUserChartData', {
 					name: 'peakPower',
-					data: [[second3Peaks, second10Peaks, second30Peaks]],
+					data: [
+						[
+							'data',
+							second3Peaks,
+							second10Peaks,
+							second30Peaks,
+							minutePeaks,
+							minute20Peak,
+						],
+					],
 				});
 				this.loading = false;
 				this.saveChartDataToDB();

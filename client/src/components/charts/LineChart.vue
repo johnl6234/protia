@@ -25,10 +25,20 @@
 						//type: "line",
 						columns: chartData.columns,
 					},
-					zoom: {
-						// for ESM import usage, import 'zoom' module and execute it as
-						// enabled: zoom()
-						enabled: true,
+					axis: {
+						x: {
+							tick: {
+								fit: true,
+								//culling: false,
+								values: [
+									'3-sec',
+									'10-sec',
+									'30-sec',
+									'1-min',
+									'20-min',
+								],
+							},
+						},
 					},
 				});
 			},
@@ -45,6 +55,7 @@
 			},
 		},
 		mounted() {
+			console.log('line init', this.chartData);
 			this.initChart();
 		},
 	};

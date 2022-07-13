@@ -83,5 +83,5 @@ export function GetPeak(data, overTime) {
 		average /= Number(overTime);
 		peaks.push(Math.round(average));
 	}
-	console.log('peak', Math.max(...peaks));
+	return Math.max(...peaks);
 }
