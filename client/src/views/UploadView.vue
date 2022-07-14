@@ -83,7 +83,10 @@
 							this.$store.getters.getUserData._id,
 						formData
 					)
-					.then(res => console.log('res', res));
+					.then(res => {
+						// TODO redirect if uploaded successfully
+						console.log('res', res);
+					});
 			},
 		},
 	};

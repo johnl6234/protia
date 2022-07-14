@@ -79,7 +79,6 @@ const store = createStore({
 				.then(res => {
 					if (res.data.success) {
 						context.commit('login');
-						console.log('auto login payload', res.data);
 						context.dispatch('setUserData', res.data.user);
 						router.push({ path: '/' });
 					}

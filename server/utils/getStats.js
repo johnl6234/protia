@@ -1,5 +1,4 @@
 const GetStats = activities => {
-	//console.log('ACTIVITIES', activities)
 	let CTL = 0;
 	let ATL = 0;
 	let TSB = 0;

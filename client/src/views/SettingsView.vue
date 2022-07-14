@@ -132,19 +132,16 @@
 						data
 					)
 					.then(response => {
-						console.log('saved', response.data);
 						if (response.data.modifiedCount > 0) {
 							this.$store.commit('setUserData', data);
 							this.$store.commit('setHasUnsavedChanges', false);
 							this.message = 'Data Saved Successfully';
-							console.log('data saved');
 							this.$flash({
 								type: 'success',
 								title: 'Success',
 								message: 'Data Saved Successfully',
 							});
 						} else {
-							console.log('data failed to save');
 							this.$flash({
 								type: 'error',
 								title: 'Error',

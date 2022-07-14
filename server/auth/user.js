@@ -18,7 +18,6 @@ router.post('/', function (req, res, next) {
 					success: 'Logged in successfully',
 					user: user,
 				};
-				console.log('auto data', data);
 				res.send(data);
 			}
 		}

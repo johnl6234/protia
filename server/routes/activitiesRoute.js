@@ -63,7 +63,6 @@ router.post('/delete', async (req, res, next) => {
 // get activity by Id
 router.get('/activity/:id', async (req, res, next) => {
 	const { id } = req.params;
-	console.log('id', id);
 	let activity = null;
 	await MongoClient.connect(process.env.MONGODB, {
 		useUnifiedTopology: true,
@@ -82,7 +81,6 @@ router.get('/activity/:id', async (req, res, next) => {
 // get all activities
 router.get('/:userId', async (req, res, next) => {
 	const { userId } = req.params;
-	console.log('user', userId);
 	let activities = null;
 	await MongoClient.connect(process.env.MONGODB, {
 		useUnifiedTopology: true,

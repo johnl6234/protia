@@ -165,7 +165,6 @@
 						}
 					)
 					.then(res => {
-						console.log('res', res.data);
 						this.$store.dispatch('setUserChartData', {
 							name: 'heart_rate',
 							data: res.data.timeInZones.timeInHeartZones,
@@ -211,11 +210,6 @@
 			},
 			chartList() {
 				return this.$store.getters.getChartList;
-			},
-		},
-		watch: {
-			userCharts(newVal, oldVal) {
-				console.log('new', newVal, 'old', oldVal);
 			},
 		},
 		mounted() {

@@ -5,9 +5,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const parseFit = require('../utils/parseFit');
 
 router.post('/:userId', async (req, res, next) => {
-	console.log('REQ files', req.files);
 	const { userId } = req.params;
-	console.log('upload', userId);
 	MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true })
 		.then(async client => {
 			const db = client.db('training');

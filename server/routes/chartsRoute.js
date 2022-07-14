@@ -4,7 +4,6 @@ const { MongoClient, ObjectId } = require('mongodb');
 
 router.get('/:userId', (req, res, next) => {
 	const { userId } = req.params;
-	console.log('userId', userId);
 	MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true }).then(
 		async client => {
 			const db = client.db('training');
@@ -13,10 +12,8 @@ router.get('/:userId', (req, res, next) => {
 				.findOne({ owner: ObjectId(userId) });
 			client.close();
 			if (userCharts) {
-				console.log('charts res', userCharts);
 				res.send(userCharts);
 			} else {
-				console.log('non found');
 				res.send(null);
 			}
 		}
@@ -43,7 +40,6 @@ router.post('/:userId', (req, res, next) => {
 				.then(response => {
 					client.close();
 					if (response) {
-						console.log('charts', response);
 						res.send(response);
 					} else res.send(null);
 				});
