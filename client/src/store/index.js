@@ -17,7 +17,7 @@ const store = createStore({
 	},
 	state() {
 		return {
-			loggedIn: false, // TODO set true for testing
+			loggedIn: false, // set true for testing
 			mapPoint: 0,
 		};
 	},

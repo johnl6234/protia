@@ -75,7 +75,6 @@
 	import axios from 'axios';
 	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
-	import { GetPeak, getTimeInZones } from '../utils/utils';
 	import BaseOverlay from '../components/base/BaseOverlay.vue';
 	import ChartListDrop from '../components/dashboard/ChartListDrop.vue';
 
