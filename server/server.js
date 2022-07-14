@@ -18,7 +18,6 @@ const verifyToken = require('./middleware/authJwt');
 const TokenLogin = require('./auth/user');
 
 const uploadRouter = require('./routes/uploadRoute');
-const routeRouter = require('./routes/getRoute');
 const activitiesRouter = require('./routes/activitiesRoute');
 const registerRouter = require('./routes/registerRoute');
 const loginRoutes = require('./routes/loginRoute');
@@ -35,7 +34,6 @@ app.use(cors());
 app.use('/auth', verifyToken, TokenLogin);
 app.use('/register', registerRouter);
 app.use('/login', loginRoutes);
-app.use('/route', routeRouter);
 app.use('/user', userRoutes);
 app.use('/activities', activitiesRouter);
 app.use('/stats', statsRoutes);

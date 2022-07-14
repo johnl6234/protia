@@ -11,10 +11,14 @@ router.post('/:userId', async (req, res, next) => {
 	MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true })
 		.then(async client => {
 			const db = client.db('training');
+			let user = await db
+				.collection('users')
+				.findOne({ _id: ObjectId(userId) });
+			if (!user) res.json({ error: 'no user found' });
 			let parsedFiles = [];
 			for (let file of req.files) {
 				let filePath = './uploads/' + file.originalname;
-				let data = await parseFit(filePath);
+				let data = await parseFit(filePath, user.zones);
 				parsedFiles.push(data);
 			}
 			for (file of parsedFiles) {
@@ -26,6 +30,7 @@ router.post('/:userId', async (req, res, next) => {
 		.then(result => {
 			res.send(result);
 		});
+
 	res.end();
 });
 

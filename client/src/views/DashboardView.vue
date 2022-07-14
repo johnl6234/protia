@@ -154,71 +154,42 @@
 			},
 			fetchDataInDateRange() {
 				this.loading = true;
-				let dateRange = this.$store.getters.getDateRange;
+				let data = this.$store.getters.getDateRange.range;
+				data.userId = this.$store.getters.getUserId;
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
 							'activities/dateRange',
-						{ params: dateRange.range }
+						{
+							params: data,
+						}
 					)
 					.then(res => {
-						this.groupChartData(res.data.activities);
+						console.log('res', res.data);
+						this.$store.dispatch('setUserChartData', {
+							name: 'heart_rate',
+							data: res.data.timeInZones.timeInHeartZones,
+						});
+						this.$store.dispatch('setUserChartData', {
+							name: 'power',
+							data: res.data.timeInZones.timeInPowerZones,
+						});
+
+						let peaks = Object.keys(res.data.peaks).reduce(
+							(arr, e) => {
+								arr.push(res.data.peaks[e]);
+								return arr;
+							},
+							[]
+						);
+						this.$store.dispatch('setUserChartData', {
+							name: 'peakPower',
+							data: [['data', ...peaks]],
+						});
+						this.loading = false;
 					});
 			},
-			groupChartData(chartDataInRange) {
-				const zones = this.$store.getters.getZones;
-				let heartData = [];
-				let powerData = [];
-				chartDataInRange.forEach(activity => {
-					heartData.push(...activity.heart_rate);
-					powerData.push(...activity.power);
-				});
 
-				let sortedHeartData = getTimeInZones(
-					'heart_rate',
-					zones.heart_rate,
-					heartData
-				);
-				let sortedPowerData = getTimeInZones(
-					'power',
-					zones.power,
-					powerData
-				);
-
-				this.$store.dispatch('setUserChartData', {
-					name: 'heart_rate',
-					data: sortedHeartData,
-				});
-				this.$store.dispatch('setUserChartData', {
-					name: 'power',
-					data: sortedPowerData,
-				});
-
-				this.rangedChartData = {
-					heart_rate: sortedHeartData,
-					power: sortedPowerData,
-				};
-				let second3Peaks = GetPeak(powerData, 3);
-				let second10Peaks = GetPeak(powerData, 10);
-				let second30Peaks = GetPeak(powerData, 30);
-				let minutePeaks = GetPeak(powerData, 60);
-				let minute20Peak = GetPeak(powerData, 60 * 60);
-				this.$store.dispatch('setUserChartData', {
-					name: 'peakPower',
-					data: [
-						[
-							'data',
-							second3Peaks,
-							second10Peaks,
-							second30Peaks,
-							minutePeaks,
-							minute20Peak,
-						],
-					],
-				});
-				this.loading = false;
-				this.saveChartDataToDB();
-			},
 			removeChart(index) {
 				this.$store.dispatch('removeChart', index);
 				this.saveChartDataToDB();
