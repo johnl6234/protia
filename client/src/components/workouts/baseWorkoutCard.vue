@@ -37,7 +37,7 @@
 </template>
 
 <script>
-	import BaseWorkoutEdit from './baseWorkoutEdit.vue';
+	import BaseWorkoutEdit from './BaseWorkoutEdit.vue';
 	export default {
 		name: 'workout-card',
 		props: ['lap'],

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-	import baseWorkoutCard from '../components/workouts/baseWorkoutCard.vue';
+	import baseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
 	import { makeId } from '../utils/utils';
 	export default {
 		props: ['date'],
