@@ -40,7 +40,6 @@
 		},
 		methods: {
 			changeFTP() {
-				console.log('change FTP');
 				const newPowerZones = [
 					{
 						number: 1,
@@ -90,7 +89,6 @@
 		},
 		watch: {
 			zones(newZones) {
-				console.log('changed zones');
 				this.powerZones = newZones;
 			},
 		},
@@ -100,7 +98,6 @@
 			},
 		},
 		created() {
-			console.log('power', this.zones);
 			this.powerZones = this.zones;
 			this.FTP = this.$store.getters.getFtp;
 		},

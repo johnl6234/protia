@@ -55,7 +55,6 @@
 		},
 		methods: {
 			changeLTHR() {
-				console.log('change LTHR');
 				const newHrZones = [
 					{
 						number: 1,
@@ -100,7 +99,6 @@
 		},
 		watch: {
 			zones(newZones) {
-				console.log('changed zones');
 				this.hrZones = newZones;
 			},
 		},

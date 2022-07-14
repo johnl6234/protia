@@ -127,7 +127,6 @@
 				}
 			},
 			ValidateEmail(email) {
-				console.log(email);
 				return String(email)
 					.toLowerCase()
 					.match(
@@ -135,7 +134,6 @@
 					);
 			},
 			RegisterUser() {
-				console.log('register');
 				const data = {
 					username: this.username,
 					email: this.email.trim().toLowerCase(),

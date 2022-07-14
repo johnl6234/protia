@@ -92,7 +92,6 @@ export default {
 	},
 	actions: {
 		setUserData(context, payload) {
-			console.log('userdata', payload);
 			context.commit('setInitialZones', payload.zones);
 			context.commit('setMaxHr', payload.maxHr);
 			context.commit('setLtThreshold', Number(payload.ltThreshold));

@@ -17,7 +17,7 @@ const store = createStore({
 	},
 	state() {
 		return {
-			loggedIn: false, // TODO set true for testing
+			loggedIn: false, // set true for testing
 			mapPoint: 0,
 		};
 	},
@@ -79,7 +79,6 @@ const store = createStore({
 				.then(res => {
 					if (res.data.success) {
 						context.commit('login');
-						console.log('auto login payload', res.data);
 						context.dispatch('setUserData', res.data.user);
 						router.push({ path: '/' });
 					}

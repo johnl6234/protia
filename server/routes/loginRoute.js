@@ -19,8 +19,6 @@ router.post('/', async (req, res, next) => {
 					function (err, pass, salt, hash) {
 						if (err) return fn(err);
 						if (hash === user.hash) {
-							console.log('User data', user);
-							console.log('SUCCESS');
 							var token = jwt.sign(
 								{ id: user._id },
 								process.env.JWT_SECRET,
@@ -34,7 +32,6 @@ router.post('/', async (req, res, next) => {
 								accessToken: token,
 							});
 						} else {
-							console.log('FAILED');
 							res.send({ error: 'Invalid Username or Password' });
 						}
 					}

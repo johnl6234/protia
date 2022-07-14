@@ -62,7 +62,6 @@
 		},
 		watch: {
 			zoneData(newVal, oldVal) {
-				console.log('new zoneData', newVal, 'old', oldVal);
 				this.zone = newVal;
 			},
 		},

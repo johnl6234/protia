@@ -47,7 +47,6 @@
 					import.meta.env.VITE_SERVER_URI +
 					'stats/' +
 					this.$store.getters.getUserId;
-				console.log('url', url);
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
@@ -55,7 +54,6 @@
 							this.$store.getters.getUserId
 					)
 					.then(response => {
-						console.log('stats', response.data);
 						this.stats = response.data;
 					});
 			},

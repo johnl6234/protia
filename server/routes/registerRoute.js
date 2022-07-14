@@ -5,7 +5,6 @@ const hash = require('pbkdf2-password')();
 
 // get all activities
 router.post('/', async (req, res, next) => {
-	console.log('REQ register', req.body);
 	const { username, password, email } = req.body;
 	let userData = {
 		username: username,

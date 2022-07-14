@@ -46,7 +46,6 @@
 		watch: {
 			chartData: {
 				handler(newValue, oldValue) {
-					console.log('new line chart data', newValue);
 					this.chart.load({
 						columns: this.chartData.columns,
 					});
@@ -55,7 +54,6 @@
 			},
 		},
 		mounted() {
-			console.log('line init', this.chartData);
 			this.initChart();
 		},
 	};
