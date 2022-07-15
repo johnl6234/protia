@@ -78,7 +78,7 @@
 
 <script>
 	import baseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
-	import { makeId } from '../utils/utils';
+	import { makeId, moveInArray } from '../utils/utils';
 	import Pencil from 'vue-material-design-icons/Pencil.vue';
 	import Close from 'vue-material-design-icons/Close.vue';
 	import Check from 'vue-material-design-icons/Check.vue';
@@ -154,24 +154,11 @@
 				}
 				let droppedId = evt.dataTransfer.getData('itemID');
 				const elementId = element.title;
-				this.moveInArray(droppedId, elementId);
-			},
-			moveInArray(movingId, placeId) {
-				let laps = this.workout.laps.map(lap => lap);
-				let placeLap = laps.find(el => el.id == placeId);
-				let toOrder;
-				if (placeLap) toOrder = placeLap.order;
-				else toOrder = this.workout.laps.length + 1;
-				laps.forEach(lap => {
-					if (lap.order >= toOrder && lap.id != movingId) lap.order++;
-				});
-
-				let droppedChart = laps.find(el => el.id == movingId);
-				droppedChart.order = toOrder;
-				laps.sort((a, b) => a.order - b.order);
-				// adjust order from 0 - length
-				laps.forEach((lap, index) => (lap.order = index + 1));
-				this.workout.laps = laps;
+				this.workout.laps = moveInArray(
+					droppedId,
+					elementId,
+					this.workout.laps
+				);
 			},
 			addLap() {
 				console.log('add lap');

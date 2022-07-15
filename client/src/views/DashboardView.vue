@@ -69,14 +69,15 @@
 </template>
 
 <script>
+	import axios from 'axios';
+	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import LineChart from '../components/charts/LineChart.vue';
 	import BarChart from '../components/charts/BarChart.vue';
 	import PieChart from '../components/charts/PieChart.vue';
-	import axios from 'axios';
-	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
 	import DateRange from '../components/dashboard/DateRange.vue';
 	import BaseOverlay from '../components/base/BaseOverlay.vue';
 	import ChartListDrop from '../components/dashboard/ChartListDrop.vue';
+	import { moveInArray } from '../utils/utils';
 
 	export default {
 		name: 'dashboard-page',
@@ -109,26 +110,10 @@
 				}
 				let droppedId = evt.dataTransfer.getData('itemID');
 				const elementId = element.title;
-				this.moveInArray(droppedId, elementId);
-			},
-			moveInArray(movingId, placeId) {
-				let chartsArray = this.$store.getters.getUserCharts.map(
-					chart => chart
-				);
-				let placeChart = chartsArray.find(el => el.id == placeId);
-				let toOrder;
-				if (placeChart) toOrder = placeChart.order;
-				else toOrder = this.$store.getters.getUserChartsLength + 1;
-				chartsArray.forEach(chart => {
-					if (chart.order >= toOrder && chart.id != movingId)
-						chart.order++;
-				});
-
-				let droppedChart = chartsArray.find(el => el.id == movingId);
-				droppedChart.order = toOrder;
-				chartsArray.sort((a, b) => a.order - b.order);
-				chartsArray.forEach(
-					(chart, index) => (chart.order = index + 1)
+				let chartsArray = moveInArray(
+					droppedId,
+					elementId,
+					this.$store.getters.getUserCharts
 				);
 				this.$store.dispatch('setUserCharts', chartsArray);
 			},
@@ -172,7 +157,6 @@
 							name: 'power',
 							data: res.data.timeInZones.timeInPowerZones,
 						});
-
 						let peaks = Object.keys(res.data.peaks).reduce(
 							(arr, e) => {
 								arr.push(res.data.peaks[e]);
