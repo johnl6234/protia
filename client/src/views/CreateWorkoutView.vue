@@ -3,9 +3,39 @@
 		<h1 class="border-b text-blue-500 text-xl font-light border-zinc-400">
 			Create Workout
 		</h1>
-		<div class="flex flex-row pt-12 pr-5">
+		<div class="mx-20 pt-12 mb-3 grid grid-cols-6 border-b border-zinc-400">
+			<div class="col-span-4">
+				<div v-if="editTitle" class="flex flex-row">
+					<input v-model="editedTitle" />
+					<button @click="saveTitle">
+						<Check />
+					</button>
+					<button @click="cancelEditTitle">
+						<Close />
+					</button>
+				</div>
+				<div v-else class="flex flex-row">
+					<span class="text-lg">{{ workout.title }}</span>
+					<span class="ml-5 cursor-pointer" @click="toggleEditTitle"
+						><Pencil fillColor="rgb(59 130 246)"
+					/></span>
+				</div>
+			</div>
+			<div class="col-span-2 mb-2">
+				<button
+					class="bg-zinc-300 text-black px-3 py-1 rounded-md mr-3"
+				>
+					cancel
+				</button>
+				<button class="bg-blue-500 text-white px-3 py-1 rounded-md">
+					Save
+				</button>
+			</div>
+		</div>
+
+		<div class="grid grid-cols-12 pr-5">
 			<div
-				class="w-4/6"
+				class="col-span-8"
 				@drop="onDrop($event, 1)"
 				@dragover.prevent
 				@dragenter.prevent
@@ -29,7 +59,7 @@
 					/>
 				</div>
 			</div>
-			<div class="w-2/6">
+			<div class="col-span-4">
 				<div>
 					<button @click.prevent="addLap">Add lap</button>
 				</div>
@@ -49,11 +79,17 @@
 <script>
 	import baseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
 	import { makeId } from '../utils/utils';
+	import Pencil from 'vue-material-design-icons/Pencil.vue';
+	import Close from 'vue-material-design-icons/Close.vue';
+	import Check from 'vue-material-design-icons/Check.vue';
+
 	export default {
 		props: ['date'],
-		components: { baseWorkoutCard },
+		components: { baseWorkoutCard, Pencil, Close, Check },
 		data() {
 			return {
+				editTitle: false,
+				editedTitle: 'Test Workout',
 				workoutDate: null,
 				defaultLap: {
 					order: 0,
@@ -66,7 +102,7 @@
 				},
 				workout: {
 					_id: makeId(5),
-					title: 'Test Workout',
+					title: 'New Workout',
 					startDate: this.workoutDate,
 					classes: ['workout'],
 					description: 'Description of Workout',
@@ -154,6 +190,17 @@
 				lap.durationType = event.durationType;
 				lap.targetType = event.targetType;
 				console.log('edit', lapId, event);
+			},
+			toggleEditTitle() {
+				this.editTitle = !this.editTitle;
+			},
+			saveTitle() {
+				this.workout.title = this.editedTitle;
+				this.toggleEditTitle();
+			},
+			cancelEditTitle() {
+				this.editedTitle = this.workout.title;
+				this.toggleEditTitle();
 			},
 		},
 		computed: {

@@ -7,7 +7,6 @@
 			v-model="lapType"
 			@showOptions="showOptions"
 		/>
-
 		<BaseSelect
 			:title="'Duration'"
 			:typeOptions="durationTypes"
