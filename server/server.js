@@ -20,10 +20,12 @@ const TokenLogin = require('./auth/user');
 const uploadRouter = require('./routes/uploadRoute');
 const activitiesRouter = require('./routes/activitiesRoute');
 const registerRouter = require('./routes/registerRoute');
-const loginRoutes = require('./routes/loginRoute');
-const statsRoutes = require('./routes/statsRoute');
+const loginRouter = require('./routes/loginRoute');
+const statsRouter = require('./routes/statsRoute');
 const chartsRouter = require('./routes/chartsRoute');
-const userRoutes = require('./routes/userRoute');
+const userRouter = require('./routes/userRoute');
+const workoutRouter = require('./routes/workoutsRoute');
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,11 +35,12 @@ app.use(cors());
 
 app.use('/auth', verifyToken, TokenLogin);
 app.use('/register', registerRouter);
-app.use('/login', loginRoutes);
-app.use('/user', userRoutes);
+app.use('/login', loginRouter);
+app.use('/user', userRouter);
 app.use('/activities', activitiesRouter);
-app.use('/stats', statsRoutes);
+app.use('/stats', statsRouter);
 app.use('/charts', chartsRouter);
+app.use('/workouts', workoutRouter);
 app.use('/upload', upload.array('file', 10), uploadRouter);
 
 // catch 404 and forward to error handler

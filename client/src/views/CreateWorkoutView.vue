@@ -27,7 +27,10 @@
 				>
 					cancel
 				</button>
-				<button class="bg-blue-500 text-white px-3 py-1 rounded-md">
+				<button
+					@click="saveWorkout"
+					class="bg-blue-500 text-white px-3 py-1 rounded-md"
+				>
 					Save
 				</button>
 			</div>
@@ -61,7 +64,12 @@
 			</div>
 			<div class="col-span-4">
 				<div>
-					<button @click.prevent="addLap">Add lap</button>
+					<button
+						class="bg-blue-500 text-white px-3 py-0.5 rounded-md"
+						@click.prevent="addLap"
+					>
+						Add lap
+					</button>
 				</div>
 				<div class="flex flex-row mb-2">
 					<div class="font-bold mr-3">Duration:</div>
@@ -91,54 +99,7 @@
 				editTitle: false,
 				editedTitle: 'Test Workout',
 				workoutDate: null,
-				defaultLap: {
-					order: 0,
-					lapType: 'active', // [warmup,coolDown,active,rest]
-					targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
-					target: '2', // target zone
-					durationType: 'time', // duration of lap
-					duration: '60', // duration of lap
-					description: 'Description on Lap',
-				},
-				workout: {
-					_id: makeId(5),
-					title: 'New Workout',
-					startDate: this.workoutDate,
-					classes: ['workout'],
-					description: 'Description of Workout',
-					laps: [
-						{
-							id: makeId(5),
-							order: 0,
-							lapType: 'warmup', // [warmup,coolDown,active,rest]
-							targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
-							target: '2', // target zone
-							durationType: 'time', // duration of lap
-							duration: '60', // duration of lap
-							description: 'Description on Lap',
-						},
-						{
-							id: makeId(5),
-							order: 1,
-							lapType: 'active', // [warmup,coolDown,active,rest]
-							targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
-							target: '2', // target zone
-							durationType: 'time', // duration of lap
-							duration: '60', // duration of lap
-							description: 'Description on Lap',
-						},
-						{
-							id: makeId(5),
-							order: 2,
-							lapType: 'coolDown', // [warmup,coolDown,active,rest]
-							targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
-							target: '2', // target zone
-							durationType: 'time', // duration of lap
-							duration: '60', // duration of lap
-							description: 'Description on Lap',
-						},
-					],
-				},
+				workout: {},
 			};
 		},
 		methods: {
@@ -161,7 +122,6 @@
 				);
 			},
 			addLap() {
-				console.log('add lap');
 				let newLap = Object.create(this.defaultLap);
 				newLap.id = makeId(5);
 				newLap.order = this.workout.laps.length + 1;
@@ -189,6 +149,14 @@
 				this.editedTitle = this.workout.title;
 				this.toggleEditTitle();
 			},
+			saveWorkout() {
+				console.log(this.workout);
+				this.$store.dispatch('addToUserWorkouts', this.workout);
+				console.log(
+					'all workouts',
+					this.$store.getters.getUserWorkouts
+				);
+			},
 		},
 		computed: {
 			totalDuration() {
@@ -198,12 +166,16 @@
 				});
 				return totalTime;
 			},
+			defaultLap() {
+				return this.$store.getters.getDefaultLap;
+			},
 		},
 		created() {
-			if (this.date) this.workoutDate = this.date;
-			else this.workoutDate = new Date();
-			console.log('date', this.workoutDate);
-			console.log('params', this.$route.params.type);
+			// if (this.date) this.workoutDate = this.date;
+			// else this.workoutDate = new Date();
+			this.workout = { ...this.$store.getters.getDefaultWorkout };
+			this.workout.laps.forEach(lap => (lap.id = makeId(5)));
+			this.workout.startDate = new Date();
 		},
 	};
 </script>
