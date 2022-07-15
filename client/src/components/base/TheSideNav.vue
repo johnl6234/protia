@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-gray-800 flex px-3">
+	<div class="bg-gray-800 flex px-3 relative">
 		<div class="flex flex-col">
 			<button
 				class="px-3 py-2 rounded-md text-base font-medium text-white"

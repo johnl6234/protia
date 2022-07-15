@@ -10,41 +10,67 @@ export default {
 				description: 'Description of Workout',
 				laps: [
 					{
+						type: 'lap',
 						order: 0,
 						lapType: 'warmup', // [warmup,coolDown,active,rest]
 						targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
 						target: '2', // target zone
 						durationType: 'time', // duration of lap
-						duration: '60', // duration of lap
+						duration: '20', // duration of lap
 						description: 'Description on Lap',
 					},
+					{
+						type: 'lap',
+						order: 1,
+						lapType: 'active',
+						targetType: 'heart_rate_zone',
+						target: '4',
+						durationType: 'time',
+						duration: '30',
+						description: 'Description on Lap',
+					},
+					{
+						type: 'lap',
+						order: 2,
+						lapType: 'coolDown',
+						targetType: 'heart_rate_zone',
+						target: '2',
+						durationType: 'time',
+						duration: '15',
+						description: 'Description on Lap',
+					},
+				],
+			},
+			defaultRepeatLap: {
+				type: 'repeat',
+				steps: [
 					{
 						order: 1,
 						lapType: 'active', // [warmup,coolDown,active,rest]
 						targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
 						target: '2', // target zone
 						durationType: 'time', // duration of lap
-						duration: '60', // duration of lap
+						duration: '10', // duration of lap
 						description: 'Description on Lap',
 					},
 					{
 						order: 2,
-						lapType: 'coolDown', // [warmup,coolDown,active,rest]
+						lapType: 'rest', // [warmup,coolDown,active,rest]
 						targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
 						target: '2', // target zone
 						durationType: 'time', // duration of lap
-						duration: '60', // duration of lap
+						duration: '5', // duration of lap
 						description: 'Description on Lap',
 					},
 				],
 			},
 			defaultLap: {
-				order: 0,
+				type: 'lap',
 				lapType: 'active', // [warmup,coolDown,active,rest]
 				targetType: 'heart_rate_zone', // heart rate zone, power zone, cadence, pace
 				target: '2', // target zone
 				durationType: 'time', // duration of lap
-				duration: '60', // duration of lap
+				duration: '10', // duration of lap
 				description: 'Description on Lap',
 			},
 			userWorkouts: [
@@ -83,6 +109,9 @@ export default {
 		},
 		getDefaultLap(state) {
 			return state.defaultLap;
+		},
+		getDefaultRepeatLap(state) {
+			return state.defaultRepeatLap;
 		},
 		getDefaultWorkout(state) {
 			return state.defaultWorkout;

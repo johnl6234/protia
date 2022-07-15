@@ -10,7 +10,6 @@ export function makeId(length) {
 	}
 	return result;
 }
-
 export const moveInArray = (movingItemId, droppedItemId, passedArray) => {
 	let array = passedArray.map(lap => lap);
 	let placeLap = array.find(el => el.id == droppedItemId);
@@ -26,5 +25,13 @@ export const moveInArray = (movingItemId, droppedItemId, passedArray) => {
 	array.sort((a, b) => a.order - b.order);
 	// adjust order from 0 - length
 	array.forEach((el, index) => (el.order = index + 1));
+	return array;
+};
+
+export const addElement = (array, _default) => {
+	let newElement = { ..._default };
+	newElement.id = makeId(5);
+	newElement.order = array.length + 1;
+	array.push(newElement);
 	return array;
 };

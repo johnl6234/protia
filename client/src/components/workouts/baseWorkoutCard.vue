@@ -1,35 +1,39 @@
 <template>
 	<div
-		class="mb-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md mx-auto"
+		:class="!isOpen ? 'hover:border hover:border-blue-500' : ''"
+		class="mb-3 max-w-sm bg-white rounded-lg shadow-md mx-auto cursor-pointer"
 	>
-		<BaseWorkoutEdit v-if="isEditing" :lap="lap" @saveEdits="saveEdits" />
+		<BaseWorkoutEdit v-if="isOpen" :lap="step" @saveEdits="saveEdits" />
 		<div v-else>
 			<div
-				:class="lap.lapType"
-				class="px-4 py-1 text-slate-50 rounded-t-lg"
+				:class="step.lapType"
+				class="px-4 py-1 text-slate-50 rounded-t-lg grid grid-cols-12"
 			>
-				{{ lap.lapType }}
-				<span class="float-right text-black"
-					><button @click.prevent="$emit('deleteLap')">
-						X
-					</button></span
-				>
-				<span class="float-right mr-3 text-blue-300"
-					><button @click.prevent="toggleEditing">edit</button></span
-				>
+				<div class="col-span-10">
+					{{ step.lapType }}
+				</div>
+				<button @click.prevent="$emit('closeOtherCards', step.id)">
+					edit
+				</button>
+				<button class="text-black flex justify-end">
+					<DeleteOutline @click.prevent="$emit('deleteLap')" />
+				</button>
 			</div>
-			<div class="flex flex-row justify-evenly p-4">
+			<div
+				class="flex flex-row justify-evenly p-4"
+				@click.prevent="$emit('closeOtherCards', step.id)"
+			>
 				<div class="px-6 flex-1 flex-col">
 					<div class="font-bold">
-						{{ lap.durationType.split('_').join(' ') }}
+						{{ step.durationType.split('_').join(' ') }}
 					</div>
-					<div class="">{{ lap.duration }}</div>
+					<div class="">{{ step.duration }}</div>
 				</div>
 				<div class="px-6 flex-1 flex-col">
 					<div class="font-bold">
-						{{ lap.targetType.split('_').join(' ') }}
+						{{ step.targetType.split('_').join(' ') }}
 					</div>
-					<div class="">{{ lap.target }}</div>
+					<div class="">{{ step.target }}</div>
 				</div>
 			</div>
 		</div>
@@ -38,23 +42,30 @@
 
 <script>
 	import BaseWorkoutEdit from './BaseWorkoutEdit.vue';
+	import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
+
 	export default {
 		name: 'workout-card',
-		props: ['lap'],
-		components: { BaseWorkoutEdit },
+		props: ['step', 'openCard'],
+		emits: ['closeOtherCards'],
+		components: {
+			BaseWorkoutEdit,
+			DeleteOutline,
+		},
 		data() {
 			return {
 				isEditing: false,
 			};
 		},
 		methods: {
-			toggleEditing() {
-				this.isEditing = !this.isEditing;
-			},
 			saveEdits(data) {
-				this.toggleEditing();
-				console.log('data', data);
+				this.$emit('closeOtherCards');
 				this.$emit('editLap', data);
+			},
+		},
+		computed: {
+			isOpen() {
+				return this.openCard;
 			},
 		},
 	};
@@ -68,6 +79,9 @@
 	}
 	.coolDown {
 		background-color: dodgerblue;
+	}
+	.rest {
+		background-color: rgb(86, 86, 87);
 	}
 	/* div {
 		border: 1px solid red;

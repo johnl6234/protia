@@ -36,9 +36,9 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-12 pr-5">
+		<div class="grid grid-cols-12 gap-2 pr-5 workout-container">
 			<div
-				class="col-span-8"
+				class="col-span-8 overflow-scroll overflow-x-hidden pb-5"
 				@drop="onDrop($event, 1)"
 				@dragover.prevent
 				@dragenter.prevent
@@ -53,31 +53,53 @@
 					@dragenter.prevent="showDropZone"
 				>
 					<baseWorkoutCard
+						v-if="lap.type === 'lap'"
 						:title="lap.id"
 						draggable="true"
 						@dragstart="startDrag($event, lap)"
-						:lap="lap"
+						:step="lap"
 						@deleteLap="deleteLap(lap.id)"
 						@editLap="editLap(lap.id, $event)"
+						:openCard="openCardId === lap.id"
+						@closeOtherCards="closeOtherCards"
+					/>
+					<baseRepeatCard
+						v-if="lap.type === 'repeat'"
+						:title="lap.id"
+						draggable="true"
+						@dragstart="startDrag($event, lap)"
+						:step="lap"
+						@deleteLap="deleteLap(lap.id)"
+						@editLap="editLap(lap.id, $event)"
+						:openCard="openCardId === lap.id"
+						@closeOtherCards="closeOtherCards"
 					/>
 				</div>
 			</div>
 			<div class="col-span-4">
-				<div>
+				<div class="mb-3">
 					<button
 						class="bg-blue-500 text-white px-3 py-0.5 rounded-md"
-						@click.prevent="addLap"
+						@click.prevent="addLapToArray"
 					>
 						Add lap
 					</button>
+					<button
+						class="bg-blue-500 text-white px-3 py-0.5 rounded-md"
+						@click.prevent="addRepeat"
+					>
+						Add Repeat
+					</button>
 				</div>
-				<div class="flex flex-row mb-2">
-					<div class="font-bold mr-3">Duration:</div>
-					<div>{{ totalDuration }} minutes</div>
-				</div>
-				<div class="mb-2">
-					<div class="font-bold mr-3">Description:</div>
-					<div class="">{{ workout.description }}</div>
+				<div class="shadow-lg p-2 border border-slate-300 rounded-md">
+					<div class="flex flex-row mb-2">
+						<div class="font-bold mr-3">Duration:</div>
+						<div>{{ totalDuration }} minutes</div>
+					</div>
+					<div class="mb-2">
+						<div class="font-bold mr-3">Description:</div>
+						<div class="">{{ workout.description }}</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -86,16 +108,23 @@
 
 <script>
 	import baseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
-	import { makeId, moveInArray } from '../utils/utils';
+	import baseRepeatCard from '../components/workouts/baseRepeatCard.vue';
+	import { makeId, moveInArray, addElement } from '../utils/utils';
 	import Pencil from 'vue-material-design-icons/Pencil.vue';
 	import Close from 'vue-material-design-icons/Close.vue';
 	import Check from 'vue-material-design-icons/Check.vue';
-
 	export default {
 		props: ['date'],
-		components: { baseWorkoutCard, Pencil, Close, Check },
+		components: {
+			baseWorkoutCard,
+			baseRepeatCard,
+			Pencil,
+			Close,
+			Check,
+		},
 		data() {
 			return {
+				openCardId: null,
 				editTitle: false,
 				editedTitle: 'Test Workout',
 				workoutDate: null,
@@ -121,11 +150,11 @@
 					this.workout.laps
 				);
 			},
-			addLap() {
-				let newLap = Object.create(this.defaultLap);
-				newLap.id = makeId(5);
-				newLap.order = this.workout.laps.length + 1;
-				this.workout.laps.push(newLap);
+			addLapToArray() {
+				this.workout.laps = addElement(
+					this.workout.laps,
+					this.defaultLap
+				);
 			},
 			deleteLap(lapId) {
 				let newLaps = this.workout.laps.filter(lap => lap.id !== lapId);
@@ -137,6 +166,18 @@
 				lap.durationType = event.durationType;
 				lap.targetType = event.targetType;
 				console.log('edit', lapId, event);
+			},
+			addRepeat() {
+				let newRepeat = { ...this.defaultRepeatLap };
+				newRepeat.id = makeId(5);
+				newRepeat.order = this.workout.laps.length + 1;
+				let duration = 0;
+				newRepeat.steps.forEach(lap => {
+					duration += Number(lap.duration);
+					lap.id = makeId(5);
+				});
+				newRepeat.duration = duration;
+				this.workout.laps.push(newRepeat);
 			},
 			toggleEditTitle() {
 				this.editTitle = !this.editTitle;
@@ -157,6 +198,9 @@
 					this.$store.getters.getUserWorkouts
 				);
 			},
+			closeOtherCards(cardId) {
+				this.openCardId = cardId;
+			},
 		},
 		computed: {
 			totalDuration() {
@@ -169,6 +213,9 @@
 			defaultLap() {
 				return this.$store.getters.getDefaultLap;
 			},
+			defaultRepeatLap() {
+				return this.$store.getters.getDefaultRepeatLap;
+			},
 		},
 		created() {
 			// if (this.date) this.workoutDate = this.date;
@@ -179,3 +226,9 @@
 		},
 	};
 </script>
+
+<style scoped>
+	.workout-container {
+		height: 77vh;
+	}
+</style>
