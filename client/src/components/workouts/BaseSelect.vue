@@ -5,19 +5,28 @@
 		<select
 			:value="modelValue"
 			@input="$emit('update:modelValue', $event.target.value)"
-			:onchange="$emit('showOptions')"
+			:onchange="
+				$emit('showOptions', {
+					name: modelValue,
+					options: optionsArray,
+				})
+			"
 			class="rounded-md border border-slate-500 p-1 mb-3 block w-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 		>
 			<option value="" disabled>-- Select an option --</option>
-			<option v-for="option in typeOptions" :key="option" :value="option">
-				{{ option.split('_').join(' ') }}
+			<option
+				v-for="option in typeOptions"
+				:key="option.name"
+				:value="option.name"
+			>
+				{{ option.name.split('_').join(' ') }}
 			</option>
 		</select>
 	</div>
 </template>
 <script>
 	export default {
-		props: ['modelValue', 'title', 'type', 'typeOptions'],
-		emits: ['showOptions'],
+		props: ['modelValue', 'title', 'type', 'typeOptions', 'optionsArray'],
+		emits: ['showOptions', 'update:modelValue'],
 	};
 </script>

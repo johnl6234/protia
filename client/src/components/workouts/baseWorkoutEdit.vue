@@ -3,22 +3,30 @@
 		<BaseSelect
 			:title="'Details'"
 			:typeOptions="lapTypes"
+			:optionsArray="'lapTypes'"
 			v-model="lapType"
 			@showOptions="showOptions"
 		/>
+
 		<BaseSelect
 			:title="'Duration'"
 			:typeOptions="durationTypes"
+			:optionsArray="'durationTypes'"
 			v-model="durationType"
 			@showOptions="showOptions"
 		/>
+		<component
+			v-if="durationOptions != null"
+			:is="durationOptions"
+		></component>
 		<BaseSelect
 			:title="'Target'"
 			:typeOptions="targetTypes"
+			:optionsArray="'targetTypes'"
 			v-model="targetType"
 			@showOptions="showOptions"
 		/>
-
+		<component v-if="targetOptions" :is="targetOptions"></component>
 		<div class="flex justify-end">
 			<button
 				@click.prevent="saveLapEdits"
@@ -31,25 +39,39 @@
 </template>
 <script>
 	import BaseSelect from './BaseSelect.vue';
+	import DistanceInput from './inputs/DistanceInput.vue';
+	import TimeInput from './inputs/TimeInput.vue';
+	import HeartRateInput from './inputs/HeartRateInput.vue';
 	export default {
 		name: 'workout-edit',
 		props: ['lap'],
-		components: { BaseSelect },
+		components: { BaseSelect, DistanceInput, TimeInput, HeartRateInput },
 		data() {
 			return {
 				test: null,
-				options: null,
+				durationOptions: null,
+				targetOptions: null,
 				lapType: '',
-				lapTypes: ['warmup', 'coolDown', 'active', 'rest'],
+				lapTypes: [
+					{ name: 'warmup' },
+					{ name: 'coolDown' },
+					{ name: 'active' },
+					{ name: 'rest' },
+				],
 				durationType: '',
 				durationTypes: [
-					'time',
-					'distance',
-					'lap_button_pressed',
-					'heart rate',
+					{ name: 'time', option: TimeInput },
+					{ name: 'distance', option: DistanceInput },
+					{ name: 'lap_button_pressed', option: null },
+					{ name: 'heart rate', option: HeartRateInput },
 				],
 				targetType: '',
-				targetTypes: ['pace', 'cadence', 'heart_rate_zone', 'power'],
+				targetTypes: [
+					{ name: 'pace', option: DistanceInput },
+					{ name: 'cadence', option: DistanceInput },
+					{ name: 'heart_rate_zone', option: DistanceInput },
+					{ name: 'power', option: DistanceInput },
+				],
 			};
 		},
 		methods: {
@@ -61,13 +83,20 @@
 				};
 				this.$emit('saveEdits', data);
 			},
-			showOptions(e) {
-				console.log('event', e);
-			},
-		},
-		watch: {
-			test(val) {
-				console.log('test', val);
+			showOptions(data) {
+				console.log('data', data);
+				if (data.options == 'lapTypes') return;
+				else if (data.options == 'durationTypes') {
+					this.durationOptions = this.durationTypes.find(
+						el => el.name === data.name
+					).option;
+					console.log('duration', data.options);
+				} else if (data.options == 'durationTypes') {
+					this.targetOptions = this.targetTypes.find(
+						el => el.name === data.name
+					).option;
+					console.log('target', data.options);
+				}
 			},
 		},
 		created() {
