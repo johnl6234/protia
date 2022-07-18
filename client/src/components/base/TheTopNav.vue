@@ -4,9 +4,7 @@
 		<!-- Left hand logo -->
 		<div class="inset-y-0 left-0 flex items-center">
 			<router-link :to="{ name: 'home' }"
-				><img
-					class="block h-8 w-auto rounded-md"
-					src="src\assets\images\nav_logo.png"
+				><img class="block h-8 w-auto rounded-md" src="navLogo.png"
 			/></router-link>
 		</div>
 
