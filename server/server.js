@@ -27,19 +27,33 @@ const userRouter = require('./routes/userRoute');
 const workoutRouter = require('./routes/workoutsRoute');
 
 const app = express();
+var whitelist = ['http://localhost:8000', 'http://localhost:8080']; //white list consumers
+var corsOptions = {
+	origin: function (origin, callback) {
+		if (whitelist.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(null, false);
+		}
+	},
+	methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+	optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+	credentials: true, //Credentials are cookies, authorization headers or TLS client certificates.
+	allowedHeaders: [
+		'Content-Type',
+		'Authorization',
+		'X-Requested-With',
+		'device-remember-token',
+		'Access-Control-Allow-Origin',
+		'Origin',
+		'Accept',
+	],
+};
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
-app.use(function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', 'http://localhost:3000/'); // update to match the domain you will make the request from
-	res.header(
-		'Access-Control-Allow-Headers',
-		'Origin, X-Requested-With, Content-Type, Accept'
-	);
-	next();
-});
 
 app.use('/auth', verifyToken, TokenLogin);
 app.use('/register', registerRouter);
