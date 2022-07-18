@@ -64,6 +64,7 @@ app.use('/stats', statsRouter);
 app.use('/charts', chartsRouter);
 app.use('/workouts', workoutRouter);
 app.use('/upload', upload.array('file', 10), uploadRouter);
+app, use('./', indexRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
