@@ -44,16 +44,8 @@ const store = createStore({
 	},
 	actions: {
 		login(context, payload) {
-			var config = {
-				method: 'post',
-				url: import.meta.env.VITE_SERVER_URI + login,
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				data: payload,
-			};
-			axios(config)
-				//.post(import.meta.env.VITE_SERVER_URI + 'login', payload)
+			axios()
+				.post(import.meta.env.VITE_SERVER_URI + 'login', payload)
 				.then(res => {
 					if (res.data.success) {
 						//remove unused data
