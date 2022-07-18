@@ -4,6 +4,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
+	console.log('auth');
 	MongoClient.connect(process.env.MONGODB, { useUnifiedTopology: true }).then(
 		async client => {
 			const db = client.db('training');
