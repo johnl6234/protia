@@ -14,7 +14,7 @@ Using MongoDB, Express and Vue.js
   <h3 align="center">Protia</h3>
 
   <p align="center">
-    A sports training web app. Upload and review .FIT files create workouts 
+    A sports training web app. Upload and review .FIT files create workouts.
   </p>
 </p>
 
