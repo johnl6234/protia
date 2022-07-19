@@ -16,7 +16,7 @@
 					name: item.to,
 					params: item.params,
 				}"
-				class="px-3 py-2 rounded-md text-base font-medium text-gray-500 flex flex-row"
+				class="nav-link px-3 py-2 rounded-md text-base font-medium text-gray-500 flex flex-row"
 				:aria-current="item.current ? 'page' : undefined"
 				><component :is="item.icon" />
 				<span v-if="sideBarOpen" class="pl-3">{{
@@ -29,28 +29,14 @@
 
 <script>
 	import { markRaw } from 'vue';
-	import { defineAsyncComponent } from 'vue';
-	const HomeOutline = defineAsyncComponent(() =>
-		import('vue-material-design-icons/HomeOutline.vue')
-	);
-	const CalendarMonthOutline = defineAsyncComponent(() =>
-		import('vue-material-design-icons/CalendarMonthOutline.vue')
-	);
-	const ViewDashboardOutline = defineAsyncComponent(() =>
-		import('vue-material-design-icons/ViewDashboardOutline.vue')
-	);
-	const ArrowCollapseLeft = defineAsyncComponent(() =>
-		import('vue-material-design-icons/ArrowCollapseLeft.vue')
-	);
-	const ArrowExpandRight = defineAsyncComponent(() =>
-		import('vue-material-design-icons/ArrowExpandRight.vue')
-	);
-	const ChartLine = defineAsyncComponent(() =>
-		import('vue-material-design-icons/ChartLine.vue')
-	);
-	const Dumbell = defineAsyncComponent(() =>
-		import('vue-material-design-icons/Dumbbell.vue')
-	);
+	import HomeOutline from 'vue-material-design-icons/HomeOutline.vue';
+	import CalendarMonthOutline from 'vue-material-design-icons/CalendarMonthOutline.vue';
+	import ViewDashboardOutline from 'vue-material-design-icons/ViewDashboardOutline.vue';
+	import ArrowCollapseLeft from 'vue-material-design-icons/ArrowCollapseLeft.vue';
+	import ArrowExpandRight from 'vue-material-design-icons/ArrowExpandRight.vue';
+	import ChartLine from 'vue-material-design-icons/ChartLine.vue';
+	import DumbBell from 'vue-material-design-icons/Dumbbell.vue';
+
 	export default {
 		name: 'side-nav',
 		components: {
@@ -58,7 +44,7 @@
 			CalendarMonthOutline,
 			ViewDashboardOutline,
 			ChartLine,
-			Dumbell,
+			DumbBell,
 			ArrowExpandRight,
 			ArrowCollapseLeft,
 		},
@@ -85,7 +71,7 @@
 					{
 						name: 'Create Workout',
 						to: 'createWorkout',
-						icon: markRaw(Dumbell),
+						icon: markRaw(DumbBell),
 						params: {
 							type: 'run',
 						},
@@ -111,7 +97,6 @@
 			});
 			this.onResize();
 		},
-
 		beforeDestroy() {
 			window.removeEventListener('resize', this.onResize);
 		},

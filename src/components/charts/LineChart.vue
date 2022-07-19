@@ -20,9 +20,7 @@
 				this.chart = bb.generate({
 					bindto: `#${chartId}`,
 					data: {
-						// for ESM import usage, import 'line' module and execute it as
 						type: line(),
-						//type: "line",
 						columns: chartData.columns,
 					},
 					axis: {
@@ -47,7 +45,7 @@
 			chartData: {
 				handler(newValue, oldValue) {
 					this.chart.load({
-						columns: this.chartData.columns,
+						columns: newValue.columns,
 					});
 				},
 				deep: true,

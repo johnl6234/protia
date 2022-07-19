@@ -36,7 +36,7 @@
 						<span class="sr-only">Open user menu</span>
 						<img
 							class="h-8 w-8 rounded-full"
-							src="src\assets\images\avatar.jpg"
+							:src="imgSrc"
 							alt=""
 						/>
 					</MenuButton>
@@ -100,6 +100,7 @@
 	export default {
 		data() {
 			return {
+				imgSrc: './src/assets/images/avatar.jpg',
 				loggedIn: false,
 			};
 		},
