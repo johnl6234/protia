@@ -44,7 +44,7 @@ const store = createStore({
 	},
 	actions: {
 		login(context, payload) {
-			axios()
+			axios
 				.post(import.meta.env.VITE_SERVER_URI + 'login', payload)
 				.then(res => {
 					if (res.data.success) {

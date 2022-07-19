@@ -132,5 +132,24 @@ export default {
 				}
 			);
 		},
+		async getUserWorkouts(context, payload) {
+			axios
+				.get(
+					import.meta.env.VITE_SERVER_URI +
+						'workouts/' +
+						context.getters.getUserId
+				)
+				.then(res => {
+					console.log('workouts', res.data);
+					if (res.data && res.data.length) {
+						res.data.forEach(workout => {
+							context.commit(
+								'addToUserWorkouts',
+								workout.workout
+							);
+						});
+					}
+				});
+		},
 	},
 };
