@@ -17,11 +17,15 @@ const store = createStore({
 	},
 	state() {
 		return {
+			loading: false,
 			loggedIn: false, // set true for testing
 			mapPoint: 0,
 		};
 	},
 	mutations: {
+		setIsLoading(state, payload) {
+			state.loading = payload;
+		},
 		login(state) {
 			state.loggedIn = true;
 		},
@@ -34,6 +38,9 @@ const store = createStore({
 		},
 	},
 	getters: {
+		isLoading(state) {
+			return state.loading;
+		},
 		isLoggedIn(state) {
 			return state.loggedIn;
 		},

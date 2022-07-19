@@ -1,12 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import CalendarView from '../views/CalendarView.vue';
-import DashboardView from '../views/DashboardView.vue';
-import ProgressView from '../views/ProgressView.vue';
-import AuthView from '../views/AuthView.vue';
-import SettingsView from '../views/SettingsView.vue';
-import UploadView from '../views/UploadView.vue';
-import CreateWorkoutView from '../views/CreateWorkoutView.vue';
+import store from '../store';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,40 +13,48 @@ const router = createRouter({
 		{
 			path: '/calendar',
 			name: 'calendar',
-			component: CalendarView,
+			component: () => import('../views/CalendarView.vue'),
 		},
 		{
 			path: '/dashboard',
 			name: 'dashboard',
-			component: DashboardView,
+			component: () => import('../views/DashboardView.vue'),
 		},
 		{
 			path: '/progress',
 			name: 'progress',
-			component: ProgressView,
+			component: () => import('../views/ProgressView.vue'),
 		},
 		{
 			path: '/auth',
 			name: 'auth',
-			component: AuthView,
+			component: () => import('../views/AuthView.vue'),
 		},
 		{
 			path: '/settings',
 			name: 'settings',
-			component: SettingsView,
+			component: () => import('../views/SettingsView.vue'),
 		},
 		{
 			path: '/upload',
 			name: 'upload',
-			component: UploadView,
+			component: () => import('../views/UploadView.vue'),
 		},
 		{
 			path: '/createWorkout/:type',
 			name: 'createWorkout',
-			component: CreateWorkoutView,
+			component: () => import('../views/CreateWorkoutView.vue'),
 			props: true,
 		},
 	],
+});
+
+router.beforeEach((to, from, next) => {
+	store.commit('setIsLoading', true);
+	next();
+});
+router.afterEach(() => {
+	store.commit('setIsLoading', false);
 });
 
 export default router;

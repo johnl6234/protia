@@ -38,8 +38,11 @@
 </template>
 
 <script setup>
+	import { defineAsyncComponent } from 'vue';
 	import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-	import ChartBar from 'vue-material-design-icons/ChartBar.vue';
+	const ChartBar = defineAsyncComponent(() =>
+		import('vue-material-design-icons/ChartBar.vue')
+	);
 </script>
 
 <script>

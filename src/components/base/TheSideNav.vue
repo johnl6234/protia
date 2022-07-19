@@ -27,20 +27,41 @@
 	</div>
 </template>
 
-<script setup>
-	import HomeOutline from 'vue-material-design-icons/HomeOutline.vue';
-	import CalendarMonthOutline from 'vue-material-design-icons/CalendarMonthOutline.vue';
-	import ViewDashboardOutline from 'vue-material-design-icons/ViewDashboardOutline.vue';
-	import ArrowCollapseLeft from 'vue-material-design-icons/ArrowCollapseLeft.vue';
-	import ArrowExpandRight from 'vue-material-design-icons/ArrowExpandRight.vue';
-	import ChartLine from 'vue-material-design-icons/ChartLine.vue';
-	import Dumbell from 'vue-material-design-icons/Dumbbell.vue';
-</script>
-
 <script>
 	import { markRaw } from 'vue';
+	import { defineAsyncComponent } from 'vue';
+	const HomeOutline = defineAsyncComponent(() =>
+		import('vue-material-design-icons/HomeOutline.vue')
+	);
+	const CalendarMonthOutline = defineAsyncComponent(() =>
+		import('vue-material-design-icons/CalendarMonthOutline.vue')
+	);
+	const ViewDashboardOutline = defineAsyncComponent(() =>
+		import('vue-material-design-icons/ViewDashboardOutline.vue')
+	);
+	const ArrowCollapseLeft = defineAsyncComponent(() =>
+		import('vue-material-design-icons/ArrowCollapseLeft.vue')
+	);
+	const ArrowExpandRight = defineAsyncComponent(() =>
+		import('vue-material-design-icons/ArrowExpandRight.vue')
+	);
+	const ChartLine = defineAsyncComponent(() =>
+		import('vue-material-design-icons/ChartLine.vue')
+	);
+	const Dumbell = defineAsyncComponent(() =>
+		import('vue-material-design-icons/Dumbbell.vue')
+	);
 	export default {
 		name: 'side-nav',
+		components: {
+			HomeOutline,
+			CalendarMonthOutline,
+			ViewDashboardOutline,
+			ChartLine,
+			Dumbell,
+			ArrowExpandRight,
+			ArrowCollapseLeft,
+		},
 		data() {
 			return {
 				sideBarOpen: true,

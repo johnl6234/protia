@@ -1,8 +1,10 @@
 <script setup>
+	import { defineAsyncComponent } from 'vue';
 	import { RouterLink, RouterView } from 'vue-router';
 	import TheTopNav from './components/base/TheTopNav.vue';
-	import AuthView from './views/AuthView.vue';
 	import TheSideNav from './components/base/TheSideNav.vue';
+	import BaseOverlay from './components/base/BaseOverlay.vue';
+	const AuthView = defineAsyncComponent(() => import('./views/AuthView.vue'));
 </script>
 
 <template>
@@ -11,14 +13,29 @@
 		<TheTopNav />
 		<div class="flex flex-row overflow-hidden bottom-container">
 			<TheSideNav />
-			<RouterView />
+			<BaseOverlay v-if="isLoading" :loading="isLoading" />
+			<RouterView v-else />
 		</div>
 	</div>
 </template>
 
 <script>
-	import axios from 'axios';
 	export default {
+		data() {
+			return {
+				isLoading: false,
+			};
+		},
+		computed: {
+			loading() {
+				return this.$store.getters.isLoading;
+			},
+		},
+		watch: {
+			loading(newVal) {
+				this.isLoading = newVal;
+			},
+		},
 		created() {
 			let token = localStorage.getItem('accessToken');
 			if (token) {

@@ -8,7 +8,11 @@
 </template>
 
 <script>
-	import LoadingSpinner from './LoadingSpinner.vue';
+	import { defineAsyncComponent } from 'vue';
+
+	const LoadingSpinner = defineAsyncComponent(() =>
+		import('./LoadingSpinner.vue')
+	);
 	export default {
 		props: ['loading'],
 		components: {

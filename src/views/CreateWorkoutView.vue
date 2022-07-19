@@ -107,12 +107,24 @@
 </template>
 
 <script>
-	import baseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
-	import baseRepeatCard from '../components/workouts/baseRepeatCard.vue';
+	import { defineAsyncComponent } from 'vue';
 	import { makeId, moveInArray, addElement } from '../utils/utils';
-	import Pencil from 'vue-material-design-icons/Pencil.vue';
-	import Close from 'vue-material-design-icons/Close.vue';
-	import Check from 'vue-material-design-icons/Check.vue';
+	const baseWorkoutCard = defineAsyncComponent(() =>
+		import('../components/workouts/BaseWorkoutCard.vue')
+	);
+	const baseRepeatCard = defineAsyncComponent(() =>
+		import('../components/workouts/baseRepeatCard.vue')
+	);
+
+	const Pencil = defineAsyncComponent(() =>
+		import('vue-material-design-icons/Pencil.vue')
+	);
+	const Close = defineAsyncComponent(() =>
+		import('vue-material-design-icons/Close.vue')
+	);
+	const Check = defineAsyncComponent(() =>
+		import('vue-material-design-icons/Check.vue')
+	);
 	export default {
 		props: ['date'],
 		components: {

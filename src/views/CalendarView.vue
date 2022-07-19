@@ -29,12 +29,20 @@
 	></modal-create-workout>
 </template>
 <script>
+	import { defineAsyncComponent } from 'vue';
+
 	import { CalendarView, CalendarViewHeader } from 'vue-simple-calendar';
 	import '../../node_modules/vue-simple-calendar/dist/style.css';
 	import '../../node_modules/vue-simple-calendar/static/css/default.css';
-	import ModalQuickView from '../components/modal/ModalQuickView.vue';
-	import ModalCreateWorkout from '../components/modal/ModalCreateWorkout.vue';
-	import BaseOverlay from '../components/base/BaseOverlay.vue';
+	const ModalQuickView = defineAsyncComponent(() =>
+		import('../components/modal/ModalQuickView.vue')
+	);
+	const ModalCreateWorkout = defineAsyncComponent(() =>
+		import('../components/modal/ModalCreateWorkout.vue')
+	);
+	const BaseOverlay = defineAsyncComponent(() =>
+		import('../components/base/BaseOverlay.vue')
+	);
 	export default {
 		name: 'calendar-page',
 		components: {
