@@ -22,6 +22,7 @@
 <script>
 	import { useStore } from 'vuex';
 	const store = useStore();
+	console.log('store', store);
 	export default {
 		data() {
 			return {
