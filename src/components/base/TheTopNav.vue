@@ -4,7 +4,7 @@
 		<!-- Left hand logo -->
 		<div class="inset-y-0 left-0 flex items-center">
 			<router-link :to="{ name: 'home' }"
-				><img class="block h-8 w-auto rounded-md" src="navLogo.png"
+				><img class="block h-8 w-auto rounded-md" :src="navLogo"
 			/></router-link>
 		</div>
 
@@ -100,6 +100,7 @@
 	export default {
 		data() {
 			return {
+				navLogo: './src/assets/images/navLogo.png',
 				imgSrc: './src/assets/images/avatar.jpg',
 				loggedIn: false,
 			};
