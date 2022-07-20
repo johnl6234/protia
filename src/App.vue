@@ -20,22 +20,31 @@
 </template>
 
 <script>
-	const store = this.$store;
+	import { useStore } from 'vuex';
+	import { computed } from '@vue/reactivity';
+
 	console.log('store', store);
 	export default {
+		setup() {
+			const store = useStore();
+			return {
+				loading: computed(() => store.getters.isLoading),
+				loggedIn: computed(() => store.getters.isLoggedIn),
+			};
+		},
 		data() {
 			return {
 				isLoading: false,
 			};
 		},
-		computed: {
-			loading() {
-				return store.getters.isLoading;
-			},
-			loggedIn() {
-				return store.getters.isLoggedIn;
-			},
-		},
+		// computed: {
+		// 	loading() {
+		// 		return store.getters.isLoading;
+		// 	},
+		// 	loggedIn() {
+		// 		return store.getters.isLoggedIn;
+		// 	},
+		// },
 		watch: {
 			loading(newVal) {
 				this.isLoading = newVal;
