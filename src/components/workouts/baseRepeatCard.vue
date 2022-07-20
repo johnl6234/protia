@@ -38,10 +38,7 @@
 		</div>
 	</div>
 </template>
-<!-- 
-				
-				
-				 -->
+
 <script>
 	import BaseWorkoutCard from './BaseWorkoutCard.vue';
 	import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
