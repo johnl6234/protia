@@ -43,22 +43,16 @@
 		},
 		methods: {
 			getStatsData() {
-				const url =
-					import.meta.env.VITE_SERVER_URI +
-					'stats/' +
-					store.getters.getUserId;
+				const userId = store.getters.getUserId;
+				if (userId == undefined) return;
 				axios
-					.get(
-						import.meta.env.VITE_SERVER_URI +
-							'stats/' +
-							store.getters.getUserId
-					)
+					.get(import.meta.env.VITE_SERVER_URI + 'stats/' + userId)
 					.then(response => {
 						this.stats = response.data;
 					});
 			},
 		},
-		created() {
+		mounted() {
 			this.getStatsData();
 		},
 	};
