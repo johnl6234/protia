@@ -90,12 +90,15 @@
 					data: {
 						x: 'x',
 						columns: [
-							['x', ...this.smoothedData.distance],
-							['heart_rate', ...this.smoothedData.heart_rate],
-							['power', ...this.smoothedData.power],
-							['speed', ...this.smoothedData.speed],
-							['elevation', ...this.workout.elevation],
-							['cadence', ...this.smoothedData.cadence],
+							['x', ...thisComponent.smoothedData.distance],
+							[
+								'heart_rate',
+								...thisComponent.smoothedData.heart_rate,
+							],
+							['power', ...thisComponent.smoothedData.power],
+							['speed', ...thisComponent.smoothedData.speed],
+							['elevation', ...thisComponent.workout.elevation],
+							['cadence', ...thisComponent.smoothedData.cadence],
 						],
 						axes: {
 							heart_rate: 'y2',
