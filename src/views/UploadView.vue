@@ -49,6 +49,7 @@
 </template>
 
 <script>
+	import store from '../store';
 	import axios from 'axios';
 	import DropZone from '../components/upload/DropZone.vue';
 	export default {
@@ -80,7 +81,7 @@
 					.post(
 						import.meta.env.VITE_SERVER_URI +
 							'upload/' +
-							this.$store.getters.getUserData._id,
+							store.getters.getUserData._id,
 						formData
 					)
 					.then(res => {

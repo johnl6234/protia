@@ -11,6 +11,7 @@
 </template>
 
 <script>
+	import store from '../../store';
 	export default {
 		name: 'date-range',
 		emits: ['getData'],
@@ -44,7 +45,7 @@
 		},
 		methods: {
 			changeDateRange(e) {
-				this.$store.commit(
+				store.commit(
 					'setDateRange',
 					this.dateRangeList[e.target.selectedIndex]
 				);

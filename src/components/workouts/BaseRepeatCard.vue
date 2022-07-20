@@ -43,6 +43,7 @@
 	import BaseWorkoutCard from './BaseWorkoutCard.vue';
 	import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 	import { addElement } from '../../utils/utils';
+	import store from '../../store';
 	export default {
 		name: 'repeat-card',
 		props: ['step'],
@@ -75,7 +76,7 @@
 		},
 		computed: {
 			defaultLap() {
-				return this.$store.getters.getDefaultLap;
+				return store.getters.getDefaultLap;
 			},
 		},
 	};

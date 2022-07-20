@@ -143,7 +143,6 @@
 					.post(import.meta.env.VITE_SERVER_URI + 'register', data)
 					.then(res => {
 						if (res.data.success) {
-							//this.$store.commit('login', res.data);
 							this.$router.push({ path: '/' });
 						} else {
 							this.errorMsg = res.data.error;

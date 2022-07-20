@@ -29,6 +29,7 @@
 	></modal-create-workout>
 </template>
 <script>
+	import store from '../store';
 	import { defineAsyncComponent } from 'vue';
 
 	import { CalendarView, CalendarViewHeader } from 'vue-simple-calendar';
@@ -87,16 +88,16 @@
 		computed: {
 			calendarItems() {
 				return [
-					...this.$store.getters.getUserActivities,
-					...this.$store.getters.getUserWorkouts,
+					...store.getters.getUserActivities,
+					...store.getters.getUserWorkouts,
 				];
 			},
 		},
 		async created() {
-			if (this.$store.getters.getUserActivitiesLength < 1) {
+			if (store.getters.getUserActivitiesLength < 1) {
 				this.loading = true;
-				await this.$store.dispatch('getActivities');
-				await this.$store.dispatch('getUserWorkouts');
+				await store.dispatch('getActivities');
+				await store.dispatch('getUserWorkouts');
 				this.loading = false;
 			}
 		},

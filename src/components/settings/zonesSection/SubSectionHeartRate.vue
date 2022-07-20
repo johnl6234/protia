@@ -42,6 +42,7 @@
 
 <script>
 	import ZoneInput from './zoneComponents/ZoneInputHr.vue';
+	import store from '../../../store';
 	export default {
 		name: 'heartRate-section',
 		components: { ZoneInput },
@@ -86,8 +87,8 @@
 					name: 'heart_rate',
 					zones: newHrZones,
 				};
-				this.$store.dispatch('changeAllZones', payload);
-				this.$store.dispatch('setLtThreshold', this.ltThreshold);
+				store.dispatch('changeAllZones', payload);
+				store.dispatch('setLtThreshold', this.ltThreshold);
 				// Zone 1 Less than 85% of LTHR
 				// Zone 2 85% to 89% of LTHR
 				// Zone 3 90% to 94% of LTHR
@@ -104,13 +105,13 @@
 		},
 		computed: {
 			zones() {
-				return this.$store.getters.getZones.heart_rate;
+				return store.getters.getZones.heart_rate;
 			},
 		},
 		created() {
 			this.hrZones = this.zones;
-			this.maxHr = this.$store.getters.getMaxHr;
-			this.ltThreshold = this.$store.getters.getLtThreshold;
+			this.maxHr = store.getters.getMaxHr;
+			this.ltThreshold = store.getters.getLtThreshold;
 		},
 	};
 </script>

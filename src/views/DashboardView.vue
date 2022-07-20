@@ -78,7 +78,7 @@
 	import BaseOverlay from '../components/base/BaseOverlay.vue';
 	import ChartListDrop from '../components/dashboard/ChartListDrop.vue';
 	import { moveInArray } from '../utils/utils';
-
+	import store from '../store';
 	export default {
 		name: 'dashboard-page',
 		components: {
@@ -113,33 +113,33 @@
 				let chartsArray = moveInArray(
 					droppedId,
 					elementId,
-					this.$store.getters.getUserCharts
+					store.getters.getUserCharts
 				);
-				this.$store.dispatch('setUserCharts', chartsArray);
+				store.dispatch('setUserCharts', chartsArray);
 			},
 			fetchUserCharts() {
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
 							'charts/' +
-							this.$store.getters.getUserId
+							store.getters.getUserId
 					)
 					.then(res => {
-						this.$store.dispatch('setUserCharts', res.data.charts);
+						store.dispatch('setUserCharts', res.data.charts);
 					});
 			},
 			showChartList() {
 				this.chartListIsShown = !this.chartListIsShown;
 			},
 			addChartToList(chart) {
-				this.$store.dispatch('addChartToUserList', chart);
+				store.dispatch('addChartToUserList', chart);
 				this.showChartList();
 				this.saveChartDataToDB();
 			},
 			fetchDataInDateRange() {
 				this.loading = true;
-				let data = this.$store.getters.getDateRange.range;
-				data.userId = this.$store.getters.getUserId;
+				let data = store.getters.getDateRange.range;
+				data.userId = store.getters.getUserId;
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
@@ -149,11 +149,11 @@
 						}
 					)
 					.then(res => {
-						this.$store.dispatch('setUserChartData', {
+						store.dispatch('setUserChartData', {
 							name: 'heart_rate',
 							data: res.data.timeInZones.timeInHeartZones,
 						});
-						this.$store.dispatch('setUserChartData', {
+						store.dispatch('setUserChartData', {
 							name: 'power',
 							data: res.data.timeInZones.timeInPowerZones,
 						});
@@ -164,7 +164,7 @@
 							},
 							[]
 						);
-						this.$store.dispatch('setUserChartData', {
+						store.dispatch('setUserChartData', {
 							name: 'peakPower',
 							data: [['data', ...peaks]],
 						});
@@ -173,26 +173,26 @@
 			},
 
 			removeChart(index) {
-				this.$store.dispatch('removeChart', index);
+				store.dispatch('removeChart', index);
 				this.saveChartDataToDB();
 			},
 			saveChartDataToDB() {
 				axios.post(
 					import.meta.env.VITE_SERVER_URI +
 						'charts/' +
-						this.$store.getters.getUserId,
+						store.getters.getUserId,
 					{
-						charts: this.$store.getters.getUserCharts,
+						charts: store.getters.getUserCharts,
 					}
 				);
 			},
 		},
 		computed: {
 			userCharts() {
-				return this.$store.getters.getUserCharts;
+				return store.getters.getUserCharts;
 			},
 			chartList() {
-				return this.$store.getters.getChartList;
+				return store.getters.getChartList;
 			},
 		},
 		mounted() {

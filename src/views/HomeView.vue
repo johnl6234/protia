@@ -28,7 +28,7 @@
 	import StatsDisplay from '../components/home/StatsDisplay.vue';
 	import BaseOverlay from '../components/base/BaseOverlay.vue';
 	import axios from 'axios';
-
+	import store from '../store';
 	export default {
 		components: {
 			HomeWorkout,
@@ -46,12 +46,12 @@
 				const url =
 					import.meta.env.VITE_SERVER_URI +
 					'stats/' +
-					this.$store.getters.getUserId;
+					store.getters.getUserId;
 				axios
 					.get(
 						import.meta.env.VITE_SERVER_URI +
 							'stats/' +
-							this.$store.getters.getUserId
+							store.getters.getUserId
 					)
 					.then(response => {
 						this.stats = response.data;

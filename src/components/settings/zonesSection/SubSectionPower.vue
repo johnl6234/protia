@@ -29,6 +29,7 @@
 
 <script>
 	import ZoneInputPower from './zoneComponents/ZoneInputPower.vue';
+	import store from '../../../store';
 	export default {
 		name: 'power-section',
 		components: { ZoneInputPower },
@@ -83,8 +84,8 @@
 					name: 'power',
 					zones: newPowerZones,
 				};
-				this.$store.dispatch('changeAllZones', payload);
-				this.$store.dispatch('setFtp', this.ftp);
+				store.dispatch('changeAllZones', payload);
+				store.dispatch('setFtp', this.ftp);
 			},
 		},
 		watch: {
@@ -94,12 +95,12 @@
 		},
 		computed: {
 			zones() {
-				return this.$store.getters.getZones.power;
+				return store.getters.getZones.power;
 			},
 		},
 		created() {
 			this.powerZones = this.zones;
-			this.FTP = this.$store.getters.getFtp;
+			this.FTP = store.getters.getFtp;
 		},
 	};
 </script>

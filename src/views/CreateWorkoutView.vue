@@ -113,7 +113,7 @@
 	import Pencil from 'vue-material-design-icons/Pencil.vue';
 	import Close from 'vue-material-design-icons/Close.vue';
 	import Check from 'vue-material-design-icons/Check.vue';
-
+	import store from '../store';
 	export default {
 		props: ['date'],
 		components: {
@@ -193,11 +193,8 @@
 			},
 			saveWorkout() {
 				console.log(this.workout);
-				this.$store.dispatch('addToUserWorkouts', this.workout);
-				console.log(
-					'all workouts',
-					this.$store.getters.getUserWorkouts
-				);
+				store.dispatch('addToUserWorkouts', this.workout);
+				console.log('all workouts', store.getters.getUserWorkouts);
 			},
 			closeOtherCards(cardId) {
 				this.openCardId = cardId;
@@ -212,16 +209,16 @@
 				return totalTime;
 			},
 			defaultLap() {
-				return this.$store.getters.getDefaultLap;
+				return store.getters.getDefaultLap;
 			},
 			defaultRepeatLap() {
-				return this.$store.getters.getDefaultRepeatLap;
+				return store.getters.getDefaultRepeatLap;
 			},
 		},
 		created() {
 			// if (this.date) this.workoutDate = this.date;
 			// else this.workoutDate = new Date();
-			this.workout = { ...this.$store.getters.getDefaultWorkout };
+			this.workout = { ...store.getters.getDefaultWorkout };
 			this.workout.laps.forEach(lap => (lap.id = makeId(5)));
 			this.workout.startDate = new Date();
 		},

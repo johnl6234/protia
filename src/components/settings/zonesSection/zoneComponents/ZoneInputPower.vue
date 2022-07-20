@@ -18,6 +18,7 @@
 	</div>
 </template>
 <script>
+	import store from '../../../../store';
 	export default {
 		props: ['zoneData'],
 		data() {
@@ -34,7 +35,7 @@
 				this.zone.bpm = Math.round(
 					this.percentageOf(this.zone.percent, this.ftp)
 				);
-				this.$store.dispatch('changeZone', {
+				store.dispatch('changeZone', {
 					name: 'power',
 					zone: this.zone,
 				});
@@ -43,7 +44,7 @@
 				this.zone.percent = Math.round(
 					this.percentage(this.zone.watts, this.ftp)
 				);
-				this.$store.dispatch('changeZone', {
+				store.dispatch('changeZone', {
 					name: 'power',
 					zone: this.zone,
 				});
@@ -57,7 +58,7 @@
 		},
 		computed: {
 			ftp() {
-				return this.$store.getters.getFtp;
+				return store.getters.getFtp;
 			},
 		},
 		watch: {

@@ -95,8 +95,8 @@
 		</div>
 	</div>
 </template>
-<script setup></script>
 <script>
+	import store from '../../store';
 	export default {
 		data() {
 			return {
@@ -119,7 +119,7 @@
 					username: this.username,
 					password: this.password,
 				};
-				this.$store.dispatch('login', data);
+				store.dispatch('login', data);
 			},
 		},
 	};

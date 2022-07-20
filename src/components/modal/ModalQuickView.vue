@@ -83,6 +83,7 @@
 	import MapBox from '../mapbox/MapBox.vue';
 	const WorkoutStatsCycling = () => import('./WorkoutStatsCycling.vue');
 	import axios from 'axios';
+	import store from '../../store';
 	export default {
 		props: {
 			open: Boolean,
@@ -137,8 +138,8 @@
 			workoutId() {
 				if (this.workoutId !== null) this.fetchWorkout();
 			},
-			'$store.state.mapPoint': function () {
-				this.mapPoint = this.$store.getters.getMapPoint;
+			'store.state.mapPoint': function () {
+				this.mapPoint = store.getters.getMapPoint;
 			},
 		},
 		created() {

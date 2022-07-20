@@ -47,6 +47,7 @@
 </template>
 
 <script>
+	import store from '../../../store';
 	export default {
 		name: 'settings-section',
 		data() {
@@ -59,7 +60,7 @@
 		},
 		methods: {
 			stoppedEditing() {
-				this.$store.commit('setTempData', this.userSettings);
+				store.commit('setTempData', this.userSettings);
 			},
 		},
 	};

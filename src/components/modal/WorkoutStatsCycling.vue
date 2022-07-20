@@ -18,6 +18,7 @@
 <script>
 	import { bb, area, line, zoom } from 'billboard.js';
 	import 'billboard.js/dist/billboard.css';
+	import store from '../../store';
 	export default {
 		name: 'cycling-stats',
 		props: {
@@ -146,14 +147,14 @@
 					},
 					tooltip: {
 						onshow: function (selectedData) {
-							thisComponent.$store.commit(
+							store.commit(
 								'setMapPoint',
 								selectedData[0].index *
 									thisComponent.smoothAmount
 							);
 						},
 						onhide: function () {
-							thisComponent.$store.commit('setMapPoint', 0);
+							store.commit('setMapPoint', 0);
 						},
 					},
 					zoom: {

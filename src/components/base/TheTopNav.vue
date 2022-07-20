@@ -27,7 +27,7 @@
 
 			<!-- Profile dropdown -->
 			<Menu
-				v-if="this.$store.getters.isLoggedIn"
+				v-if="store.getters.isLoggedIn"
 				as="div"
 				class="ml-3 relative"
 			>
@@ -97,6 +97,7 @@
 </script>
 
 <script>
+	import store from '../../store';
 	export default {
 		data() {
 			return {
@@ -107,7 +108,7 @@
 		},
 		methods: {
 			LogOut() {
-				this.$store.commit('logout');
+				store.commit('logout');
 			},
 		},
 	};

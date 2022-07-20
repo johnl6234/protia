@@ -75,7 +75,7 @@
 	import FlashMessage from '../plugins/Flash/FlashTemplate.vue';
 	const SectionAccount = markRaw(SectionAccountVue);
 	const SectionZones = markRaw(SectionZonesVue);
-
+	import store from '../store';
 	export default {
 		name: 'user-settings',
 		components: {
@@ -120,11 +120,11 @@
 				this.currentSubSection = subLink;
 			},
 			saveData() {
-				let data = this.$store.getters.getTempData;
-				data.zones = this.$store.getters.getZones;
-				data.maxHr = this.$store.getters.getMaxHr;
-				data.ltThreshold = this.$store.getters.getLtThreshold;
-				let userId = this.$store.getters.getUserData._id;
+				let data = store.getters.getTempData;
+				data.zones = store.getters.getZones;
+				data.maxHr = store.getters.getMaxHr;
+				data.ltThreshold = store.getters.getLtThreshold;
+				let userId = store.getters.getUserData._id;
 
 				axios
 					.post(
@@ -133,8 +133,8 @@
 					)
 					.then(response => {
 						if (response.data.modifiedCount > 0) {
-							this.$store.commit('setUserData', data);
-							this.$store.commit('setHasUnsavedChanges', false);
+							store.commit('setUserData', data);
+							store.commit('setHasUnsavedChanges', false);
 							this.message = 'Data Saved Successfully';
 							this.$flash({
 								type: 'success',
@@ -158,14 +158,14 @@
 			this.currentSubSection = this.sectionsArray[0].subLinks[0];
 		},
 		beforeRouteLeave(to, from, next) {
-			if (!this.$store.getters.getHasUnsavedChanges) {
+			if (!store.getters.getHasUnsavedChanges) {
 				next();
 			} else {
 				const userWantsToLeave = confirm(
 					'Are you sure, You have unsaved Changes'
 				);
 				if (userWantsToLeave) {
-					this.$store.commit('clearTempData');
+					store.commit('clearTempData');
 				}
 				next(userWantsToLeave);
 			}

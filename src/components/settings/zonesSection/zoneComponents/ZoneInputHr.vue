@@ -18,6 +18,7 @@
 	</div>
 </template>
 <script>
+	import store from '../../../../store';
 	export default {
 		props: ['zoneData'],
 		data() {
@@ -34,7 +35,7 @@
 				this.zone.bpm = Math.round(
 					this.percentageOf(this.zone.percent, this.ltThreshold)
 				);
-				this.$store.dispatch('changeZone', {
+				store.dispatch('changeZone', {
 					name: 'heart_rate',
 					zone: this.zone,
 				});
@@ -43,7 +44,7 @@
 				this.zone.percent = Math.round(
 					this.percentage(this.zone.bpm, this.ltThreshold)
 				);
-				this.$store.dispatch('changeZone', {
+				store.dispatch('changeZone', {
 					name: 'heart_rate',
 					zone: this.zone,
 				});
@@ -57,7 +58,7 @@
 		},
 		computed: {
 			ltThreshold() {
-				return this.$store.getters.getLtThreshold;
+				return store.getters.getLtThreshold;
 			},
 		},
 		watch: {

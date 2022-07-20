@@ -237,6 +237,7 @@
 </template>
 
 <script>
+	import store from '../../../store';
 	import DropZone from '../../upload/DropZone.vue';
 	import BaseTextInput from '../../base/inputs/BaseTextInput.vue';
 	export default {
@@ -269,8 +270,8 @@
 		},
 		methods: {
 			stoppedEditing() {
-				this.$store.commit('setTempData', this.userData);
-				this.$store.commit('setHasUnsavedChanges', true);
+				store.commit('setTempData', this.userData);
+				store.commit('setHasUnsavedChanges', true);
 			},
 			onFileChange(event) {
 				this.files = event.target.files;
@@ -282,17 +283,17 @@
 		},
 		computed: {
 			countries() {
-				return this.$store.getters.getCountries;
+				return store.getters.getCountries;
 			},
 			states() {
-				return this.$store.getters.getStates;
+				return store.getters.getStates;
 			},
 			sports() {
-				return this.$store.getters.getSports;
+				return store.getters.getSports;
 			},
 		},
 		created() {
-			this.userData = this.$store.getters.getUserData;
+			this.userData = store.getters.getUserData;
 		},
 	};
 </script>
