@@ -51,8 +51,15 @@ const store = createStore({
 	},
 	actions: {
 		login(context, payload) {
+			const config = {
+				'Access-Control-Allow-Origin': '*',
+			};
 			axios
-				.post(import.meta.env.VITE_SERVER_URI + 'login', payload)
+				.post(
+					import.meta.env.VITE_SERVER_URI + 'login',
+					payload,
+					config
+				)
 				.then(res => {
 					if (res.data.success) {
 						//remove unused data
