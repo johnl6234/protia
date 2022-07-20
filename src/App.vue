@@ -20,8 +20,7 @@
 </template>
 
 <script>
-	import { useStore } from 'vuex';
-	const store = useStore();
+	const store = this.$store;
 	console.log('store', store);
 	export default {
 		data() {
