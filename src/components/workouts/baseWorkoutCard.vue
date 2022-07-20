@@ -45,7 +45,6 @@
 	import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 
 	export default {
-		name: 'workout-card',
 		props: ['step', 'openCard'],
 		emits: ['closeOtherCards'],
 		components: {

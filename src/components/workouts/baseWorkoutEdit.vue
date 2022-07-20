@@ -46,7 +46,6 @@
 	import HeartZoneInput from './inputs/HeartZoneInput.vue';
 	import PowerZoneInput from './inputs/PowerZoneInput.vue';
 	export default {
-		name: 'workout-edit',
 		props: ['lap'],
 		components: {
 			BaseSelect,
