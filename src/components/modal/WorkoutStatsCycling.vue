@@ -32,10 +32,10 @@
 			};
 		},
 		methods: {
-			async smoothData() {
+			smoothData() {
 				let newData = {};
 				if (this.workout.heart_rate)
-					newData.heart_rate = await this.smoothArray(
+					newData.heart_rate = this.smoothArray(
 						this.workout.heart_rate
 					);
 
@@ -84,21 +84,19 @@
 				return newArray;
 			},
 			initChart() {
+				console.log('this', this);
 				let thisComponent = this;
 				this.chart = bb.generate({
 					bindto: `#statsChart`,
 					data: {
 						x: 'x',
 						columns: [
-							['x', ...thisComponent.smoothedData.distance],
-							[
-								'heart_rate',
-								...thisComponent.smoothedData.heart_rate,
-							],
-							['power', ...thisComponent.smoothedData.power],
-							['speed', ...thisComponent.smoothedData.speed],
-							['elevation', ...thisComponent.workout.elevation],
-							['cadence', ...thisComponent.smoothedData.cadence],
+							['x', ...this.smoothedData.distance],
+							['heart_rate', ...this.smoothedData.heart_rate],
+							['power', ...this.smoothedData.power],
+							['speed', ...this.smoothedData.speed],
+							['elevation', ...this.workout.elevation],
+							['cadence', ...this.smoothedData.cadence],
 						],
 						axes: {
 							heart_rate: 'y2',
