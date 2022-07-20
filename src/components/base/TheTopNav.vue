@@ -100,8 +100,8 @@
 	export default {
 		data() {
 			return {
-				navLogo: './src/assets/images/navLogo.png',
-				imgSrc: './src/assets/images/avatar.jpg',
+				navLogo: '@/assets/images/navLogo.png',
+				imgSrc: '@/assets/images/avatar.jpg',
 				loggedIn: false,
 			};
 		},
