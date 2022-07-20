@@ -8,7 +8,7 @@
 </script>
 
 <template>
-	<AuthView v-if="!loggedIn" />
+	<AuthView v-if="false" />
 	<div v-else class="app-container overflow-hidden md:w-full lg:w-5/6">
 		<TheTopNav />
 		<div class="flex flex-row overflow-hidden bottom-container">
