@@ -23,10 +23,11 @@
 	import { useStore } from 'vuex';
 	import { computed } from '@vue/reactivity';
 
-	console.log('store', store);
 	export default {
 		setup() {
 			const store = useStore();
+			console.log('store', store);
+
 			return {
 				loading: computed(() => store.getters.isLoading),
 				loggedIn: computed(() => store.getters.isLoggedIn),
