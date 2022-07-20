@@ -108,8 +108,8 @@
 
 <script>
 	import { makeId, moveInArray, addElement } from '../utils/utils';
-	import baseWorkoutCard from '@/components/workouts/BaseWorkoutCard.vue';
-	import baseRepeatCard from '@/components/workouts/baseRepeatCard.vue';
+	import baseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
+	import baseRepeatCard from '../components/workouts/baseRepeatCard.vue';
 	import Pencil from 'vue-material-design-icons/Pencil.vue';
 	import Close from 'vue-material-design-icons/Close.vue';
 	import Check from 'vue-material-design-icons/Check.vue';
