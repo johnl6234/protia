@@ -1,11 +1,11 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
-import router from '../router';
-import chartsModule from './modules/charts/index';
-import activitiesModule from './modules/activities/index';
-import workoutModule from './modules/workouts/index';
-import userSettingsModule from './modules/settings/index';
-import dataModule from './modules/data/index';
+import router from '../router/index.js';
+import chartsModule from './modules/charts/index.js';
+import activitiesModule from './modules/activities/index.js';
+import workoutModule from './modules/workouts/index.js';
+import userSettingsModule from './modules/settings/index.js';
+import dataModule from './modules/data/index.js';
 // Create a new store instance.
 const store = createStore({
 	modules: {
