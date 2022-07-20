@@ -8,7 +8,7 @@
 </script>
 
 <template>
-	<AuthView v-if="!this.$store.getters.isLoggedIn" />
+	<AuthView v-if="!loggedIn" />
 	<div v-else class="app-container overflow-hidden md:w-full lg:w-5/6">
 		<TheTopNav />
 		<div class="flex flex-row overflow-hidden bottom-container">
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+	import { useStore } from 'vuex';
+	const store = useStore();
 	export default {
 		data() {
 			return {
@@ -28,7 +30,10 @@
 		},
 		computed: {
 			loading() {
-				return this.$store.getters.isLoading;
+				return store.getters.isLoading;
+			},
+			loggedIn() {
+				return store.getters.isLoggedIn;
 			},
 		},
 		watch: {
@@ -39,7 +44,7 @@
 		created() {
 			let token = localStorage.getItem('accessToken');
 			if (token) {
-				this.$store.dispatch('autoLogin', token);
+				store.dispatch('autoLogin', token);
 			}
 		},
 	};
