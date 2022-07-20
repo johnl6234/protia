@@ -81,7 +81,7 @@
 		TransitionRoot,
 	} from '@headlessui/vue';
 	import MapBox from '../mapbox/MapBox.vue';
-	import WorkoutStatsCycling from './WorkoutStatsCycling.vue';
+	const WorkoutStatsCycling = () => import('./WorkoutStatsCycling.vue');
 	import axios from 'axios';
 	export default {
 		props: {
