@@ -52,7 +52,7 @@
 					@dragover.prevent
 					@dragenter.prevent="showDropZone"
 				>
-					<baseWorkoutCard
+					<BaseWorkoutCard
 						v-if="lap.type === 'lap'"
 						:title="lap.id"
 						draggable="true"
@@ -63,7 +63,7 @@
 						:openCard="openCardId === lap.id"
 						@closeOtherCards="closeOtherCards"
 					/>
-					<baseRepeatCard
+					<BaseRepeatCard
 						v-if="lap.type === 'repeat'"
 						:title="lap.id"
 						draggable="true"
@@ -108,16 +108,17 @@
 
 <script>
 	import { makeId, moveInArray, addElement } from '../utils/utils';
-	import baseWorkoutCard from '@/components/workouts/BaseWorkoutCard.vue';
-	import baseRepeatCard from '@/components/workouts/baseRepeatCard.vue';
+	import BaseWorkoutCard from '../components/workouts/BaseWorkoutCard.vue';
+	import BaseRepeatCard from '../components/workouts/BaseRepeatCard.vue';
 	import Pencil from 'vue-material-design-icons/Pencil.vue';
 	import Close from 'vue-material-design-icons/Close.vue';
 	import Check from 'vue-material-design-icons/Check.vue';
+
 	export default {
 		props: ['date'],
 		components: {
-			baseWorkoutCard,
-			baseRepeatCard,
+			BaseWorkoutCard,
+			BaseRepeatCard,
 			Pencil,
 			Close,
 			Check,
