@@ -71,6 +71,7 @@ const store = createStore({
 							'accessToken',
 							res.data.accessToken
 						);
+						console.log('returned', res.data);
 						context.commit('login');
 						context.dispatch('setUserData', res.data.user);
 						router.push({ path: '/' });
