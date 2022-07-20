@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		<div class="p-3">
-			<baseWorkoutCard
+			<BaseWorkoutCard
 				v-for="(interval, index) in step.steps"
 				:key="interval.id"
 				:step="interval"
@@ -43,13 +43,13 @@
 				
 				 -->
 <script>
-	import baseWorkoutCard from './baseWorkoutCard.vue';
+	import BaseWorkoutCard from './BaseWorkoutCard.vue';
 	import DeleteOutline from 'vue-material-design-icons/DeleteOutline.vue';
 	import { addElement } from '../../utils/utils';
 	export default {
 		name: 'repeat-card',
 		props: ['step'],
-		components: { baseWorkoutCard, DeleteOutline },
+		components: { BaseWorkoutCard, DeleteOutline },
 		data() {
 			return {
 				openCardId: null,
