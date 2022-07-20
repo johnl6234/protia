@@ -4,7 +4,7 @@
 		<!-- Left hand logo -->
 		<div class="inset-y-0 left-0 flex items-center">
 			<router-link :to="{ name: 'home' }"
-				><img class="block h-8 w-auto rounded-md" src="navLogo.png"
+				><img class="block h-8 w-auto rounded-md" src="./navLogo.png"
 			/></router-link>
 		</div>
 
@@ -36,7 +36,7 @@
 						<span class="sr-only">Open user menu</span>
 						<img
 							class="h-8 w-8 rounded-full"
-							src="avatar.jpg"
+							src="./avatar.jpg"
 							alt=""
 						/>
 					</MenuButton>
