@@ -20,7 +20,7 @@
 	import 'billboard.js/dist/billboard.css';
 	import store from '../../store';
 	export default {
-		name: 'cycling-stats',
+		name: 'stats-chart',
 		props: {
 			workout: Object,
 		},
@@ -84,7 +84,6 @@
 				return newArray;
 			},
 			initChart() {
-				console.log('this', this);
 				let thisComponent = this;
 				this.chart = bb.generate({
 					bindto: `#statsChart`,

@@ -53,6 +53,7 @@
 		},
 		mounted() {
 			this.initChart();
+			console.log('barchart', this.chartData);
 		},
 	};
 </script>

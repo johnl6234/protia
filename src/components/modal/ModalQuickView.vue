@@ -47,7 +47,11 @@
 									<h1 v-else>No Map</h1>
 								</div>
 								<div>
-									<WorkoutStatsCycling
+									<WorkoutStatsChart
+										v-if="workout !== null"
+										:workout="workout"
+									/>
+									<WorkoutStatsData
 										v-if="workout !== null"
 										:workout="workout"
 									/>
@@ -81,7 +85,8 @@
 		TransitionRoot,
 	} from '@headlessui/vue';
 	import MapBox from '../mapbox/MapBox.vue';
-	import WorkoutStatsCycling from './WorkoutStatsCycling.vue';
+	import WorkoutStatsChart from './WorkoutStatsChart.vue';
+	import WorkoutStatsData from './WorkoutStatsData.vue';
 	import axios from 'axios';
 	import store from '../../store';
 	export default {
@@ -95,7 +100,8 @@
 			TransitionChild,
 			TransitionRoot,
 			MapBox,
-			WorkoutStatsCycling,
+			WorkoutStatsChart,
+			WorkoutStatsData,
 		},
 		data() {
 			return {
